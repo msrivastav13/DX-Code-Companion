@@ -1,6 +1,8 @@
-# CS Code Companion README
+# CS SalesforceDX Code Companion
 
-Provides ability to save Apex Classes, Apex Triggers, Visualforce, AuraBundles and ApexComponents to Salesforce org at blazing speed.This extension requires users to have SalesforceDX CLI and also mo-dx-plugin for SalesforceDX CLI.It is highly recommended to use with Salesforce Extension Pack (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .The Extension works with both scratch orgs and Non-scratch orgs.
+Provides ability to save Apex Classes, Apex Triggers, Visualforce, AuraBundles and ApexComponents to Salesforce org at blazing speed.This extension requires users to have SalesforceDX CLI and also mo-dx-plugin for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
+
+It is highly recommended to use with Salesforce Extension Pack (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .
 
 ## Features
 
@@ -8,7 +10,7 @@ Save Apex Class To Salesforce Org
 
 Right click on the File and click "Save To Salesforce"
 
-![Save To Apex](https://media.giphy.com/media/xVIlA0Q1SxGyQpHWyC/giphy.gif)
+![Save To Apex](./images/saveApex.gif)
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
