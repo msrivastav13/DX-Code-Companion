@@ -3,8 +3,14 @@
     "displayName": "CS SalesforceDX Code Companion",
     "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
     "version": "0.0.1",
+    "publisher": "MohithShrivastava",
     "engines": {
         "vscode": "^1.29.0"
+    },
+    "icon" : "images/terminal.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/msrivastav13/DX-Code-Companion.git"
     },
     "categories": [
         "Other"
