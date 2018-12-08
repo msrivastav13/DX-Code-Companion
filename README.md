@@ -1,14 +1,14 @@
-# dx-code-companion README
+# CS Code Companion README
 
-This is the README for your extension "dx-code-companion". After writing up a brief description, we recommend including the following sections.
+Provides ability to save Apex Classes, Apex Triggers, Visualforce, AuraBundles and ApexComponents to Salesforce org at blazing speed.This extension requires users to have SalesforceDX CLI and also mo-dx-plugin for SalesforceDX CLI.It is highly recommended to use with Salesforce Extension Pack (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .The Extension works with both scratch orgs and Non-scratch orgs.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Save Apex Class To Salesforce Org
 
-For example if there is an image subfolder under your extension project workspace:
+Right click on the File and click "Save To Salesforce"
 
-\!\[feature X\]\(images/feature-x.png\)
+\!\[feature X\]\(images/saveApex.gif\)
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
