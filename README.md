@@ -8,7 +8,7 @@ Save Apex Class To Salesforce Org
 
 Right click on the File and click "Save To Salesforce"
 
-\!\[feature X\]\(images/saveApex.gif\)
+![Save To Apex](https://media.giphy.com/media/xVIlA0Q1SxGyQpHWyC/giphy.gif)
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
