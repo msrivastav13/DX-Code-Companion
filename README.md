@@ -1,4 +1,4 @@
-# CS SalesforceDX Code Companion
+# SalesforceDX Code Companion
 
 Provides ability to save Apex Classes, Apex Triggers, Visualforce, AuraBundles and ApexComponents to Salesforce org at blazing speed.This extension requires users to have SalesforceDX CLI and also mo-dx-plugin for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
 
