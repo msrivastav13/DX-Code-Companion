@@ -2,12 +2,12 @@
     "name": "cs-dx-code-companion",
     "displayName": "CS SalesforceDX Code Companion",
     "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "MohithShrivastava",
     "engines": {
         "vscode": "^1.29.0"
     },
-    "icon" : "images/terminal.png",
+    "icon": "images/terminal.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/msrivastav13/DX-Code-Companion.git"
@@ -30,8 +30,8 @@
                 "title": "Save To Salesforce"
             }
         ],
-        "menus" : {
-            "editor/context" : [
+        "menus": {
+            "editor/context": [
                 {
                     "command": "retrieve.dxSource",
                     "group": "DXCompanion"
@@ -41,7 +41,7 @@
                     "group": "DXCompanion"
                 }
             ],
-            "editor/title" : [
+            "editor/title": [
                 {
                     "command": "retrieve.dxSource",
                     "group": "DXCompanion"
@@ -51,7 +51,7 @@
                     "group": "DXCompanion"
                 }
             ],
-            "explorer/context" : [
+            "explorer/context": [
                 {
                     "command": "retrieve.dxSource",
                     "group": "DXCompanion"
@@ -64,11 +64,11 @@
         },
         "keybindings": [
             {
-              "command": "deploy.source",
-              "key": "cmd+shift+c",
-              "win": "ctrl+shift+c",
-              "linux": "ctrl+shift+c",
-              "when": "editorFocus"
+                "command": "deploy.source",
+                "key": "cmd+shift+c",
+                "win": "ctrl+shift+c",
+                "linux": "ctrl+shift+c",
+                "when": "editorFocus"
             }
         ]
     },
@@ -86,6 +86,5 @@
         "@types/node": "^8.10.25",
         "@types/mocha": "^2.2.42"
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }
