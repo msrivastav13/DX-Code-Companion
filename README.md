@@ -11,6 +11,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 1. Install SalesforceDX CLI from https://developer.salesforce.com/tools/sfdxcli based on your operating system.
 2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`
 3. Salesforce official plugin provides great syntax and language support .Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
+4. When you open the VScode , it is recommended to wait for few seconds for Salesforce CLI or Salesforce VScode plugin to authorize the connection .This plugin depends on CLI to do auth and uses the session from the CLI.
 
 ## Features
 
@@ -57,15 +58,16 @@ If you find any issues feel free to log it on the github page for the project @ 
 
 ## Release Notes
 
+### 0.0.3
+
+1. Fixes issues for keyboard shortcut
+
 ### 0.0.2
 
 1. Provides quick save apex,vf,aura bundles to salesforce server
 2. Retrieve Source from Salesforce using DX Source format.
 3. 3X performant than salesforce deploy command for apex , aura and vf files.
 
-### 0.0.3
-
-1. Fixes issues for keyboard shortcut
 -----------------------------------------------------------------------------------------------------------
 
 ### For more information and contribution to project visit the below repositories and use issues tab to log any feedback or issues .
