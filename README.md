@@ -58,7 +58,7 @@ If you find any issues feel free to log it on the github page for the project @ 
 
 ## Release Notes
 
-### 0.0.3
+### 0.0.4
 
 1. Fixes issues for keyboard shortcut
 
