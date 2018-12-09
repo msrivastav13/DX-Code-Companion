@@ -13,12 +13,12 @@ export function activate(context: vscode.ExtensionContext) {
         retrieveDXSource();
     });
 
-    let deploySource = vscode.commands.registerCommand('deploy.source', (uri:vscode.Uri) => {
+    let deploySource = vscode.commands.registerCommand('deploy.source', () => {
         let activeTerminal = setupTerminal();
         if(activeTerminal){
             if(vscode.window.activeTextEditor){
-                // const path = vscode.window.activeTextEditor.document.uri.fsPath;
-                const commandToExecute = new CommandService(uri.fsPath);
+                const path = vscode.window.activeTextEditor.document.uri.fsPath;
+                const commandToExecute = new CommandService(path);
                 activeTerminal.sendText(commandToExecute.generateCommand());
             }
         }
@@ -32,7 +32,10 @@ export function activate(context: vscode.ExtensionContext) {
     function setupTerminal() {
         let activeTerminal;
         if(ensureTerminalExists()){
-            activeTerminal = vscode.window.activeTerminal;
+            activeTerminal = vscode.window.terminals[0];
+            if(activeTerminal){
+                activeTerminal.show(true);
+            }
         } else {
             // Create Terminal via VScode API
             const terminalName = 'DX Companion';
