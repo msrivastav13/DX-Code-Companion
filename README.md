@@ -48,7 +48,7 @@ If you find any issues feel free to log it on the github page for the project @ 
 
 ## Release Notes
 
-### 0.0.1
+### 0.0.2
 
 1. Provides quick save apex,vf,aura bundles to salesforce server
 2. Retrieve Source from Salesforce using DX Source format.
