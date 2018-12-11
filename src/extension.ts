@@ -17,9 +17,13 @@ export function activate(context: vscode.ExtensionContext) {
         let activeTerminal = setupTerminal();
         if(activeTerminal){
             if(vscode.window.activeTextEditor){
-                const path = vscode.window.activeTextEditor.document.uri.fsPath;
+                let path = vscode.window.activeTextEditor.document.uri.fsPath;
+                if(process.platform.includes('win')) {
+                    path = toUnixStyle(path); //change to unix style for windows
+                }
                 const commandToExecute = new CommandService(path);
                 activeTerminal.sendText(commandToExecute.generateCommand());
+                console.log(process.platform);
             }
         }
 
@@ -73,6 +77,10 @@ export function activate(context: vscode.ExtensionContext) {
         }
         return true;
     }
+
+    function toUnixStyle(path: string): string {
+        return path.replace(/\\/g, "/");
+    } 
 
     // this method is called when your extension is deactivated
     export function deactivate() {
