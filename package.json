@@ -28,6 +28,22 @@
             {
                 "command": "deploy.source",
                 "title": "Save To Salesforce"
+            },
+            {
+                "command": "open.lightningPage",
+                "title": "Open Lightning Builder page"
+            },
+            {
+                "command": "open.metadataCoverageReport",
+                "title": "Open MetadataCoverage Report"
+            },
+            {
+                "command": "open.componentLibrary",
+                "title": "Open Component Library"
+            },
+            {
+                "command": "open.vf",
+                "title": "Open Visualforce Page"
             }
         ],
         "menus": {
@@ -43,12 +59,20 @@
             ],
             "editor/title": [
                 {
-                    "command": "retrieve.dxSource",
-                    "group": "DXCompanion"
+                    "command": "open.metadataCoverageReport",
+                    "group": "OpenCmd"
                 },
                 {
-                    "command": "deploy.source",
-                    "group": "DXCompanion"
+                    "command": "open.componentLibrary",
+                    "group": "OpenCmd"
+                },
+                {
+                    "command": "open.lightningPage",
+                    "group": "OpenCmd"
+                },
+                {
+                    "command": "open.vf",
+                    "group": "OpenCmd"
                 }
             ],
             "explorer/context": [
