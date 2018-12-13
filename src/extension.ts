@@ -10,8 +10,11 @@ import {NavigationService} from './services/openInSalesforce';
 export function activate(context: vscode.ExtensionContext) {
 
     const retrieveSource = vscode.commands.registerCommand('retrieve.dxSource', () => {
-        // The code you place here will be executed every time your command is executed
-        retrieveDXSource();
+        retrieveDXSource('sfdx retrieve:dxsource -n ');
+    });
+
+    const retrievepkgSource = vscode.commands.registerCommand('retrieve.pkgSource', () => {
+        retrieveDXSource('sfdx retrieve:pkgsource -n ');
     });
 
     const openMetadataCoverage = vscode.commands.registerCommand('open.metadataCoverageReport', () => {
@@ -31,7 +34,6 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     const openLightningAppPage = vscode.commands.registerCommand('open.lightningPage', () => {
-        // The code you place here will be executed every time your command is executed
         let activeTerminal = setupTerminal();
         if(activeTerminal){
             let openCmd = 'sfdx force:source:open -f ' + '"' + getPath() + '"';
@@ -53,12 +55,12 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(retrieveSource);
+    context.subscriptions.push(retrievepkgSource);
     context.subscriptions.push(deploySource);
     context.subscriptions.push(openLightningAppPage);
     context.subscriptions.push(openMetadataCoverage);
     context.subscriptions.push(openComponentLibrary);
     context.subscriptions.push(openVFPage);
-    
 }
 
     function setupTerminal() {
@@ -77,12 +79,12 @@ export function activate(context: vscode.ExtensionContext) {
         return activeTerminal;
     }
 
-    async function retrieveDXSource(){
+    async function retrieveDXSource(cmd: string){
         const unmanagedpkg = await showInputBox('Enter Package Name');
         if(unmanagedpkg) {
             let activeTerminal = setupTerminal();
             if(activeTerminal){
-                let retrievecommand = 'sfdx retrieve:dxsource -n ' + '"' + unmanagedpkg + '"';
+                let retrievecommand = cmd + '"' + unmanagedpkg + '"';
                 activeTerminal.sendText(retrievecommand);
             }
         }

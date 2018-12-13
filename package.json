@@ -26,6 +26,10 @@
                 "title": "Retrieve DX Source From Package"
             },
             {
+                "command": "retrieve.pkgSource",
+                "title": "Retrieve Source From Package"
+            },
+            {
                 "command": "deploy.source",
                 "title": "Save To Salesforce"
             },
@@ -53,6 +57,10 @@
                     "group": "DXCompanion"
                 },
                 {
+                    "command": "retrieve.pkgSource",
+                    "group": "DXCompanion"
+                },
+                {
                     "command": "deploy.source",
                     "group": "DXCompanion"
                 }
@@ -68,16 +76,22 @@
                 },
                 {
                     "command": "open.lightningPage",
-                    "group": "OpenCmd"
+                    "group": "OpenCmd",
+                    "when": "resourceExtname =~ /(.flexipage|.xml)/"
                 },
                 {
                     "command": "open.vf",
-                    "group": "OpenCmd"
+                    "group": "OpenCmd",
+                    "when": "resourceExtname == .page"
                 }
             ],
             "explorer/context": [
                 {
                     "command": "retrieve.dxSource",
+                    "group": "DXCompanion"
+                },
+                {
+                    "command": "retrieve.pkgSource",
                     "group": "DXCompanion"
                 },
                 {
