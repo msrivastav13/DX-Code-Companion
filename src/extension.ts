@@ -65,6 +65,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(openComponentLibrary);
     context.subscriptions.push(openVFPage);
     context.subscriptions.push(openSLDS);
+    //Support on save compile
+    context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
+        if(vscode.workspace.getConfiguration('dx-code-companion').autosave.enabled) {
+            vscode.commands.executeCommand('deploy.source');
+        }
+    }));
 }
 
     function setupTerminal() {

@@ -116,7 +116,18 @@
                 "linux": "ctrl+shift+c",
                 "when": "editorFocus"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "SalesforceDX Companion Features",
+            "properties": {
+              "dx-code-companion.autosave.enabled": {
+                "type": ["boolean"],
+                "default": true,
+                "description": "Saves to salesforce automatically"
+              }
+            }
+          }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
