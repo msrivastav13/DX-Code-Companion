@@ -7,11 +7,19 @@ import * as vscode from 'vscode';
 export class NavigationService {
 
     public static metadataCoverageReport() {
-        vscode.commands.executeCommand('vscode.open', vscode.Uri.parse('https://developer.salesforce.com/docs/metadata-coverage'));
+        NavigationService.vscodeOpenurl('https://developer.salesforce.com/docs/metadata-coverage');
     }
 
     public static componentLibrary() {
-        vscode.commands.executeCommand('vscode.open', vscode.Uri.parse('https://developer.salesforce.com/docs/component-library'));
+        NavigationService.vscodeOpenurl('https://developer.salesforce.com/docs/component-library');
+    }
+
+    public static openSLDSDocument() {
+        NavigationService.vscodeOpenurl('https://www.lightningdesignsystem.com/');
+    }
+
+    public static vscodeOpenurl(url: string) {
+        vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(url));
     }
 
     public static openVFPage(filePath: string) {

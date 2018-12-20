@@ -17,6 +17,10 @@ export function activate(context: vscode.ExtensionContext) {
         retrieveDXSource('sfdx retrieve:pkgsource -n ');
     });
 
+    const openSLDS = vscode.commands.registerCommand('open.slds', () => {
+        NavigationService.openSLDSDocument();
+    });
+
     const openMetadataCoverage = vscode.commands.registerCommand('open.metadataCoverageReport', () => {
         NavigationService.metadataCoverageReport();
     });
@@ -48,7 +52,6 @@ export function activate(context: vscode.ExtensionContext) {
                 let path = getPath();
                 const commandToExecute = new CommandService(path);
                 activeTerminal.sendText(commandToExecute.generateCommand());
-                console.log(process.platform);
             }
         }
 
@@ -61,6 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(openMetadataCoverage);
     context.subscriptions.push(openComponentLibrary);
     context.subscriptions.push(openVFPage);
+    context.subscriptions.push(openSLDS);
 }
 
     function setupTerminal() {

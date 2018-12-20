@@ -39,15 +39,19 @@
             },
             {
                 "command": "open.metadataCoverageReport",
-                "title": "Open MetadataCoverage Report"
+                "title": "MetadataCoverage Report"
             },
             {
                 "command": "open.componentLibrary",
-                "title": "Open Component Library"
+                "title": "Component Library"
             },
             {
                 "command": "open.vf",
                 "title": "Open Visualforce Page"
+            },
+            {
+                "command": "open.slds",
+                "title": "Salesforce Lightning Design"
             }
         ],
         "menus": {
@@ -67,11 +71,15 @@
             ],
             "editor/title": [
                 {
+                    "command": "open.componentLibrary",
+                    "group": "OpenCmd"
+                },
+                {
                     "command": "open.metadataCoverageReport",
                     "group": "OpenCmd"
                 },
                 {
-                    "command": "open.componentLibrary",
+                    "command": "open.slds",
                     "group": "OpenCmd"
                 },
                 {
