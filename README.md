@@ -21,7 +21,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
 1. **Save Apex Class,Apex Trigger,Visualforce Page and Visualforce Component To Salesforce Org**
 
-    ![Save Apex](./images/saveApex.gif)
+    ![Save Apex](./images/saveApexv1.gif)
 
     By default autosave is enabled .Hence when you save file the extension will try to save the file to salesforce you have logged in by default.
 
@@ -31,7 +31,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
     If you disable auto save feature you can also Right click on the File and click **_"Save To Salesforce"_**
 
-    ![Save AuraBundle Files](./images/auraSave.gif)
+    ![Save AuraBundle Files](./images/auraSavev1.gif)
 
     Save LWC (Available in Spring 19 pre-release orgs)
 
