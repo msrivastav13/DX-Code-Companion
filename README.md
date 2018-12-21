@@ -19,7 +19,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
 ## Features
 
-1.**Save Apex Class,Apex Trigger,Visualforce Page and Visualforce Component To Salesforce Org**
+1. **Save Apex Class,Apex Trigger,Visualforce Page and Visualforce Component To Salesforce Org**
 
     ![Save Apex](./images/saveApexv1.gif)
 
@@ -27,7 +27,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
     If you disable auto save feature you can also Right click on the File and click "Save To Salesforce Menu"
 
-2.**Save Lightning Components (Both aura and LWC) To Salesforce Org**
+2. **Save Lightning Components (Both aura and LWC) To Salesforce Org**
 
     If you disable auto save feature you can also Right click on the File and click **_"Save To Salesforce"_**
 
@@ -37,7 +37,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
     ![Save LWC Bundle Files](./images/lwcSave.gif)
 
-3.**Retrieve Source in DX Source format from Managed/Unmamaged package**
+3. **Retrieve Source in DX Source format from Managed/Unmamaged package**
 
     Right click and click "Retrieve DX Source From Package" menu . Provide the name of the managed/unmanaged package in input box and press enter .
 
@@ -45,7 +45,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
     ![Retrieve Source From Unmanaged/Managed Package In DX Format](./images/retrieve.png)
 
-4.**Retrieve Source from Managed/Unmamaged package in regular metadata format**
+4. **Retrieve Source from Managed/Unmamaged package in regular metadata format**
 
     Right click and click "Retrieve Source From Package" menu. Provide the name of the managed/unmanaged package and press enter .
 
@@ -53,7 +53,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
     ![Retrieve Source From Unmanaged/Managed Package In DX Format](./images/retrievePkg.png)
 
-5.**Smart Navigations to VF page preview ,Lighnting App Builder Page ,Salesforce Lightning Design System Website ,Salesforce MetadataCoverage Report and Component Library URL**
+5. **Smart Navigations to VF page preview ,Lighnting App Builder Page ,Salesforce Lightning Design System Website ,Salesforce MetadataCoverage Report and Component Library URL**
 
     Screenshot shows how one can find these smart navigation
 
