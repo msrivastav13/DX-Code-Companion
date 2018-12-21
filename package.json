@@ -2,7 +2,7 @@
     "name": "dx-code-companion",
     "displayName": "SalesforceDX Code Companion",
     "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "publisher": "MohithShrivastava",
     "engines": {
         "vscode": "^1.29.0"
@@ -121,13 +121,15 @@
             "type": "object",
             "title": "SalesforceDX Companion Features",
             "properties": {
-              "dx-code-companion.autosave.enabled": {
-                "type": ["boolean"],
-                "default": true,
-                "description": "Saves to salesforce automatically"
-              }
+                "dx-code-companion.autosave.enabled": {
+                    "type": [
+                        "boolean"
+                    ],
+                    "default": true,
+                    "description": "Saves to salesforce automatically"
+                }
             }
-          }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
