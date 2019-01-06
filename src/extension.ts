@@ -2,10 +2,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import {Config} from './services/config';
 import {DeploySource} from './services/deploy';
 import {NavigationService} from './services/openInSalesforce';
 import {RetrieveSource} from './services/retrieve';
+import {switchOrg} from './services/switchOrg';
 import {VSCodeCore} from './services/vscodeCore';
 
 // this method is called when your extension is activated
@@ -48,9 +48,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    const authinfo = vscode.commands.registerCommand('auth.info', async () => {
-        const orgs = await Config.getLocalUsername();
-        console.log(orgs);
+    const switchorg = vscode.commands.registerCommand('switch.org', async () => {
+        await switchOrg();
     });
 
     const deploySource = vscode.commands.registerCommand('deploy.source', () => {
@@ -65,15 +64,24 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(openComponentLibrary);
     context.subscriptions.push(openVFPage);
     context.subscriptions.push(openSLDS);
-    context.subscriptions.push(authinfo);
+    context.subscriptions.push(switchorg);
     //Support on save compile
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
         if(vscode.workspace.getConfiguration('dx-code-companion').autosave.enabled) {
-            vscode.commands.executeCommand('deploy.source');
+            //At this point only few file types are supported for auto save
+            if(vscode.window.activeTextEditor){
+                const supportedFileTypes = ['trigger','cls','cmp','js','html','evt','css','design','tokens','page','svg','auradoc','component','intf','app','xml'];
+                const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
+                const pathAsArray = filePath.split('/');
+                const lastparam = pathAsArray[pathAsArray.length - 1];
+                const fileExtension = lastparam.substring(lastparam.lastIndexOf('.') + 1);
+                if(supportedFileTypes.indexOf(fileExtension) !== -1){
+                    vscode.commands.executeCommand('deploy.source');
+                }
+            }
         }
     }));
 }
-
     // this method is called when your extension is deactivated
     export function deactivate() {
 

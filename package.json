@@ -2,7 +2,7 @@
     "name": "dx-code-companion",
     "displayName": "SalesforceDX Code Companion",
     "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "publisher": "MohithShrivastava",
     "engines": {
         "vscode": "^1.29.0"
@@ -23,39 +23,39 @@
         "commands": [
             {
                 "command": "retrieve.dxSource",
-                "title": "Retrieve DX Source From Package"
+                "title": "CCDX: Retrieve DX Source From Package"
             },
             {
                 "command": "retrieve.pkgSource",
-                "title": "Retrieve Source From Package"
+                "title": "CCDX: Retrieve Source From Package"
             },
             {
                 "command": "deploy.source",
-                "title": "Save To Salesforce"
+                "title": "CCDX: Save To Salesforce"
             },
             {
                 "command": "open.lightningPage",
-                "title": "Open Lightning Builder page"
+                "title": "CCDX: Open Lightning Builder page"
             },
             {
                 "command": "open.metadataCoverageReport",
-                "title": "MetadataCoverage Report"
+                "title": "CCDX: Open MetadataCoverage Report"
             },
             {
                 "command": "open.componentLibrary",
-                "title": "Component Library"
+                "title": "CCDX: Open Component Library"
             },
             {
                 "command": "open.vf",
-                "title": "Open Visualforce Page"
+                "title": "CCDX: Open Visualforce Page"
             },
             {
                 "command": "open.slds",
-                "title": "Salesforce Lightning Design"
+                "title": "CCDX: Open SLDS Website"
             },
             {
-                "command": "auth.info",
-                "title": "Auth Info"
+                "command": "switch.org",
+                "title": "CCDX: Switch Org"
             }
         ],
         "menus": {

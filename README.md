@@ -1,6 +1,6 @@
 # SalesforceDX Code Companion 
 
-**Note that this is not official from Salesforce, It Supplements Salesforce Official Plugins with some more great features for ISV salesforce application development that I wish offical plugin had.**
+**Note that this is not official from Salesforce, It Supplements Salesforce Official Plugins with some more great features for salesforce application development that I wish offical plugin had.**
 
 Provides ability to save Apex Classes,Apex Triggers, Visualforce, AuraBundles, Lightning Web Component Bundles(under preview) and ApexComponents to Salesforce Org at blazing speed without source tracking. Also enables retrieving code from the salesforce unmanaged package in both DX and NonDX source formats .This extension requires users to have SalesforceDX CLI and also mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin**) for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
 
@@ -11,7 +11,7 @@ It is highly recommended to use with Salesforce Extension Pack to get all the ot
 This salesforce extension works only once you have installed Salesforce CLI and a mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin** on your terminal) that has api for all the commands this plugin leverages .
 
 1. Install SalesforceDX CLI from https://developer.salesforce.com/tools/sfdxcli based on your operating system.
-2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx:plugins:update mo-dx-plugin`
+2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx:plugins:update`
 3. Salesforce official plugin provides great syntax and language support.Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
 4. When you open the VScode , it is recommended to wait for few seconds for Salesforce CLI or Salesforce VScode plugin to authorize the connection .This plugin depends on CLI to do auth and uses the session from the CLI.
 5. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
@@ -83,6 +83,17 @@ If you find any issues feel free to log it on the github page for the project @ 
 You can also reach out to me via my twitter @msrivastav13 or via my MVP email handle mohith.shrivastava@salesforcemvps.com
 
 ## Release Notes
+
+### 0.1.7
+
+1.Switch between authenticated orgs using new Switch Org Command .This opens up to switch and deploy the code between orgs using SFDX:Deploy To Org Command
+
+![Navigations](./images/switchorg.gif)
+
+2.Fix AutoSave to now not run terminal command if file type is not supported
+3.Better naming and Grouping .All Commands now CCDX as the prefix .
+4.LWC(Lighnting Web Components) support improved
+5.Introduces sfdx-core library in the build opening up lot more existing features to come in next release.
 
 ### 0.1.4
 
