@@ -1,14 +1,14 @@
 # SalesforceDX Code Companion 
 
-**Note that this is not official from Salesforce, It Supplements Salesforce Official Plugins with some more great features for salesforce application development that I wish offical plugin had.**
+**Note that this is not official from Salesforce. I created this extension to help my own development workflow for building salesforce apps .This extension supplements Salesforce Official Extension Pack with features like faster save of apex,lwc and vf pages.You can use this to also retrieve package metadata from salesforce orgs in both traditional metadata and SalesforceDX formats**
 
-Provides ability to save Apex Classes,Apex Triggers, Visualforce, AuraBundles, Lightning Web Component Bundles(under preview) and ApexComponents to Salesforce Org at blazing speed without source tracking. Also enables retrieving code from the salesforce unmanaged package in both DX and NonDX source formats .This extension requires users to have SalesforceDX CLI and also mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin**) for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
+Provides ability to save Apex Classes,Apex Triggers, Visualforce, AuraBundles, Lightning Web Component Bundles(under preview) and ApexComponents to Salesforce Org at blazing speed without source tracking. Also enables retrieving code from the salesforce unmanaged package in both DX and NonDX source formats .You can also switch between authenticated orgs easily with CCDX: Switch Command. This extension requires users to have SalesforceDX CLI and also mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin**) for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
 
-It is highly recommended to use with Salesforce Extension Pack to get all the other good things salesforce official plugin offers (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .
+It is highly recommended to use with Salesforce Extension Pack to get all the other good things salesforce official extension offers (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .
 
 ## Requirements
 
-This salesforce extension works only once you have installed Salesforce CLI and a mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin** on your terminal) that has api for all the commands this plugin leverages .
+This vscode extension works only once you have installed Salesforce CLI and a mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin** on your terminal) that has api for all the commands this extension leverages .
 
 1. Install SalesforceDX CLI from https://developer.salesforce.com/tools/sfdxcli based on your operating system.
 2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx:plugins:update`
@@ -45,7 +45,7 @@ This salesforce extension works only once you have installed Salesforce CLI and 
 
     ![Retrieve Source From Unmanaged/Managed Package In DX Format](./images/retrieve.png)
 
-4. **Retrieve Source from Managed/Unmamaged package in regular metadata format**
+4. **Retrieve Source from Managed/Unmamaged package in traditional metadata format**
 
     Right click and click "Retrieve Source From Package" menu. Provide the name of the managed/unmanaged package and press enter .
 
