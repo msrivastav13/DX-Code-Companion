@@ -91,8 +91,11 @@ You can also reach out to me via my twitter @msrivastav13 or via my MVP email ha
 ![Navigations](./images/switchorg.gif)
 
 2.Fix AutoSave to now not run terminal command if file type is not supported
+
 3.Better naming and Grouping .All Commands now CCDX as the prefix .
+
 4.LWC(Lighnting Web Components) support improved
+
 5.Introduces sfdx-core library in the build opening up lot more existing features to come in next release.
 
 ### 0.1.4
