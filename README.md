@@ -11,11 +11,12 @@ It is highly recommended to use with Salesforce Extension Pack to get all the ot
 This vscode extension works only once you have installed Salesforce CLI and a mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin** on your terminal) that has api for all the commands this extension leverages .
 
 1. Install SalesforceDX CLI from https://developer.salesforce.com/tools/sfdxcli based on your operating system.
-2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx:plugins:update`
-3. Salesforce official plugin provides great syntax and language support.Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
-4. When you open the VScode , it is recommended to wait for few seconds for Salesforce CLI or Salesforce VScode plugin to authorize the connection .This plugin depends on CLI to do auth and uses the session from the CLI.
-5. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
-6. If you open the project folder thats already authorized then wait for a minute or so before salesforce plugin authorizes to salesforce.
+2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx plugins:update`
+3. VScode version 1.29 and beyond
+4. Salesforce official plugin provides great syntax and language support.Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
+5. When you open the VScode , it is recommended to wait for few seconds for Salesforce CLI or Salesforce VScode plugin to authorize the connection .This plugin depends on CLI to do auth and uses the session from the CLI.
+6. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
+7. If you open the project folder thats already authorized then wait for a minute or so before salesforce plugin authorizes to salesforce.
 
 ## Features
 

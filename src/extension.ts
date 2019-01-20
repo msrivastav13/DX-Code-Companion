@@ -1,6 +1,7 @@
 'use strict';
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+import * as fs from 'fs';
 import * as vscode from 'vscode';
 import {DeploySource} from './services/deploy';
 import {NavigationService} from './services/openInSalesforce';
@@ -75,8 +76,12 @@ export function activate(context: vscode.ExtensionContext) {
                 const pathAsArray = filePath.split('/');
                 const lastparam = pathAsArray[pathAsArray.length - 1];
                 const fileExtension = lastparam.substring(lastparam.lastIndexOf('.') + 1);
-                if(supportedFileTypes.indexOf(fileExtension) !== -1){
-                    vscode.commands.executeCommand('deploy.source');
+                if(supportedFileTypes.indexOf(fileExtension) !== -1 ){
+                    if(vscode.workspace.workspaceFolders){
+                        if(fs.existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath + '/sfdx-project.json')) {
+                            vscode.commands.executeCommand('deploy.source');
+                        }
+                    }
                 }
             }
         }
