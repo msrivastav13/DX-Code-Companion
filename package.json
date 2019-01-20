@@ -61,14 +61,6 @@
         "menus": {
             "editor/context": [
                 {
-                    "command": "retrieve.dxSource",
-                    "group": "DXCompanion"
-                },
-                {
-                    "command": "retrieve.pkgSource",
-                    "group": "DXCompanion"
-                },
-                {
                     "command": "deploy.source",
                     "group": "DXCompanion"
                 }
@@ -98,14 +90,6 @@
                 }
             ],
             "explorer/context": [
-                {
-                    "command": "retrieve.dxSource",
-                    "group": "DXCompanion"
-                },
-                {
-                    "command": "retrieve.pkgSource",
-                    "group": "DXCompanion"
-                },
                 {
                     "command": "deploy.source",
                     "group": "DXCompanion"
