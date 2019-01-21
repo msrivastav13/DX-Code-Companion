@@ -5,7 +5,7 @@ import { VSCodeUI } from './vscodeUI';
 import {VSCodeCore} from './vscodeCore';
 
 export async function switchOrg(): Promise<void> {
-    const orgs = await Config.getAllAliases();
+    const orgs = await Config.getAllOrgAliases();
     const result = await VSCodeUI.showQuickPick(orgs);
     let cmd = 'sfdx force:config:set defaultusername=';
     if(result){

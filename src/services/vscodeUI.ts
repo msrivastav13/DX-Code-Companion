@@ -18,6 +18,7 @@ export class VSCodeUI {
     public static async showQuickPick(options: string[], placeholder?:string ){
         const result = await vscode.window.showQuickPick(options, {
             placeHolder: placeholder,
+            ignoreFocusOut : true
         });
         return result;
     }
