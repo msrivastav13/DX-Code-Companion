@@ -40,4 +40,12 @@ export class VSCodeCore {
         }
         return path;
     }
+
+    public static showActivationMessage(): vscode.StatusBarItem {
+        const ccdx = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 90);
+        ccdx.text = `DX Code Companion $(check)`;
+        ccdx.tooltip = 'SalesforceDX Code Companion is Active ! Enjoy!!!!';
+        ccdx.show();
+        return ccdx;
+    }
 }

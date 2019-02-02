@@ -8,3 +8,8 @@ export interface Record {
     Name : string;
     NamespacePrefix : string;
 }
+
+export interface MetadataType {
+    MetadataName : string;
+    CommandName : string;
+}

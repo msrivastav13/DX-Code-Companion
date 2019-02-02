@@ -1,10 +1,11 @@
 'use strict';
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as fs from 'fs';
 import * as vscode from 'vscode';
+import {Config} from './services/config';
+import CodeCompanionContentProvider from './providers/contentProvider' ;
 import {DeploySource} from './services/deploy';
-import {NavigationService} from './services/openInSalesforce';
+import {NavigationService} from './services/navigation';
 import {RetrieveSource} from './services/retrieve';
 import {switchOrg} from './services/switchOrg';
 import {VSCodeCore} from './services/vscodeCore';
@@ -13,12 +14,19 @@ import {VSCodeCore} from './services/vscodeCore';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    const retrieveSource = vscode.commands.registerCommand('retrieve.dxSource', () => {
-        RetrieveSource.retrieve('sfdx retrieve:dxsource -n ');
+    // show activation message
+    VSCodeCore.showActivationMessage();
+
+    const retrieveSource = vscode.commands.registerCommand('retrieve.dxSource', async () => {
+        const connection = await Config.getConnection();
+        const retrievesrc = new RetrieveSource(connection);
+        retrievesrc.retrieve('sfdx retrieve:dxsource -n ');
     });
 
-    const retrievepkgSource = vscode.commands.registerCommand('retrieve.pkgSource', () => {
-        RetrieveSource.retrieve('sfdx retrieve:pkgsource -n ');
+    const retrievepkgSource = vscode.commands.registerCommand('retrieve.pkgSource', async () => {
+        const connection = await Config.getConnection();
+        const retrievesrc = new RetrieveSource(connection);
+        retrievesrc.retrieve('sfdx retrieve:pkgsource -n ');
     });
 
     const openSLDS = vscode.commands.registerCommand('open.slds', () => {
@@ -54,40 +62,28 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     const deploySource = vscode.commands.registerCommand('deploy.source', () => {
-        DeploySource.deploy();
+        if(vscode.window.activeTextEditor){
+            DeploySource.deploy(vscode.window.activeTextEditor.document);
+        }
     });
 
+    // Provider for compare view when server files are modified
+    context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider('codecompanion', CodeCompanionContentProvider.getInstance()));
+    // Trigger Deploy on Save
+    context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
+        DeploySource.deploy(textDocument);
+    }));
+    context.subscriptions.push(deploySource);
     context.subscriptions.push(retrieveSource);
     context.subscriptions.push(retrievepkgSource);
-    context.subscriptions.push(deploySource);
     context.subscriptions.push(openLightningAppPage);
     context.subscriptions.push(openMetadataCoverage);
     context.subscriptions.push(openComponentLibrary);
     context.subscriptions.push(openVFPage);
     context.subscriptions.push(openSLDS);
     context.subscriptions.push(switchorg);
-    //Support on save compile
-    context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
-        if(vscode.workspace.getConfiguration('dx-code-companion').autosave.enabled) {
-            //At this point only few file types are supported for auto save
-            if(vscode.window.activeTextEditor){
-                const supportedFileTypes = ['trigger','cls','cmp','js','html','evt','css','design','tokens','page','svg','auradoc','component','intf','app','xml'];
-                const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
-                const pathAsArray = filePath.split('/');
-                const lastparam = pathAsArray[pathAsArray.length - 1];
-                const fileExtension = lastparam.substring(lastparam.lastIndexOf('.') + 1);
-                if(supportedFileTypes.indexOf(fileExtension) !== -1 ){
-                    if(vscode.workspace.workspaceFolders){
-                        if(fs.existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath + '/sfdx-project.json')) {
-                            vscode.commands.executeCommand('deploy.source');
-                        }
-                    }
-                }
-            }
-        }
-    }));
 }
     // this method is called when your extension is deactivated
     export function deactivate() {
-
+        VSCodeCore.showActivationMessage().dispose();
     }
