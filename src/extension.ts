@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     const deploySource = vscode.commands.registerCommand('deploy.source', () => {
         if(vscode.window.activeTextEditor){
-            DeploySource.deploy(vscode.window.activeTextEditor.document);
+            DeploySource.deployToSFDC(vscode.window.activeTextEditor.document);
         }
     });
 

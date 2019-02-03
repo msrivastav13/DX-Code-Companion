@@ -13,3 +13,8 @@ export interface MetadataType {
     MetadataName : string;
     CommandName : string;
 }
+
+export interface ServerResult {
+    Body : string;
+    lastModifiedDate : string;
+}

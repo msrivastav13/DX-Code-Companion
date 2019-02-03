@@ -1,6 +1,7 @@
 'use strict';
 
 import {Connection} from '@salesforce/core';
+import {ServerResult} from '../typings/ccdxTypings';
 
 export class SalesforceUtil {
 
@@ -26,7 +27,7 @@ export class SalesforceUtil {
         return namespacePrefix;
     }
 
-    public async getFileContentFromServer(metadataType: string, filename: string) : Promise<any> {
+    public async getFileContentFromServer(metadataType: string, filename: string) : Promise<ServerResult> {
         const namespacePrefix = await this.getNamespace();
         const connection = await this.connection;
         const apexclass = <any> await connection.tooling.sobject('Apexclass').find({
@@ -34,10 +35,14 @@ export class SalesforceUtil {
             NameSpacePrefix : namespacePrefix
         });
 
+        const serverResponse = {} as ServerResult;
+
        if(apexclass !== null){
             const apexBody = apexclass[0];
-            return apexBody['Body'];
-       }
+            serverResponse.Body = apexBody['Body'];
+            serverResponse.lastModifiedDate = apexBody['LastModifiedDate'];
+       } 
+       return serverResponse;
     }
 
 }
