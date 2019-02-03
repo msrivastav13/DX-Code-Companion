@@ -115,6 +115,13 @@
                     ],
                     "default": true,
                     "description": "Saves to salesforce automatically"
+                },
+                "dx-code-companion.manageconflict.enabled": {
+                    "type": [
+                        "boolean"
+                    ],
+                    "default": true,
+                    "description": "Compare code in local file with file in salesforce"
                 }
             }
         }

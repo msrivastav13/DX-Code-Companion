@@ -40,7 +40,6 @@ export class SalesforceUtil {
        if(apexclass !== null){
             const apexBody = apexclass[0];
             serverResponse.Body = apexBody['Body'];
-            serverResponse.lastModifiedDate = apexBody['LastModifiedDate'];
        } 
        return serverResponse;
     }

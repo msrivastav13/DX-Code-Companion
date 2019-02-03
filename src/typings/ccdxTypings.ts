@@ -16,5 +16,4 @@ export interface MetadataType {
 
 export interface ServerResult {
     Body : string;
-    lastModifiedDate : string;
 }
