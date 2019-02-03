@@ -41,4 +41,72 @@ export class Metadata {
         }
         return metadataType;
     }
+
+    // function to get file extension
+    public static getDefType(extension: string, filename: string | null): string | undefined {
+        let auratype;
+        switch (extension) {
+            case 'app': {
+                // APPLICATION — Lightning Components app
+                auratype = 'APPLICATION';
+                break;
+            }
+            case 'cmp': {
+                // COMPONENT — component markup
+                auratype = 'COMPONENT';
+                break;
+            }
+            case 'auradoc': {
+                // DOCUMENTATION — documentation markup
+                auratype = 'DOCUMENTATION';
+                break;
+            }
+            case 'css': {
+                // STYLE — style (CSS) resource
+                auratype = 'STYLE';
+                break;
+            }
+            case 'evt': {
+                // EVENT — event definition
+                auratype = 'EVENT';
+                break;
+            }
+            case 'design': {
+                // DESIGN — design definition
+                auratype = 'DESIGN';
+                break;
+            }
+            case 'svg': {
+                 // SVG — SVG graphic resource
+                 auratype = 'SVG';
+                 break;
+            }
+            case 'js': {
+                if(filename !== null) {
+                    const fname = filename.toLowerCase();
+                    if (fname.endsWith('controller')) {
+                        auratype = 'CONTROLLER';
+                    } else if (fname.endsWith('helper')) {
+                        auratype =  'HELPER';
+                    } else if (fname.endsWith('renderer')) {
+                        // RENDERER — client-side renderer
+                        auratype =  'RENDERER';
+                    }
+                }
+                break;
+            }
+            case 'tokens': {
+                auratype =  'TOKENS';
+                break;
+            }
+            case 'intf': {
+                auratype =  'INTERFACE';
+                break;
+            }
+            default : {
+                auratype =  '';
+            }
+        }
+        return auratype;
+    }
 }

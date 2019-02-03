@@ -14,7 +14,9 @@ export default class CodeCompanionContentProvider implements vscode.TextDocument
 
     provideTextDocumentContent(uri: vscode.Uri): Thenable<string> {
         return new Promise<string>( async (resolve, reject) => {
-            resolve(CodeCompanionContentProvider.serverContent);
+            if(CodeCompanionContentProvider.serverContent) {
+                resolve(CodeCompanionContentProvider.serverContent);
+            }
         });
     }
 

@@ -1,7 +1,9 @@
 'use strict';
 
 import {Connection} from '@salesforce/core';
-import {ServerResult} from '../typings/ccdxTypings';
+import {ServerResult, Query} from '../typings/ccdxTypings';
+import {Metadata} from '../services/findMetadataType';
+
 
 export class SalesforceUtil {
 
@@ -16,7 +18,7 @@ export class SalesforceUtil {
         return await connection.tooling.query('SELECT Name, NamespacePrefix FROM MetadataPackage');
     }
 
-    public async getNamespace() : Promise<string> {
+    public async getNamespace(): Promise<string> {
         let namespacePrefix = '';
         const connection = await this.connection;
         const Organization = await connection.query('Select NamespacePrefix from Organization');
@@ -27,21 +29,70 @@ export class SalesforceUtil {
         return namespacePrefix;
     }
 
-    public async getFileContentFromServer(metadataType: string, filename: string) : Promise<ServerResult> {
+    public async getFileContentFromServer(metadataType: string, filename: string,fileextension: string): Promise<ServerResult> {
         const namespacePrefix = await this.getNamespace();
         const connection = await this.connection;
-        const apexclass = <any> await connection.tooling.sobject('Apexclass').find({
-            Name: filename,
-            NameSpacePrefix : namespacePrefix
-        });
+        const query = this.getToolingQuery(metadataType,filename,fileextension,namespacePrefix);
+        let serverResponse = {} as ServerResult;
+        serverResponse.exist = false;
+        const result =  await connection.tooling.query(query.queryString);
+        if(result.records.length > 0) {
+            const response = <any> result.records[0];
+            serverResponse.Body = response[query.bodyfield];
+            serverResponse.exist = true;
+        }
+         
+        return serverResponse;
+    }
 
-        const serverResponse = {} as ServerResult;
-
-       if(apexclass !== null){
-            const apexBody = apexclass[0];
-            serverResponse.Body = apexBody['Body'];
-       } 
-       return serverResponse;
+    private getToolingQuery (metadataType: string, filename: string | null, fileextension: string, namespacePrefix: string): Query {
+        let bodyfield: string;
+        let wherefield: string;
+        const query = {} as Query;
+        switch(metadataType) { 
+            case "ApexClass" || "ApexTrigger": { 
+                bodyfield = 'Body';
+                wherefield = 'Name';
+                break; 
+            } 
+            case "ApexPage" || "ApexComponent": { 
+                bodyfield = 'Markup';
+                wherefield = 'Name';
+                break; 
+            }
+            case "AuraDefinition": { 
+                const connection = this.connection;
+                const auraDefinition = <any> connection.tooling.sobject('AuraDefinitionBundle').find({
+                    DeveloperName: filename,
+                    NamespacePrefix: namespacePrefix
+                });
+                bodyfield = 'Source';
+                wherefield = 'AuraDefinitionBundleId';
+                metadataType = 'AuraDefinition';
+                if(auraDefinition !== null){
+                    filename = auraDefinition[0].Id;
+                } else {
+                    filename = null;
+                }
+                break; 
+            }
+            case "LightningComponent": { 
+                bodyfield = 'Markup';
+                wherefield = 'Name';
+                break; 
+            }   
+            default: { 
+                bodyfield = 'Body';
+                wherefield = 'Name';            
+            } 
+        }
+        query.queryString = `Select ${bodyfield} from ${metadataType} where ${wherefield} ='${filename}' and NamespacePrefix=${namespacePrefix}`;
+        if(metadataType === 'AuraDefinition'){
+            const deftype = Metadata.getDefType(fileextension,filename);
+            query.queryString += ` and DefType='${deftype}'`;
+        }
+        query.bodyfield = bodyfield;
+        return query;
     }
 
 }

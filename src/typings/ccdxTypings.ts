@@ -14,6 +14,12 @@ export interface MetadataType {
     CommandName : string;
 }
 
+export interface Query {
+    queryString : string;
+    bodyfield : string;
+}
+
 export interface ServerResult {
     Body : string;
+    exist: boolean;
 }

@@ -13,7 +13,7 @@ import {VSCodeCore} from './vscodeCore';
 
 export class DeploySource {
 
-    public static lastSavedToServer: string;
+    private static lastSavedToServer: string;
 
     public static deployToSFDC(textDocument: vscode.TextDocument) {
         if(this.supportedFileForDeploy()) {
@@ -22,10 +22,11 @@ export class DeploySource {
                 if(vscode.window.activeTextEditor) {
                     const filepath = VSCodeCore.getFsPath();
                     const filename = path.basename(textDocument.fileName).split('.')[0];
+                    const fileextension = path.basename(textDocument.fileName).split('.')[1];
                     const commandToExecute = new CommandService(filepath);
                     if(vscode.workspace.getConfiguration('dx-code-companion').manageconflict.enabled) {
                         const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
-                        DeploySource.save(metadataType, filename, textDocument, commandToExecute);
+                        this.save(metadataType, filename, textDocument, commandToExecute,fileextension);
                     } else {
                         this.executeDeployCommand(commandToExecute);
                     }
@@ -36,33 +37,41 @@ export class DeploySource {
         }
     }
 
-    private static save(metadataType: string, filename: string, textDocument: vscode.TextDocument, commandToExecute: CommandService) {
+    private static save(metadataType: string, filename: string, textDocument: vscode.TextDocument, commandToExecute: CommandService, fileextension: string) {
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
-            title: "Comparing with file on server",
+            title: "Comparing with server copy",
         }, () => {
             var p = new Promise(async (resolve) => {
-                const serverBody = await this.getServerBody(metadataType, filename);
-                // Set content provider content
-                CodeCompanionContentProvider.serverContent = serverBody.Body;
-                if (!this.compare(textDocument.getText(), serverBody.Body) && !this.compare(serverBody.Body, this.lastSavedToServer)) {
-                    var sfuri: vscode.Uri = vscode.Uri.parse(`codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`);
-                    vscode.commands.executeCommand('vscode.diff', sfuri, textDocument.uri, `${filename}(SERVER) <~> ${filename} (LOCAL)`, { preview: false });
-                    vscode.window.showWarningMessage('File has been modified in salesforce', 'Refresh From Server', 'Overwrite', 'Cancel').then(s => {
-                        if (s === 'Overwrite') {
-                            this.executeDeployCommand(commandToExecute);
-                            this.lastSavedToServer = textDocument.getText();
-                        }
-                    });
+                const serverResponse = await this.getServerCopy(metadataType, filename, fileextension);
+                if(serverResponse.exist) {
+                    // Set content provider content
+                    CodeCompanionContentProvider.serverContent = serverResponse.Body;
+                    if (!this.compare(textDocument.getText(), serverResponse.Body) && !this.compare(serverResponse.Body, this.lastSavedToServer)) {
+                        var sfuri: vscode.Uri = vscode.Uri.parse(`codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`);
+                        vscode.commands.executeCommand('vscode.diff', sfuri, textDocument.uri, `${filename}(SERVER) <~> ${filename} (LOCAL)`, { preview: true });
+                        vscode.window.showWarningMessage('File has been modified in salesforce', 'Refresh From Server', 'Overwrite Server Copy', 'Cancel').then(s => {
+                            if (s === 'Overwrite Server Copy') {
+                                this.run(commandToExecute, textDocument);
+                            }
+                        });
+                    }
+                    else {
+                        this.run(commandToExecute, textDocument);
+                    }
                 }
                 else {
-                    this.executeDeployCommand(commandToExecute);
-                    this.lastSavedToServer = textDocument.getText();
+                    this.run(commandToExecute, textDocument);
                 }
                 resolve();
             });
             return p;
         });
+    }
+
+    private static run(commandToExecute: CommandService, textDocument: vscode.TextDocument) {
+        this.lastSavedToServer = textDocument.getText();
+        this.executeDeployCommand(commandToExecute);
     }
 
     public static deploy(textDocument: vscode.TextDocument) {
@@ -71,13 +80,13 @@ export class DeploySource {
         }
     }
 
-    static async getServerBody(metadataName: string, fileName: string): Promise<ServerResult>  {
+    private static async getServerCopy(metadataName: string, fileName: string, fileextension: string): Promise<ServerResult>  {
         const connection = await Config.getConnection();
         const util = new SalesforceUtil(connection);
-        return util.getFileContentFromServer(metadataName,fileName);
+        return util.getFileContentFromServer(metadataName,fileName,fileextension);
     }
 
-    static compare(localfile :string, serverfile: string): boolean {
+    private static compare(localfile :string, serverfile: string): boolean {
         if(localfile === serverfile) {
             return true;
         } else {
@@ -85,14 +94,14 @@ export class DeploySource {
         }
     }
 
-    static executeDeployCommand(cmd: CommandService): void {
+    private static executeDeployCommand(cmd: CommandService): void {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
             activeTerminal.sendText(cmd.generateCommand());
         }
     }
 
-    static isProjectAuthroizedToSFDC() : boolean {
+    private static isProjectAuthroizedToSFDC() : boolean {
         let isProjectAuthorized: boolean = false;
         if(vscode.workspace.workspaceFolders){
             // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
@@ -103,7 +112,7 @@ export class DeploySource {
         return isProjectAuthorized;
     }
 
-    static supportedFileForDeploy() : boolean {
+    private static supportedFileForDeploy() : boolean {
         let fileSupported = false;
         if(vscode.window.activeTextEditor) {
             //At this point only few file types are supported for auto save
