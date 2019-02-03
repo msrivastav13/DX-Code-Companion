@@ -32,7 +32,7 @@ export class SalesforceUtil {
     public async getFileContentFromServer(metadataType: string, filename: string,fileextension: string): Promise<ServerResult> {
         const namespacePrefix = await this.getNamespace();
         const connection = await this.connection;
-        const query = this.getToolingQuery(metadataType,filename,fileextension,namespacePrefix);
+        const query = await this.getToolingQuery(metadataType,filename,fileextension,namespacePrefix);
         let serverResponse = {} as ServerResult;
         serverResponse.exist = false;
         const result =  await connection.tooling.query(query.queryString);
@@ -45,7 +45,7 @@ export class SalesforceUtil {
         return serverResponse;
     }
 
-    private getToolingQuery (metadataType: string, filename: string | null, fileextension: string, namespacePrefix: string): Query {
+    private async getToolingQuery (metadataType: string, filename: string, fileextension: string, namespacePrefix: string): Promise<Query> {
         let bodyfield: string;
         let wherefield: string;
         const query = {} as Query;
@@ -62,18 +62,16 @@ export class SalesforceUtil {
             }
             case "AuraDefinition": { 
                 const connection = this.connection;
-                const auraDefinition = <any> connection.tooling.sobject('AuraDefinitionBundle').find({
+                const auraDefinition = <any> await connection.tooling.sobject('AuraDefinitionBundle').find({
                     DeveloperName: filename,
                     NamespacePrefix: namespacePrefix
                 });
                 bodyfield = 'Source';
                 wherefield = 'AuraDefinitionBundleId';
                 metadataType = 'AuraDefinition';
-                if(auraDefinition !== null){
+                if(auraDefinition.length > 0){
                     filename = auraDefinition[0].Id;
-                } else {
-                    filename = null;
-                }
+                } 
                 break; 
             }
             case "LightningComponent": { 
@@ -86,10 +84,12 @@ export class SalesforceUtil {
                 wherefield = 'Name';            
             } 
         }
-        query.queryString = `Select ${bodyfield} from ${metadataType} where ${wherefield} ='${filename}' and NamespacePrefix=${namespacePrefix}`;
+        query.queryString = `Select ${bodyfield} from ${metadataType} where ${wherefield} ='${filename}'`;
         if(metadataType === 'AuraDefinition'){
             const deftype = Metadata.getDefType(fileextension,filename);
             query.queryString += ` and DefType='${deftype}'`;
+        } else {
+            query.queryString += `and NamespacePrefix=${namespacePrefix}`;
         }
         query.bodyfield = bodyfield;
         return query;

@@ -49,7 +49,7 @@ export class DeploySource {
                     CodeCompanionContentProvider.serverContent = serverResponse.Body;
                     if (!this.compare(textDocument.getText(), serverResponse.Body) && !this.compare(serverResponse.Body, this.lastSavedToServer)) {
                         var sfuri: vscode.Uri = vscode.Uri.parse(`codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`);
-                        vscode.commands.executeCommand('vscode.diff', sfuri, textDocument.uri, `${filename}(SERVER) <~> ${filename} (LOCAL)`, { preview: true });
+                        vscode.commands.executeCommand('vscode.diff', sfuri, textDocument.uri, `${filename}.${fileextension}(SERVER) <~> ${filename}.${fileextension} (LOCAL)`, { preview: true });
                         vscode.window.showWarningMessage('File has been modified in salesforce', 'Refresh From Server', 'Overwrite Server Copy', 'Cancel').then(s => {
                             if (s === 'Overwrite Server Copy') {
                                 this.run(commandToExecute, textDocument);
