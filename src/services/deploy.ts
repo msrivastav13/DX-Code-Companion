@@ -25,37 +25,44 @@ export class DeploySource {
                     const commandToExecute = new CommandService(filepath);
                     if(vscode.workspace.getConfiguration('dx-code-companion').manageconflict.enabled) {
                         const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
-                        vscode.window.withProgress({
-                            location: vscode.ProgressLocation.Notification,
-                            title: "Comparing with file on server",
-                        }, () => {
-                            var p = new Promise( async (resolve) => {
-                                const serverBody = await this.getServerBody(metadataType,filename);
-                                // Set content provider content
-                                CodeCompanionContentProvider.serverContent = serverBody.Body;
-                                if(!this.compare(textDocument.getText(),serverBody.Body) && !this.compare(serverBody.Body,this.lastSavedToServer)) {
-                                        var sfuri: vscode.Uri = vscode.Uri.parse(`codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`);
-                                        vscode.commands.executeCommand('vscode.diff',sfuri,textDocument.uri,`${filename}(SERVER) <~> ${filename} (LOCAL)`,{preview:false});
-                                        vscode.window.showWarningMessage('File has been modified in salesforce', 'Refresh From Server', 'Overwrite', 'Cancel').then(s => {
-                                            if (s === 'Overwrite') {
-                                                this.executeDeployCommand(commandToExecute);
-                                                this.lastSavedToServer = textDocument.getText();
-                                            }
-                                        });
-                                } else {
-                                    this.executeDeployCommand(commandToExecute);
-                                    this.lastSavedToServer = textDocument.getText();
-                                }
-                                resolve();
-                            });
-                            return p;
-                        });
+                        DeploySource.save(metadataType, filename, textDocument, commandToExecute);
+                    } else {
+                        this.executeDeployCommand(commandToExecute);
                     }
                 }
             } else {
                 vscode.window.showErrorMessage('Authorize a salesforce org');
             }
         }
+    }
+
+    private static save(metadataType: string, filename: string, textDocument: vscode.TextDocument, commandToExecute: CommandService) {
+        vscode.window.withProgress({
+            location: vscode.ProgressLocation.Notification,
+            title: "Comparing with file on server",
+        }, () => {
+            var p = new Promise(async (resolve) => {
+                const serverBody = await this.getServerBody(metadataType, filename);
+                // Set content provider content
+                CodeCompanionContentProvider.serverContent = serverBody.Body;
+                if (!this.compare(textDocument.getText(), serverBody.Body) && !this.compare(serverBody.Body, this.lastSavedToServer)) {
+                    var sfuri: vscode.Uri = vscode.Uri.parse(`codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`);
+                    vscode.commands.executeCommand('vscode.diff', sfuri, textDocument.uri, `${filename}(SERVER) <~> ${filename} (LOCAL)`, { preview: false });
+                    vscode.window.showWarningMessage('File has been modified in salesforce', 'Refresh From Server', 'Overwrite', 'Cancel').then(s => {
+                        if (s === 'Overwrite') {
+                            this.executeDeployCommand(commandToExecute);
+                            this.lastSavedToServer = textDocument.getText();
+                        }
+                    });
+                }
+                else {
+                    this.executeDeployCommand(commandToExecute);
+                    this.lastSavedToServer = textDocument.getText();
+                }
+                resolve();
+            });
+            return p;
+        });
     }
 
     public static deploy(textDocument: vscode.TextDocument) {
