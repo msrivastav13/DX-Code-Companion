@@ -1,7 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import {OSUtil} from './osUtils';
+import { OSUtil } from './osUtils';
 
 export class VSCodeCore {
 

@@ -1,10 +1,10 @@
 'use strict';
 
-import {Connection} from '@salesforce/core';
-import {VSCodeCore} from './vscodeCore';
-import {VSCodeUI} from './vscodeUI';
-import {SalesforceUtil} from './sfdcUtils';
-import {QueryResult} from '../typings/ccdxTypings';
+import { Connection } from '@salesforce/core';
+import { QueryResult } from '../typings/ccdxTypings';
+import { SalesforceUtil } from './sfdcUtils';
+import { VSCodeCore } from './vscodeCore';
+import { VSCodeUI } from './vscodeUI';
 
 export class RetrieveSource {
 

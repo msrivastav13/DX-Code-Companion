@@ -1,7 +1,7 @@
 'use strict';
 
 import * as path from 'path';
-import {MetadataType} from '../typings/ccdxTypings';
+import { MetadataType } from '../typings/ccdxTypings';
 
 export class Metadata {
 

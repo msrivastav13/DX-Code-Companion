@@ -1,8 +1,8 @@
 'use strict';
 
-import {Connection} from '@salesforce/core';
-import {ServerResult, Query} from '../typings/ccdxTypings';
-import {Metadata} from '../services/findMetadataType';
+import { Connection } from '@salesforce/core';
+import { Metadata } from '../services/findMetadataType';
+import { Query, ServerResult } from '../typings/ccdxTypings';
 
 
 export class SalesforceUtil {
