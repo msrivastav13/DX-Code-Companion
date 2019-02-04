@@ -62,8 +62,12 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     const deploySource = vscode.commands.registerCommand('deploy.source', () => {
+        
+    });
+
+    const refreshSource = vscode.commands.registerCommand('refresh.source', async () => {
         if(vscode.window.activeTextEditor){
-            DeploySource.deployToSFDC(vscode.window.activeTextEditor.document);
+            DeploySource.refreshFromServer(vscode.window.activeTextEditor.document);
         }
     });
 
@@ -74,6 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
         DeploySource.deploy(textDocument);
     }));
     context.subscriptions.push(deploySource);
+    context.subscriptions.push(refreshSource);
     context.subscriptions.push(retrieveSource);
     context.subscriptions.push(retrievepkgSource);
     context.subscriptions.push(openLightningAppPage);

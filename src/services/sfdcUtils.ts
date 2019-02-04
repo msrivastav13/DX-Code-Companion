@@ -87,14 +87,18 @@ export class SalesforceUtil {
             } 
         }
         query.queryString = `Select ${bodyfield} from ${metadataType}`;
-        if(metadataType === 'AuraDefinition'){
+        if(metadataType === 'AuraDefinition') {
             const deftype = Metadata.getDefType(fileextension,filename);
             query.queryString += ` where DefType='${deftype}'`;
             if(filename !== null){
                 query.queryString += ` and ${wherefield}='${filename}'`;
             }
         } else {
-            query.queryString += `where ${wherefield} ='${filename}' and NamespacePrefix='${namespacePrefix}'`;
+            query.queryString += ` where ${wherefield}='${filename}'`;
+             // Add Namespace Prefix
+            if(namespacePrefix !== null) {
+                query.queryString += ` and NamespacePrefix=${namespacePrefix}`;
+            }
         }
         query.bodyfield = bodyfield;
         return query;

@@ -26,6 +26,10 @@
                 "title": "CCDX: Retrieve DX Source From Package"
             },
             {
+                "command": "refresh.source",
+                "title": "CCDX: Refresh From Server"
+            },
+            {
                 "command": "retrieve.pkgSource",
                 "title": "CCDX: Retrieve Source From Package"
             },
@@ -63,6 +67,10 @@
                 {
                     "command": "deploy.source",
                     "group": "DXCompanion"
+                },
+                {
+                    "command": "refresh.source",
+                    "group": "DXCompanion"
                 }
             ],
             "editor/title": [
@@ -92,6 +100,10 @@
             "explorer/context": [
                 {
                     "command": "deploy.source",
+                    "group": "DXCompanion"
+                },
+                {
+                    "command": "refresh.source",
                     "group": "DXCompanion"
                 }
             ]

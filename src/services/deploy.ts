@@ -1,14 +1,14 @@
 'use strict';
 
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import {Config} from './config';
-import {SalesforceUtil} from './sfdcUtils';
-import {CommandService} from './commandBuilder';
+import * as vscode from 'vscode';
 import CodeCompanionContentProvider from '../providers/contentProvider';
-import {ServerResult} from '../typings/ccdxTypings';
-import {VSCodeCore} from './vscodeCore';
+import { ServerResult } from '../typings/ccdxTypings';
+import { CommandService } from './commandBuilder';
+import { Config } from './config';
+import { SalesforceUtil } from './sfdcUtils';
+import { VSCodeCore } from './vscodeCore';
 
 
 export class DeploySource {
@@ -20,10 +20,7 @@ export class DeploySource {
             // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
             if(this.isProjectAuthroizedToSFDC()) {
                 if(vscode.window.activeTextEditor) {
-                    const filepath = VSCodeCore.getFsPath();
-                    const filename = path.basename(textDocument.fileName).split('.')[0];
-                    const fileextension = path.basename(textDocument.fileName).split('.')[1];
-                    const commandToExecute = new CommandService(filepath);
+                    const { commandToExecute, filename, fileextension } = DeploySource.extractInfo(textDocument);
                     if(vscode.workspace.getConfiguration('dx-code-companion').manageconflict.enabled) {
                         const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
                         this.save(metadataType, filename, textDocument, commandToExecute,fileextension);
@@ -35,6 +32,14 @@ export class DeploySource {
                 vscode.window.showErrorMessage('Authorize a salesforce org');
             }
         }
+    }
+
+    private static extractInfo(textDocument: vscode.TextDocument) {
+        const filepath = VSCodeCore.getFsPath();
+        const filename = path.basename(textDocument.fileName).split('.')[0];
+        const fileextension = path.basename(textDocument.fileName).split('.')[1];
+        const commandToExecute = new CommandService(filepath);
+        return { commandToExecute, filename, fileextension };
     }
 
     private static save(metadataType: string, filename: string, textDocument: vscode.TextDocument, commandToExecute: CommandService, fileextension: string) {
@@ -50,9 +55,11 @@ export class DeploySource {
                     if (!this.compare(textDocument.getText(), serverResponse.Body) && !this.compare(serverResponse.Body, this.lastSavedToServer)) {
                         var sfuri: vscode.Uri = vscode.Uri.parse(`codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`);
                         vscode.commands.executeCommand('vscode.diff', sfuri, textDocument.uri, `${filename}.${fileextension}(SERVER) <~> ${filename}.${fileextension} (LOCAL)`, { preview: true });
-                        vscode.window.showWarningMessage('File has been modified in salesforce', 'Refresh From Server', 'Overwrite Server Copy', 'Cancel').then(s => {
+                        vscode.window.showWarningMessage('File has been modified in salesforce', 'Refresh From Server', 'Overwrite Server Copy').then(s => {
                             if (s === 'Overwrite Server Copy') {
                                 this.run(commandToExecute, textDocument);
+                            } else if (s === 'Refresh From Server'){
+                                this.refresh(serverResponse.Body);
                             }
                         });
                     }
@@ -69,9 +76,20 @@ export class DeploySource {
         });
     }
 
+    public static async  refreshFromServer(textDocument: vscode.TextDocument) {
+        const { commandToExecute, filename, fileextension } = DeploySource.extractInfo(textDocument);
+        const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
+        const serverResponse = await this.getServerCopy(metadataType, filename, fileextension);
+        this.refresh(serverResponse.Body);
+    }
+
     private static run(commandToExecute: CommandService, textDocument: vscode.TextDocument) {
         this.lastSavedToServer = textDocument.getText();
         this.executeDeployCommand(commandToExecute);
+    }
+
+    private static refresh(filecontent: string) {
+        fs.writeFileSync(VSCodeCore.getFsPath(),filecontent);
     }
 
     public static deploy(textDocument: vscode.TextDocument) {
