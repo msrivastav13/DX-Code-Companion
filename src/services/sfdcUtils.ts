@@ -49,6 +49,7 @@ export class SalesforceUtil {
         let bodyfield: string;
         let wherefield: string;
         const query = {} as Query;
+        const lwcpath = this.getlwcPath(filename, fileextension);
         switch(metadataType) { 
             case "ApexClass" || "ApexTrigger": { 
                 bodyfield = 'Body';
@@ -61,24 +62,19 @@ export class SalesforceUtil {
                 break; 
             }
             case "AuraDefinition": { 
-                const connection = this.connection;
-                const auraDefinition = <any> await connection.tooling.sobject('AuraDefinitionBundle').find({
-                    DeveloperName: filename,
-                    NamespacePrefix: namespacePrefix
-                });
+                const auraDefinition = await this.getDefinition(filename, namespacePrefix, 'AuraDefinitionBundle');
                 bodyfield = 'Source';
                 wherefield = 'AuraDefinitionBundleId';
                 metadataType = 'AuraDefinition';
-                if(auraDefinition.length > 0){
-                    filename = auraDefinition[0].Id;
-                } else {
-                    filename = null;
-                }
+                filename = this.getDefId(auraDefinition, filename);
                 break; 
             }
             case "LightningComponent": { 
-                bodyfield = 'Markup';
-                wherefield = 'Name';
+                const lwcDefinition = await this.getDefinition(filename, namespacePrefix, 'LightningComponentBundle');
+                bodyfield = 'Source';
+                wherefield = 'LightningComponentBundleId';
+                metadataType = 'LightningComponentResource';
+                filename = this.getDefId(lwcDefinition, filename);
                 break; 
             }   
             default: { 
@@ -93,6 +89,11 @@ export class SalesforceUtil {
             if(filename !== null){
                 query.queryString += ` and ${wherefield}='${filename}'`;
             }
+        } else if(metadataType === 'LightningComponent') {
+            query.queryString += ` where FilePath='${lwcpath}'`;
+            if(filename !== null){
+                query.queryString += ` and ${wherefield}='${filename}'`;
+            }
         } else {
             query.queryString += ` where ${wherefield}='${filename}'`;
              // Add Namespace Prefix
@@ -104,4 +105,29 @@ export class SalesforceUtil {
         return query;
     }
 
+
+    private getlwcPath(filename: string | null, fileextension: string): string {
+        let lwcpath: string;
+        lwcpath = 'lwc/' + filename + '/' + filename + '.' + fileextension;
+        return lwcpath;
+    }
+
+    private getDefId(definition: any, filename: string | null) {
+        if (definition.length > 0) {
+            filename = definition[0].Id;
+        }
+        else {
+            filename = null;
+        }
+        return filename;
+    }
+
+    private async getDefinition(filename: string | null, namespacePrefix: string, typename: string) {
+        const connection = this.connection;
+        const definition = <any>await connection.tooling.sobject(typename).find({
+            DeveloperName: filename,
+            NamespacePrefix: namespacePrefix
+        });
+        return definition;
+    }
 }

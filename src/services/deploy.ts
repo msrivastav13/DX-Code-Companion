@@ -89,6 +89,7 @@ export class DeploySource {
     }
 
     private static refresh(filecontent: string) {
+        this.lastSavedToServer = filecontent;
         fs.writeFileSync(VSCodeCore.getFsPath(),filecontent);
     }
 

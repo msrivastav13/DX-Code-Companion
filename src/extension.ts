@@ -88,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(openSLDS);
     context.subscriptions.push(switchorg);
 }
-    // this method is called when your extension is deactivated
-    export function deactivate() {
-        VSCodeCore.showActivationMessage().dispose();
-    }
+// this method is called when your extension is deactivated
+export function deactivate() {
+    VSCodeCore.showActivationMessage().dispose();
+}
