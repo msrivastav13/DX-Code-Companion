@@ -1,8 +1,8 @@
 # SalesforceDX Code Companion 
 
-**Note that this is not official from Salesforce. I created this extension to help my own development workflow for building salesforce apps. This extension supplements Salesforce Official Extension Pack with features like faster save of apex,lwc and vf pages.You can use this to also retrieve package metadata from salesforce orgs in both traditional metadata and SalesforceDX formats.Also supports managing conflicts with server**
+**Note that this is not official from Salesforce. I created this extension to help my own development workflow for building salesforce apps. This extension supplements Salesforce Official Extension Pack with features like faster save of apex,lwc and vf pages.You can use this to also retrieve package metadata from salesforce orgs in both traditional metadata and SalesforceDX formats. Also supports managing conflicts between salesforce files and salesforce org**
 
-Provides ability to save Apex Classes,Apex Triggers, Visualforce, AuraBundles, Lightning Web Component Bundles(under preview) and ApexComponents to Salesforce Org at blazing speed without source tracking. Also enables retrieving code from the salesforce unmanaged package in both DX and NonDX source formats .You can also switch between authenticated orgs easily with CCDX: Switch Command. This extension requires users to have SalesforceDX CLI and also mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin**) for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
+Provides ability to save Apex Classes,Apex Triggers, Visualforce, AuraBundles, Lightning Web Component Bundles(under preview) and ApexComponents to Salesforce Org at blazing speed without source tracking. Also enables retrieving code from the salesforce unmanaged package/changesets in both DX and NonDX source formats .You can also switch between authenticated orgs easily with CCDX: Switch Command. This extension requires users to have SalesforceDX CLI and also mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin**) for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
 
 It is highly recommended to use with Salesforce Extension Pack to get all the other good things salesforce official extension offers (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .
 
@@ -14,9 +14,8 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx plugins:update`
 3. VScode version 1.29 and beyond
 4. Salesforce official plugin provides great syntax and language support.Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
-5. When you open the VScode , it is recommended to wait for few seconds for Salesforce CLI or Salesforce VScode plugin to authorize the connection .This plugin depends on CLI to do auth and uses the session from the CLI.
-6. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
-7. If you open the project folder thats already authorized then wait for a minute or so before salesforce plugin authorizes to salesforce.
+5. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
+6. If you open the project folder thats already authorized then wait for a minute or so before salesforce plugin authorizes to salesforce.
 
 ## Features
 
@@ -87,7 +86,19 @@ You can also reach out to me via my twitter @msrivastav13 or via my MVP email ha
 
 ## Release Notes
 
-### 0.1.9
+### 0.2.0
+
+1. Adds ability to manage conflicts with server copy
+
+2. Refresh From Server for LWC, Aura files , triggers , vf pages, vf components and classes
+
+3. Save now compares file with server copy .
+
+4. A new icon on the footer to indicate SalesforceDX Code Companion is active
+
+5. Clicking on the icon takes to the salesforce org
+
+### 0.1.10
 
 1. Auto populate package list for selection for Retrieve Options
 
@@ -135,7 +146,7 @@ Use the settings (Select Code > Preferences > Settings) from the gear icon and m
 
 1. Provides quick save apex,vf,aura bundles to salesforce server
 2. Retrieve Source from Salesforce using DX Source format.
-3. 3X performant than salesforce deploy command for apex , aura and vf files.
+3. 3X performant than salesforce deploy command for apex,aura and vf files.
 
 -----------------------------------------------------------------------------------------------------------
 
