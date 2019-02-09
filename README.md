@@ -66,6 +66,8 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 
     This feature is turned on by default .It compares server copy with the local copy before save and if a difference is found you will see a prompt in a diff editor with options to either overwrite or accept change from server .Also you can manually resolve the conflicts and push changes .
 
+    ![Manage conflict](./images/manageConflicts.png)
+
 5. **Smart Navigations to VF page preview ,Lighnting App Builder Page ,Salesforce Lightning Design System Website ,Salesforce MetadataCoverage Report and Component Library URL**
 
     Screenshot shows how one can find these smart navigation
@@ -90,6 +92,8 @@ To Save any of the supported files to salesforce you can use the below shorcut k
 "linux": "ctrl+shift+c",
 
 ## Issue Reporting
+
+You can join the slack channel for any assistance [here](https://join.slack.com/t/salesforcedxc-ej87847/shared_invite/enQtNTQ4MjM2MTEzNjg2LTg2NzA4YTQ5ZTRkYzZjYTI4MDFhODQ2MDQ1ZjNmNzVmMTg5M2E0NTI2NzE0YWVmZjRjMGIwNmQ5YjkyMWEzZWU). 
 
 If you find any issues feel free to log it on the github page for the project @ https://github.com/msrivastav13/DX-Code-Companion/issues
 
