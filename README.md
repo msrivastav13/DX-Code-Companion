@@ -1,6 +1,6 @@
 # SalesforceDX Code Companion 
 
-[![Logo](https://github.com/msrivastav13/DX-Code-Companion/blob/master/images/logo.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
+[![Logo](https://github.com/msrivastav13/DX-Code-Companion/blob/master/images/logo_revised.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 
 [![Version](https://vsmarketplacebadge.apphb.com/version/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
