@@ -159,7 +159,7 @@ Use the settings (Select Code > Preferences > Settings) from the gear icon and m
 
 2.Add some useful link in editor title for vf preview , app builder page ,metadata coverage report and component Library.
 
-### 0.0.4
+### 0.0.5
 
 1. Fixes issues for keyboard shortcut
 
