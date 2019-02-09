@@ -41,6 +41,14 @@ export function activate(context: vscode.ExtensionContext) {
         NavigationService.componentLibrary();
     });
 
+    const openSalesforceOrg = vscode.commands.registerCommand('open.org', () => {
+        let activeTerminal = VSCodeCore.setupTerminal();
+        if(activeTerminal){
+            let openCmd = 'sfdx force:org:open';
+            activeTerminal.sendText(openCmd);
+        }
+    });
+
     const openVFPage = vscode.commands.registerCommand('open.vf', () => {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
@@ -62,7 +70,9 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     const deploySource = vscode.commands.registerCommand('deploy.source', () => {
-        
+        if(vscode.window.activeTextEditor){
+            DeploySource.deployToSFDC(vscode.window.activeTextEditor.document);
+        }    
     });
 
     const refreshSource = vscode.commands.registerCommand('refresh.source', async () => {
@@ -87,6 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(openVFPage);
     context.subscriptions.push(openSLDS);
     context.subscriptions.push(switchorg);
+    context.subscriptions.push(openSalesforceOrg);
 }
 // this method is called when your extension is deactivated
 export function deactivate() {

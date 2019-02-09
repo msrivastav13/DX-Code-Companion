@@ -48,8 +48,8 @@ export class SalesforceUtil {
     private async getToolingQuery (metadataType: string, filename: string | null, fileextension: string, namespacePrefix: string): Promise<Query> {
         let bodyfield: string;
         let wherefield: string;
+        let lwcpath: string = '';
         const query = {} as Query;
-        const lwcpath = this.getlwcPath(filename, fileextension);
         switch(metadataType) { 
             case "ApexClass" || "ApexTrigger": { 
                 bodyfield = 'Body';
@@ -70,6 +70,7 @@ export class SalesforceUtil {
                 break; 
             }
             case "LightningComponent": { 
+                lwcpath = this.getlwcPath(filename, fileextension);
                 const lwcDefinition = await this.getDefinition(filename, namespacePrefix, 'LightningComponentBundle');
                 bodyfield = 'Source';
                 wherefield = 'LightningComponentBundleId';
@@ -89,7 +90,7 @@ export class SalesforceUtil {
             if(filename !== null){
                 query.queryString += ` and ${wherefield}='${filename}'`;
             }
-        } else if(metadataType === 'LightningComponent') {
+        } else if(metadataType === 'LightningComponentResource') {
             query.queryString += ` where FilePath='${lwcpath}'`;
             if(filename !== null){
                 query.queryString += ` and ${wherefield}='${filename}'`;

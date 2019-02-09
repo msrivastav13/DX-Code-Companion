@@ -7,7 +7,7 @@
     "engines": {
         "vscode": "^1.29.0"
     },
-    "icon": "images/terminal.png",
+    "icon": "images/logo.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/msrivastav13/DX-Code-Companion.git"
@@ -60,31 +60,40 @@
             {
                 "command": "switch.org",
                 "title": "CCDX: Switch Org"
+            },
+            {
+                "command": "open.org",
+                "title": "CCDX: Open Default Org"
             }
         ],
         "menus": {
             "editor/context": [
                 {
                     "command": "deploy.source",
-                    "group": "DXCompanion"
+                    "group": "DXCompanion",
+                    "when": "CCDXActive"
                 },
                 {
                     "command": "refresh.source",
-                    "group": "DXCompanion"
+                    "group": "DXCompanion",
+                    "when": "CCDXActive"
                 }
             ],
             "editor/title": [
                 {
                     "command": "open.componentLibrary",
-                    "group": "OpenCmd"
+                    "group": "OpenCmd",
+                    "when": "CCDXActive"
                 },
                 {
                     "command": "open.metadataCoverageReport",
-                    "group": "OpenCmd"
+                    "group": "OpenCmd",
+                    "when": "CCDXActive"
                 },
                 {
                     "command": "open.slds",
-                    "group": "OpenCmd"
+                    "group": "OpenCmd",
+                    "when": "CCDXActive"
                 },
                 {
                     "command": "open.lightningPage",
@@ -95,16 +104,23 @@
                     "command": "open.vf",
                     "group": "OpenCmd",
                     "when": "resourceExtname == .page"
+                },
+                {
+                    "command": "open.org",
+                    "group": "OpenCmd",
+                    "when": "CCDXActive"
                 }
             ],
             "explorer/context": [
                 {
                     "command": "deploy.source",
-                    "group": "DXCompanion"
+                    "group": "DXCompanion",
+                    "when": "CCDXActive"
                 },
                 {
                     "command": "refresh.source",
-                    "group": "DXCompanion"
+                    "group": "DXCompanion",
+                    "when": "CCDXActive"
                 }
             ]
         },

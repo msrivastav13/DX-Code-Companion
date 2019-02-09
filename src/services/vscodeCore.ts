@@ -42,9 +42,11 @@ export class VSCodeCore {
     }
 
     public static showActivationMessage(): vscode.StatusBarItem {
+        vscode.commands.executeCommand('setContext', 'CCDXActive', true);
         const ccdx = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 90);
-        ccdx.text = `DX Code Companion $(check)`;
+        ccdx.text = `DX Code Companion $(rocket)`;
         ccdx.tooltip = 'SalesforceDX Code Companion is Active ! Enjoy!!!!';
+        ccdx.command = 'open.org';
         ccdx.show();
         return ccdx;
     }

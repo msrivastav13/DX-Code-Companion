@@ -36,8 +36,12 @@ export class DeploySource {
 
     private static extractInfo(textDocument: vscode.TextDocument) {
         const filepath = VSCodeCore.getFsPath();
-        const filename = path.basename(textDocument.fileName).split('.')[0];
-        const fileextension = path.basename(textDocument.fileName).split('.')[1];
+        const filepathArray = path.basename(textDocument.fileName).split('.');
+        const filename = filepathArray[0];
+        let fileextension = filepathArray[1];
+        if(filepathArray.length > 2){
+            fileextension = fileextension + '.' + filepathArray[2];
+        }
         const commandToExecute = new CommandService(filepath);
         return { commandToExecute, filename, fileextension };
     }
@@ -76,11 +80,21 @@ export class DeploySource {
         });
     }
 
-    public static async  refreshFromServer(textDocument: vscode.TextDocument) {
+    public static async refreshFromServer(textDocument: vscode.TextDocument) {
         const { commandToExecute, filename, fileextension } = DeploySource.extractInfo(textDocument);
         const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
-        const serverResponse = await this.getServerCopy(metadataType, filename, fileextension);
-        this.refresh(serverResponse.Body);
+        vscode.window.withProgress({
+            location: vscode.ProgressLocation.Notification,
+            title: "Refreshing..",
+        }, () => {
+            var p = new Promise(async (resolve) => {
+                const serverResponse = await this.getServerCopy(metadataType, filename, fileextension);
+                this.refresh(serverResponse.Body);
+                resolve();
+            });
+            return p;
+        });
+       
     }
 
     private static run(commandToExecute: CommandService, textDocument: vscode.TextDocument) {
