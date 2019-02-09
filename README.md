@@ -3,7 +3,7 @@
 [![Logo](https://github.com/msrivastav13/DX-Code-Companion/blob/master/images/logo.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 
 [![Version](https://vsmarketplacebadge.apphb.com/version/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/JMohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/MohithShrivastava.dx-code-companion.png)](https://vsmarketplacebadge.apphb.com/rating/MohithShrivastava.dx-code-companion.svg)
 
 
@@ -121,7 +121,7 @@ You can also reach out to me via my twitter @msrivastav13 or via my MVP email ha
 
 1.Switch between authenticated orgs using new Switch Org Command .This opens up to switch and deploy the code between orgs using SFDX:Deploy To Org Command
 
-![Navigations](./images/switchorg.gif)
+![Navigations](./images/switchorg.png)
 
 2.Fix AutoSave to now not run terminal command if file type is not supported
 
