@@ -4,6 +4,7 @@
 
 [![Version](https://vsmarketplacebadge.apphb.com/version/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
+[![Downloads](https://vsmarketplacebadge.apphb.com/downloads/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/MohithShrivastava.dx-code-companion.png)](https://vsmarketplacebadge.apphb.com/rating/MohithShrivastava.dx-code-companion.svg)
 
 
@@ -68,7 +69,7 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 
     ![Manage conflict](./images/manageConflicts.png)
 
-    If you wish to turn this feature off for faster save you can disable Manageconflict settings as below
+    If you wish to turn this feature (If you have VCS for your project and do not develop in team) for faster save you can do so by disabling Manageconflict settings found in  settings for extension
 
     ![Manage conflict](./images/manageConflictSettings.png)
 
@@ -116,7 +117,7 @@ To open command pallete and look for all CCDX Commands use below .
 
 4. A new icon on the footer to indicate SalesforceDX Code Companion is active
 
-5. Clicking on the icon takes to the salesforce org
+5. Footer now indicates a rocket symbol if extension is active and you can navigate to org clicking on this .
 
 ### 0.1.10
 
