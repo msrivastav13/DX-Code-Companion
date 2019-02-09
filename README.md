@@ -68,7 +68,12 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 
     ![Manage conflict](./images/manageConflicts.png)
 
-5. **Smart Navigations to VF page preview ,Lighnting App Builder Page ,Salesforce Lightning Design System Website ,Salesforce MetadataCoverage Report and Component Library URL**
+    If you wish to turn this feature off for faster save you can disable Manageconflict settings as below
+
+    ![Manage conflict](./images/manageConflictSettings.png)
+
+
+6. **Smart Navigations to VF page preview ,Lighnting App Builder Page ,Salesforce Lightning Design System Website ,Salesforce MetadataCoverage Report and Component Library URL**
 
     Screenshot shows how one can find these smart navigation
 
@@ -83,14 +88,6 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 
     ![See Errors on Terminal](./images/error_log.png)
 
-## Extension Shortcut Keys
-
-To Save any of the supported files to salesforce you can use the below shorcut keys based on the operating system.
-
-"MACOSX": "cmd+shift+c",
-"win": "ctrl+shift+c",
-"linux": "ctrl+shift+c",
-
 ## Issue Reporting
 
 You can join the slack channel for any assistance [here](https://join.slack.com/t/salesforcedxc-ej87847/shared_invite/enQtNTQ4MjM2MTEzNjg2LTg2NzA4YTQ5ZTRkYzZjYTI4MDFhODQ2MDQ1ZjNmNzVmMTg5M2E0NTI2NzE0YWVmZjRjMGIwNmQ5YjkyMWEzZWU). 
@@ -98,6 +95,14 @@ You can join the slack channel for any assistance [here](https://join.slack.com/
 If you find any issues feel free to log it on the github page for the project @ https://github.com/msrivastav13/DX-Code-Companion/issues
 
 You can also reach out to me via my twitter @msrivastav13 or via my MVP email handle mohith.shrivastava@salesforcemvps.com
+
+## Extension Shortcut Keys
+
+To open command pallete and look for all CCDX Commands use below .
+
+"MACOSX": "cmd+shift+p",
+"win": "ctrl+shift+p",
+"linux": "ctrl+shift+p",
 
 ## Release Notes
 
