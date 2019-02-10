@@ -14,7 +14,7 @@ Provides ability to save Apex Classes,Apex Triggers, Visualforce, AuraBundles, L
 
 It is highly recommended to use with Salesforce Extension Pack to get all the other good things salesforce official extension offers (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .
 
-## Requirements
+# Requirements
 
 This vscode extension works only once you have installed Salesforce CLI and a mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin** on your terminal) that has api for all the commands this extension leverages .
 
@@ -25,7 +25,7 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 5. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
 6. If you open the project folder thats already authorized then wait for a minute or so before salesforce plugin authorizes to salesforce.
 
-## Features
+# Features
 
 1. **Retrieve Source in DX Source format from Managed/Unmamaged package/ChangeSets**
 
@@ -89,7 +89,11 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 
     ![See Errors on Terminal](./images/error_log.png)
 
-## Issue Reporting
+# Video Recordings of all features 
+
+https://www.youtube.com/playlist?list=PLDFd1LjbN883y5IlMuU8BCyGhRO-VMuw9
+
+# Issue Reporting
 
 You can join the slack channel for any assistance [here](https://join.slack.com/t/salesforcedxc-ej87847/shared_invite/enQtNTQ4MjM2MTEzNjg2LTg2NzA4YTQ5ZTRkYzZjYTI4MDFhODQ2MDQ1ZjNmNzVmMTg5M2E0NTI2NzE0YWVmZjRjMGIwNmQ5YjkyMWEzZWU). 
 
@@ -105,7 +109,7 @@ To open command pallete and look for all CCDX Commands use below .
 "win": "ctrl+shift+p",
 "linux": "ctrl+shift+p",
 
-## Release Notes
+# Release Notes
 
 ### 0.2.0
 
