@@ -23,7 +23,7 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 3. VScode version 1.29 and beyond
 4. Salesforce official plugin provides great syntax and language support.Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
 5. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
-6. If you open the project folder thats already authorized then wait for a minute or so before salesforce plugin authorizes to salesforce.
+6. Extension activation is shown in footer with a rocket symbol. Once extension is active authorize the project if you havent and enjoy faster deploys
 
 # Features
 
@@ -110,6 +110,10 @@ To open command pallete and look for all CCDX Commands use below .
 "linux": "ctrl+shift+p",
 
 # Release Notes
+
+### 0.2.4
+
+1. Fixes when .xml files would try to save to server .This is not supported at this point and use native salesforce extension to deploy meta.xml files for version changes .
 
 ### 0.2.0
 
