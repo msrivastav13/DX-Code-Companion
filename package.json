@@ -38,6 +38,10 @@
                 "title": "CCDX: Save To Salesforce"
             },
             {
+                "command": "compare.source",
+                "title": "CCDX: Compare With Server"
+            },
+            {
                 "command": "open.lightningPage",
                 "title": "CCDX: Open Lightning Builder page"
             },
@@ -75,6 +79,11 @@
                 },
                 {
                     "command": "refresh.source",
+                    "group": "DXCompanion",
+                    "when": "CCDXActive"
+                },
+                {
+                    "command": "compare.source",
                     "group": "DXCompanion",
                     "when": "CCDXActive"
                 }
@@ -148,7 +157,7 @@
                     "type": [
                         "boolean"
                     ],
-                    "default": true,
+                    "default": false,
                     "description": "Compare code in local file with file in salesforce"
                 }
             }

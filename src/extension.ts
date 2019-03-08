@@ -81,6 +81,12 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    const compareSource = vscode.commands.registerCommand('compare.source', async () => {
+        if(vscode.window.activeTextEditor){
+            DeploySource.compareWithServer(vscode.window.activeTextEditor.document);
+        }
+    });
+
     // Provider for compare view when server files are modified
     context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider('codecompanion', CodeCompanionContentProvider.getInstance()));
     // Trigger Deploy on Save
@@ -88,6 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
         DeploySource.deploy(textDocument);
     }));
     context.subscriptions.push(deploySource);
+    context.subscriptions.push(compareSource);
     context.subscriptions.push(refreshSource);
     context.subscriptions.push(retrieveSource);
     context.subscriptions.push(retrievepkgSource);

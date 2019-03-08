@@ -49,6 +49,9 @@ export class SalesforceUtil {
         let bodyfield: string;
         let wherefield: string;
         let lwcpath: string = '';
+        let auraDefId: string | null = '';
+        let lwcDefId: string | null = '';
+        let componentName: string | null = '';
         const query = {} as Query;
         switch(metadataType) { 
             case "ApexClass" || "ApexTrigger": { 
@@ -62,11 +65,17 @@ export class SalesforceUtil {
                 break; 
             }
             case "AuraDefinition": { 
-                const auraDefinition = await this.getDefinition(filename, namespacePrefix, 'AuraDefinitionBundle');
+                if( filename !== null && (filename.endsWith('Helper') || filename.endsWith('Controller'))) {
+                    componentName = filename.replace('Helper' ,'');
+                    componentName = componentName.replace('Controller' ,'');
+                } else {
+                    componentName = filename;
+                }
+                const auraDefinition = await this.getDefinition(componentName, namespacePrefix, 'AuraDefinitionBundle');
                 bodyfield = 'Source';
                 wherefield = 'AuraDefinitionBundleId';
                 metadataType = 'AuraDefinition';
-                filename = this.getDefId(auraDefinition, filename);
+                auraDefId = this.getDefId(auraDefinition, auraDefId);
                 break; 
             }
             case "LightningComponent": { 
@@ -75,7 +84,7 @@ export class SalesforceUtil {
                 bodyfield = 'Source';
                 wherefield = 'LightningComponentBundleId';
                 metadataType = 'LightningComponentResource';
-                filename = this.getDefId(lwcDefinition, filename);
+                lwcDefId = this.getDefId(lwcDefinition, lwcDefId);
                 break; 
             }   
             default: { 
@@ -88,12 +97,12 @@ export class SalesforceUtil {
             const deftype = Metadata.getDefType(fileextension,filename);
             query.queryString += ` where DefType='${deftype}'`;
             if(filename !== null){
-                query.queryString += ` and ${wherefield}='${filename}'`;
+                query.queryString += ` and ${wherefield}='${auraDefId}'`;
             }
         } else if(metadataType === 'LightningComponentResource') {
             query.queryString += ` where FilePath='${lwcpath}'`;
             if(filename !== null){
-                query.queryString += ` and ${wherefield}='${filename}'`;
+                query.queryString += ` and ${wherefield}='${lwcDefId}'`;
             }
         } else {
             query.queryString += ` where ${wherefield}='${filename}'`;

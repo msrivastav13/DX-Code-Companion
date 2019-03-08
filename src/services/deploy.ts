@@ -15,6 +15,25 @@ export class DeploySource {
 
     private static lastSavedToServer: string;
 
+    public static async compareWithServer(textDocument: vscode.TextDocument) {
+        if(this.supportedFileForDeploy()) {
+            // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
+            if(this.isProjectAuthroizedToSFDC()) {
+                if(vscode.window.activeTextEditor) {
+                    const { commandToExecute, filename, fileextension } = DeploySource.extractInfo(textDocument);
+                    const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
+                    const serverResponse = await this.getServerCopy(metadataType, filename, fileextension);
+                    if(serverResponse.exist) {
+                        // Set content provider content
+                        CodeCompanionContentProvider.serverContent = serverResponse.Body;
+                        var sfuri: vscode.Uri = vscode.Uri.parse(`codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`);
+                        vscode.commands.executeCommand('vscode.diff', sfuri, textDocument.uri, `${filename}.${fileextension}(SERVER) <~> ${filename}.${fileextension} (LOCAL)`, { preview: false });
+                    }
+                }
+            }
+        }
+    }
+
     public static deployToSFDC(textDocument: vscode.TextDocument) {
         if(this.supportedFileForDeploy()) {
             // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
@@ -81,20 +100,26 @@ export class DeploySource {
     }
 
     public static async refreshFromServer(textDocument: vscode.TextDocument) {
-        const { commandToExecute, filename, fileextension } = DeploySource.extractInfo(textDocument);
-        const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
-        vscode.window.withProgress({
-            location: vscode.ProgressLocation.Notification,
-            title: "Refreshing..",
-        }, () => {
-            var p = new Promise(async (resolve) => {
-                const serverResponse = await this.getServerCopy(metadataType, filename, fileextension);
-                this.refresh(serverResponse.Body);
-                resolve();
-            });
-            return p;
-        });
-       
+        if(this.supportedFileForDeploy()) {
+            // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
+            if(this.isProjectAuthroizedToSFDC()) {
+                if(vscode.window.activeTextEditor) {
+                    const { commandToExecute, filename, fileextension } = DeploySource.extractInfo(textDocument);
+                    const metadataType = commandToExecute.metadataDef.getMetadataType().MetadataName;
+                    vscode.window.withProgress({
+                        location: vscode.ProgressLocation.Notification,
+                        title: "Refreshing..",
+                    }, () => {
+                        var p = new Promise(async (resolve) => {
+                            const serverResponse = await this.getServerCopy(metadataType, filename, fileextension);
+                            this.refresh(serverResponse.Body);
+                            resolve();
+                        });
+                        return p;
+                    });
+                }
+            }
+        }
     }
 
     private static run(commandToExecute: CommandService, textDocument: vscode.TextDocument) {
@@ -149,14 +174,14 @@ export class DeploySource {
         let fileSupported = false;
         if(vscode.window.activeTextEditor) {
             //At this point only few file types are supported for auto save
-            const supportedFileTypes = ['trigger','cls','cmp','js','html','evt','css','design','tokens','page','svg','auradoc','component','intf','app'];
+            const supportedFileTypes = ['trigger','cls','cmp','evt','design','tokens','page','svg','auradoc','component','intf','app'];
             const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
             const pathAsArray = filePath.split('/');
             const lastparam = pathAsArray[pathAsArray.length - 1];
             const fileExtension = lastparam.substring(lastparam.lastIndexOf('.') + 1);
             const directory = path.basename(path.dirname(path.dirname(filePath)));
-            if(fileExtension === 'xml') {
-                // check for directory
+            if(fileExtension === 'js' || fileExtension === 'css' ||  fileExtension === 'html') {
+                // check for immediate directory
                 if(directory === 'lwc' || directory === 'aura') {
                     fileSupported = true;
                 }
