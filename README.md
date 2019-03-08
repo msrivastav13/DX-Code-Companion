@@ -65,7 +65,7 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 
 5. **Manage Conflicts with server**
 
-    This feature is turned on by default .It compares server copy with the local copy before save and if a difference is found you will see a prompt in a diff editor with options to either overwrite or accept change from server .Also you can manually resolve the conflicts and push changes .
+    This feature is turned off by default .It compares server copy with the local copy before save and if a difference is found you will see a prompt in a diff editor with options to either overwrite or accept change from server. Also you can manually resolve the conflicts and push changes .
 
     ![Manage conflict](./images/manageConflicts.png)
 
@@ -110,6 +110,16 @@ To open command pallete and look for all CCDX Commands use below .
 "linux": "ctrl+shift+p",
 
 # Release Notes
+
+### 0.2.5
+
+1. Adds a new Command Compare With Server to view diff between current local and server file.
+
+2. By default Manage Conflict is switched off .Turn it on via settings 
+
+![Manage conflict](./images/manageConflictSettings.png)
+
+3. Fixed few bugs related to refresh from server on aura components.
 
 ### 0.2.4
 
