@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import {Config} from './services/config';
-import CodeCompanionContentProvider from './providers/contentProvider' ;
+import CodeCompanionContentProvider from './providers/ContentProvider' ;
 import {DeploySource} from './services/deploy';
 import {NavigationService} from './services/navigation';
 import {RetrieveSource} from './services/retrieve';

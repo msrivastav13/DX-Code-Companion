@@ -3,7 +3,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import CodeCompanionContentProvider from '../providers/contentProvider';
+import CodeCompanionContentProvider from '../providers/ContentProvider';
 import { ServerResult } from '../typings/ccdxTypings';
 import { CommandService } from './commandBuilder';
 import { Config } from './config';

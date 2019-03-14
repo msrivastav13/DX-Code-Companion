@@ -111,6 +111,10 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.2.6
+
+1. Fix issue by changing the folder name of content provider to use Capital letter. Seems very weird that not doing this breaks the plugin for chrome-os. The issue is described here (https://github.com/msrivastav13/DX-Code-Companion/issues/6)
+
 ### 0.2.5
 
 1. Adds a new Command Compare With Server to view diff between current local and server file.
