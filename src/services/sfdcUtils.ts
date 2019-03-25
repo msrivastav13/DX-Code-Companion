@@ -54,12 +54,22 @@ export class SalesforceUtil {
         let componentName: string | null = '';
         const query = {} as Query;
         switch(metadataType) { 
-            case "ApexClass" || "ApexTrigger": { 
+            case "ApexClass": { 
                 bodyfield = 'Body';
                 wherefield = 'Name';
                 break; 
+            }
+            case "ApexTrigger": { 
+                bodyfield = 'Body';
+                wherefield = 'Name';
+                break; 
+            }
+            case "ApexComponent": { 
+                bodyfield = 'Markup';
+                wherefield = 'Name';
+                break; 
             } 
-            case "ApexPage" || "ApexComponent": { 
+            case "ApexPage": { 
                 bodyfield = 'Markup';
                 wherefield = 'Name';
                 break; 
