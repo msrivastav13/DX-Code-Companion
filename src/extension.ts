@@ -9,6 +9,7 @@ import {NavigationService} from './services/navigation';
 import {RetrieveSource} from './services/retrieve';
 import {switchOrg} from './services/switchOrg';
 import {VSCodeCore} from './services/vscodeCore';
+import { OSUtil } from './services/osUtils';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -27,6 +28,14 @@ export function activate(context: vscode.ExtensionContext) {
         const connection = await Config.getConnection();
         const retrievesrc = new RetrieveSource(connection);
         retrievesrc.retrieve('sfdx retrieve:pkgsource -n ');
+    });
+
+    const deploysrc = vscode.commands.registerCommand('deploy.src', async (fileUri: { path: string; }) => {
+        let activeTerminal = VSCodeCore.setupTerminal();
+        if(activeTerminal) {
+            let deployCommand = 'sfdx force:mdapi:deploy -d ' + OSUtil.toUnixStyle(fileUri.path);
+            activeTerminal.sendText(deployCommand);
+        }
     });
 
     const openSLDS = vscode.commands.registerCommand('open.slds', () => {
@@ -105,6 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(openSLDS);
     context.subscriptions.push(switchorg);
     context.subscriptions.push(openSalesforceOrg);
+    context.subscriptions.push(deploysrc);
 }
 // this method is called when your extension is deactivated
 export function deactivate() {

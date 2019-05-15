@@ -68,6 +68,10 @@
             {
                 "command": "open.org",
                 "title": "CCDX: Open Default Org"
+            },
+            {
+                "command": "deploy.src",
+                "title": "CCDX: Deploy Source To Salesforce"
             }
         ],
         "menus": {
@@ -122,14 +126,9 @@
             ],
             "explorer/context": [
                 {
-                    "command": "deploy.source",
+                    "command": "deploy.src",
                     "group": "DXCompanion",
-                    "when": "CCDXActive"
-                },
-                {
-                    "command": "refresh.source",
-                    "group": "DXCompanion",
-                    "when": "CCDXActive"
+                    "when": "explorerResourceIsFolder && resourceFilename == src"
                 }
             ]
         },
@@ -171,13 +170,13 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^3.2.0",
-        "vscode": "^1.1.21",
-        "tslint": "^5.8.0",
-        "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^8.10.48",
+        "tslint": "^5.16.0",
+        "typescript": "^3.3.0",
+        "vscode": "^1.1.34"
     },
     "dependencies": {
-        "@salesforce/core": "^1.1.2"
+        "@salesforce/core": "^1.3.3"
     }
 }

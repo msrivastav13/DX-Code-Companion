@@ -2,6 +2,7 @@
 
 import * as sfcore from '@salesforce/core';
 import * as vscode from 'vscode';
+import * as path from 'path';
 
 export class Config {
 
@@ -29,31 +30,22 @@ export class Config {
         return orgAlias;
     }
 
-    public static async getLocalAlias(): Promise<any> {
-        if(vscode.workspace.workspaceFolders){
-            const rootPath = vscode.workspace.workspaceFolders[0];
-            const localusername = await sfcore.fs.readJsonMap(rootPath.uri.fsPath + '/.sfdx/sfdx-config.json');
-            return localusername;
-        } else {
-            return undefined;
-        }
-    }
-
     public static async getConnection(): Promise<any> {
-        const orgs = await this.getAllOrgs();
-        const aliases = await this.getAllAliases();
-        const defaultalias = await Config.getLocalAlias();
-        let defaultusername ;
-        // Should be better way to get the defaultusername .The config aggeragtor does not work currently
-        for (const org of orgs) {
-            if(aliases.getKeysByValue(org).length>0 && aliases.getKeysByValue(org)[0] === defaultalias.defaultusername) {
-                defaultusername = org;
-                break ;
-            }
-        }
-        const connection = await sfcore.Connection.create({
-            authInfo: await sfcore.AuthInfo.create({ username:  defaultusername})
-        });
-        return connection;
+        if(vscode.workspace && vscode.workspace.workspaceFolders) {
+            const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+            const myLocalConfig = await sfcore.ConfigFile.create({
+                isGlobal: false,
+                rootFolder: path.join(rootPath, '.sfdx'),
+                filename: 'sfdx-config.json'
+            });
+            const localValue = myLocalConfig.get('defaultusername');
+            let defaultusername = await sfcore.Aliases.fetch(JSON.stringify(localValue).replace(/\"/g, ''));
+            const connection = await sfcore.Connection.create({
+                authInfo: await sfcore.AuthInfo.create({ username:  defaultusername})
+            });
+            return connection;
+        } else {
+            throw vscode.FileSystemError.FileNotFound('Project does not have workspace opened');
+        }      
     }
 }
