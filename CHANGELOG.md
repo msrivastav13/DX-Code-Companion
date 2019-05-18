@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.2.8
+
+1. Fixes connection method to use salesforce core library native methods
+2. Adds ability to deploy the src folder for classic metadata directly from explorer menu. Note this expects you have source in classic metadata format
+
+![Deploy source from src folder](./images/deploySrc.png)
+
 ### 0.2.7
 
 1. Fixes Manage Conflicts with server is not working for Apex Components and Apex Pages
