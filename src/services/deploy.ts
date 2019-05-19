@@ -9,6 +9,8 @@ import { CommandService } from './commandBuilder';
 import { Config } from './config';
 import { SalesforceUtil } from './sfdcUtils';
 import { VSCodeCore } from './vscodeCore';
+import { OSUtil } from './osUtils';
+import { VSCodeUI } from './vscodeUI';
 
 
 export class DeploySource {
@@ -191,5 +193,21 @@ export class DeploySource {
             }
         }
         return fileSupported;
+    }
+
+    public static async deploySrc(uripath: string) :Promise<void> {
+        if(vscode.workspace.workspaceFolders){
+            let activeTerminal = VSCodeCore.setupTerminal();
+            let deployCommand = 'sfdx force:mdapi:deploy -d ' + OSUtil.toUnixStyle(uripath) + ' -w -1';
+            if(uripath.indexOf('changesets') > -1) {
+                //changesets folder so ask for relevant org
+                const orgs = fs.readdirSync(vscode.workspace.workspaceFolders[0].uri.fsPath +'/.sfdx/orgs');
+                const username = await VSCodeUI.showQuickPick(orgs, 'Select Org for deployment(Orgs found in .sfdx/orgs are only displayed)');
+                deployCommand = deployCommand + ' -u ' + username;
+            } 
+            if(activeTerminal) {
+                activeTerminal.sendText(deployCommand);
+            }
+        }
     }
 }

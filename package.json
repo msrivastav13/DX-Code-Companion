@@ -72,6 +72,10 @@
             {
                 "command": "deploy.src",
                 "title": "CCDX: Deploy Source To Salesforce"
+            },
+            {
+                "command": "changeset.retrieve",
+                "title": "CCDX: Retrieve Source From Changeset"
             }
         ],
         "menus": {
@@ -129,6 +133,12 @@
                     "command": "deploy.src",
                     "group": "DXCompanion",
                     "when": "explorerResourceIsFolder && resourceFilename == src"
+                },
+                {
+                    "command": "changeset.retrieve",
+                    "title": "CCDX: Retrieve Source From Changeset",
+                    "group": "DXCompanion",
+                    "when": "explorerResourceIsFolder && resourceFilename == changesets"
                 }
             ]
         },

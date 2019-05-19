@@ -4,13 +4,12 @@
 import * as vscode from 'vscode';
 import {Config} from './services/config';
 import CodeCompanionContentProvider from './providers/ContentProvider' ;
+import {Changeset} from './services/changeset';
 import {DeploySource} from './services/deploy';
 import {NavigationService} from './services/navigation';
 import {RetrieveSource} from './services/retrieve';
 import {switchOrg} from './services/switchOrg';
 import {VSCodeCore} from './services/vscodeCore';
-import { OSUtil } from './services/osUtils';
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -31,11 +30,12 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     const deploysrc = vscode.commands.registerCommand('deploy.src', async (fileUri: { path: string; }) => {
-        let activeTerminal = VSCodeCore.setupTerminal();
-        if(activeTerminal) {
-            let deployCommand = 'sfdx force:mdapi:deploy -d ' + OSUtil.toUnixStyle(fileUri.path);
-            activeTerminal.sendText(deployCommand);
-        }
+        await DeploySource.deploySrc(fileUri.path);
+    });
+
+    const changesetRetrieve = vscode.commands.registerCommand('changeset.retrieve', async () => {
+        let changeset = new Changeset();
+        await changeset.retrieve();
     });
 
     const openSLDS = vscode.commands.registerCommand('open.slds', () => {
@@ -103,6 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
         DeploySource.deploy(textDocument);
     }));
     context.subscriptions.push(deploySource);
+    context.subscriptions.push(changesetRetrieve);
     context.subscriptions.push(compareSource);
     context.subscriptions.push(refreshSource);
     context.subscriptions.push(retrieveSource);

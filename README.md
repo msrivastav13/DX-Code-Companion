@@ -116,6 +116,8 @@ To open command pallete and look for all CCDX Commands use below .
 1. Fixes connection method to use salesforce core library native methods
 2. Adds ability to deploy the src folder for classic metadata directly from explorer menu
 
+![Deploy source from src folder](./images/deploySrc.png)
+
 ### 0.2.7
 
 1. Fixes Manage Conflicts with server is not working for Apex Components and Apex Pages

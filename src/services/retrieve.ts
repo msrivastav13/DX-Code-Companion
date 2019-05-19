@@ -22,7 +22,7 @@ export class RetrieveSource {
         if(unmanagedpkg) {
             let activeTerminal = VSCodeCore.setupTerminal();
             if(activeTerminal){
-                let retrievecommand = cmd + '"' + unmanagedpkg + '"';
+                let retrievecommand = cmd + '"' + unmanagedpkg + '"' ;
                 activeTerminal.sendText(retrievecommand);
             }
         }
