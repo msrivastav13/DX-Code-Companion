@@ -6,7 +6,7 @@ import * as path from 'path';
 
 export class Config {
 
-    private static async getAllOrgs(): Promise<string[]> {
+    public static async getAllOrgs(): Promise<string[]> {
         const authFiles = await sfcore.AuthInfo.listAllAuthFiles();
         const orgs = authFiles.map(authfile => authfile.replace('.json', ''));
         return orgs;
@@ -31,6 +31,14 @@ export class Config {
     }
 
     public static async getConnection(): Promise<any> {
+        let defaultusername = await Config.getDefaultUsername();
+        const connection = await sfcore.Connection.create({
+            authInfo: await sfcore.AuthInfo.create({ username:  defaultusername})
+        });
+        return connection;  
+    }
+
+    public static async getDefaultUsername() {
         if(vscode.workspace && vscode.workspace.workspaceFolders) {
             const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
             const myLocalConfig = await sfcore.ConfigFile.create({
@@ -40,12 +48,7 @@ export class Config {
             });
             const localValue = myLocalConfig.get('defaultusername');
             let defaultusername = await sfcore.Aliases.fetch(JSON.stringify(localValue).replace(/\"/g, ''));
-            const connection = await sfcore.Connection.create({
-                authInfo: await sfcore.AuthInfo.create({ username:  defaultusername})
-            });
-            return connection;
-        } else {
-            throw vscode.FileSystemError.FileNotFound('Project does not have workspace opened');
-        }      
+            return defaultusername;
+        }
     }
 }

@@ -199,13 +199,21 @@ export class DeploySource {
         if(vscode.workspace.workspaceFolders){
             let activeTerminal = VSCodeCore.setupTerminal();
             let deployCommand = 'sfdx force:mdapi:deploy -d ' + OSUtil.toUnixStyle(uripath) + ' -w -1';
+            let runCommand = true;
             if(uripath.indexOf('changesets') > -1) {
                 //changesets folder so ask for relevant org
-                const orgs = fs.readdirSync(vscode.workspace.workspaceFolders[0].uri.fsPath +'/.sfdx/orgs');
-                const username = await VSCodeUI.showQuickPick(orgs, 'Select Org for deployment(Orgs found in .sfdx/orgs are only displayed)');
-                deployCommand = deployCommand + ' -u ' + username;
+                try {
+                    const orgs = fs.readFileSync(vscode.workspace.workspaceFolders[0].uri.fsPath +'/changesets/orgs.json');
+                    const username = await VSCodeUI.showQuickPick(JSON.parse(orgs.toString()), 'Select Org for deployment(To display more orgs add usernames in orgs.json)');
+                    deployCommand = deployCommand + ' -u ' + username;
+                    if(!username) {
+                        runCommand = false;
+                    }
+                } catch(error) {
+                    throw error;
+                }
             } 
-            if(activeTerminal) {
+            if(activeTerminal && runCommand) {
                 activeTerminal.sendText(deployCommand);
             }
         }

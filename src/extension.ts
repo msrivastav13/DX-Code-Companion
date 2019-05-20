@@ -38,6 +38,11 @@ export function activate(context: vscode.ExtensionContext) {
         await changeset.retrieve();
     });
 
+    const changesetOrgAdd = vscode.commands.registerCommand('changeset.addorgs', async () => {
+        let changeset = new Changeset();
+        await changeset.addOrgs();
+    });
+
     const openSLDS = vscode.commands.registerCommand('open.slds', () => {
         NavigationService.openSLDSDocument();
     });
@@ -116,6 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(switchorg);
     context.subscriptions.push(openSalesforceOrg);
     context.subscriptions.push(deploysrc);
+    context.subscriptions.push(changesetOrgAdd);
 }
 // this method is called when your extension is deactivated
 export function deactivate() {

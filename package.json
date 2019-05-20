@@ -76,6 +76,10 @@
             {
                 "command": "changeset.retrieve",
                 "title": "CCDX: Retrieve Source From Changeset"
+            },
+            {
+                "command": "changeset.addorgs",
+                "title": "CCDX: Add Orgs For Changeset Deployment"
             }
         ],
         "menus": {
@@ -139,6 +143,12 @@
                     "title": "CCDX: Retrieve Source From Changeset",
                     "group": "DXCompanion",
                     "when": "explorerResourceIsFolder && resourceFilename == changesets"
+                },
+                {
+                    "command": "changeset.addorgs",
+                    "title": "CCDX: Add Orgs For Changeset Deployment",
+                    "group": "DXCompanion",
+                    "when": "resourceFilename == orgs.json"
                 }
             ]
         },
