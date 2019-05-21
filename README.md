@@ -111,6 +111,34 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.3.0
+
+Fully support changeset driven development (https://trailhead.salesforce.com/en/content/learn/modules/declarative-change-set-development/develop-and-test-changes-locally)
+
+With this release,you can use DX Code Companion extension to retrieve source from the changeset created in your sandbox (Assumes you have authorized CLI to sandbox using "SFDX:Authorize and org").Use vscode to edit contents if needed and then deploy to target orgs all from VScode without need to upload the changesets and wait.
+
+  1) To retrieve source from the changeset use the command pallete and select "CCDX:Retrieve Source From Changeset"
+
+  ![Retrieve source from changeset](./images/retrieve_changeset.png)
+
+  2) Provide the changeset name in the text box (Avoid creating changesets with same name in sandbox)
+
+  ![changeset name](./images/changesetname.png)
+
+  3) Once code components are retrieved , Under changeset directory a sub directory will be created with src folder having all the components .You can edit the source code and also save to the authenticated orgs.
+
+  ![changeset dir structure](./images/changesetdir.png)
+
+  4) Note that the changeset directory has orgs.json to which you can add list of orgs you have authorized salesforce CLI by clicking on the file and using "CCDX:Add Orgs For Changeset Deployment"
+
+  ![Add orgs for depolyments](./images/addChangesets.png)
+
+  5.Click on "src" folder for your changeset to deploy them . The interface will ask you to pick orgs you added in previous step
+
+  ![Deploy changeset](./images/changesetDeploy.png)
+
+  ![Select the target org](./images/deployorgselector.png)
+  
 ### 0.2.8
 
 1. Fixes connection method to use salesforce core library native methods

@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import {Config} from './services/config';
-import CodeCompanionContentProvider from './providers/ContentProvider' ;
+import CodeCompanionContentProvider from './providers/ccprovider' ;
 import {Changeset} from './services/changeset';
 import {DeploySource} from './services/deploy';
 import {NavigationService} from './services/navigation';
@@ -107,6 +107,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
         DeploySource.deploy(textDocument);
     }));
+    
     context.subscriptions.push(deploySource);
     context.subscriptions.push(changesetRetrieve);
     context.subscriptions.push(compareSource);
