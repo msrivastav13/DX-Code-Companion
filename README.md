@@ -133,12 +133,12 @@ With this release,you can use DX Code Companion extension to retrieve source fro
 
   ![Add orgs for depolyments](./images/addChangesets.png)
 
-  5.Click on "src" folder for your changeset to deploy them . The interface will ask you to pick orgs you added in previous step
+  ![Select the target org](./images/deployorgselector.png)
+
+  5.Click on "src" folder for your changeset to deploy them . The interface will ask you to pick orgs from list of orgs you have added in previous step
 
   ![Deploy changeset](./images/changesetDeploy.png)
 
-  ![Select the target org](./images/deployorgselector.png)
-  
 ### 0.2.8
 
 1. Fixes connection method to use salesforce core library native methods
