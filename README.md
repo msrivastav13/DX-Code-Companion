@@ -115,6 +115,10 @@ To open command pallete and look for all CCDX Commands use below .
 
 Fully support changeset driven development (https://trailhead.salesforce.com/en/content/learn/modules/declarative-change-set-development/develop-and-test-changes-locally)
 
+This version requires you to upgrade mo-dx-plugin to 0.2.0 version.
+
+Run `sfdx plugins:update` to update mo-dx-plugin to latest
+
 With this release,you can use DX Code Companion extension to retrieve source from the changeset created in your sandbox (Assumes you have authorized CLI to sandbox using "SFDX:Authorize and org").Use vscode to edit contents if needed and then deploy to target orgs all from VScode without need to upload the changesets and wait.
 
   1) To retrieve source from the changeset use the command pallete and select "CCDX:Retrieve Source From Changeset"
