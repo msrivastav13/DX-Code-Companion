@@ -104,8 +104,13 @@ export function activate(context: vscode.ExtensionContext) {
     // Provider for compare view when server files are modified
     context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider('codecompanion', CodeCompanionContentProvider.getInstance()));
     // Trigger Deploy on Save
-    context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
-        DeploySource.deploy(textDocument);
+    context.subscriptions.push(vscode.workspace.onWillSaveTextDocument((textDocument: vscode.TextDocumentWillSaveEvent) => {
+        // Make sure this is a manual save only and not when editor tries to saves the command is fired
+        if(textDocument.reason === 1) {
+            vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
+                DeploySource.deploy(textDocument);
+            });
+        }
     }));
     
     context.subscriptions.push(deploySource);
