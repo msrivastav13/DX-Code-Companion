@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.3.1
+
+1.Update the sfdx-core to use latest version.
+2.Save to salesforce would automatically kick off  when vscode opens a folder. Made sure it happens only when user manually tries to save the file
+3.Remove support for v1.29.0 vscode. Requires v1.30.0 and above
+
 ### 0.3.0
 
 Fully support changeset driven development (https://trailhead.salesforce.com/en/content/learn/modules/declarative-change-set-development/develop-and-test-changes-locally)
