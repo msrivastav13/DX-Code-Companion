@@ -111,7 +111,7 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
-### 0.3.1
+### 0.3.3
 
 1.Update the sfdx-core to use latest version.
 2.Save to salesforce would automatically kick off  when vscode opens a folder. Made sure it happens only when user manually tries to save the file
