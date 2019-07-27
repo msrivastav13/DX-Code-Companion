@@ -111,6 +111,10 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.3.6
+1.To manage settings you dont need to edit the settings.json and instead has UI
+2.Security path via npm audit
+
 ### 0.3.3
 
 1.Update the sfdx-core to use latest version.
