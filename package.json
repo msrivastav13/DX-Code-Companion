@@ -166,16 +166,12 @@
             "title": "SalesforceDX Companion Features",
             "properties": {
                 "dx-code-companion.autosave.enabled": {
-                    "type": [
-                        "boolean"
-                    ],
+                    "type": "boolean",
                     "default": true,
                     "description": "Saves to salesforce automatically"
                 },
                 "dx-code-companion.manageconflict.enabled": {
-                    "type": [
-                        "boolean"
-                    ],
+                    "type": "boolean",
                     "default": false,
                     "description": "Compare code in local file with file in salesforce"
                 }
@@ -197,6 +193,6 @@
         "vscode": "^1.1.34"
     },
     "dependencies": {
-        "@salesforce/core": "^2.0.1"
+        "@salesforce/core": "^2.1.1"
     }
 }
