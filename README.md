@@ -111,6 +111,9 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.3.7
+1.Now you can directly edit the static resource file and save to the server.Note that your folders or files should be within folder named "staticresources".If you are building a vf app using vue or React,you can keep your files in folder named staticresources and edit the app and save the file.
+
 ### 0.3.6
 1.To manage settings you dont need to edit the settings.json and instead has UI
 2.Security path via npm audit

@@ -37,7 +37,7 @@ export class DeploySource {
     }
 
     public static deployToSFDC(textDocument: vscode.TextDocument) {
-        if(this.supportedFileForDeploy()) {
+        if(this. supportedFileForDeploy()) {
             // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
             if(this.isProjectAuthroizedToSFDC()) {
                 if(vscode.window.activeTextEditor) {
@@ -175,21 +175,26 @@ export class DeploySource {
     private static supportedFileForDeploy() : boolean {
         let fileSupported = false;
         if(vscode.window.activeTextEditor) {
-            //At this point only few file types are supported for auto save
-            const supportedFileTypes = ['trigger','cls','cmp','evt','design','tokens','page','svg','auradoc','component','intf','app'];
             const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
-            const pathAsArray = filePath.split('/');
-            const lastparam = pathAsArray[pathAsArray.length - 1];
-            const fileExtension = lastparam.substring(lastparam.lastIndexOf('.') + 1);
-            const directory = path.basename(path.dirname(path.dirname(filePath)));
-            if(fileExtension === 'js' || fileExtension === 'css' ||  fileExtension === 'html') {
-                // check for immediate directory
-                if(directory === 'lwc' || directory === 'aura') {
+            // Check if this is a static resource
+            if(filePath.indexOf('/staticresources/') !== -1) {
+                fileSupported = true;
+            } else {
+                //At this point only few file types are supported for auto save
+                const supportedFileTypes = ['trigger','cls','cmp','evt','design','tokens','page','svg','auradoc','component','intf','app'];
+                const pathAsArray = filePath.split('/');
+                const lastparam = pathAsArray[pathAsArray.length - 1];
+                const fileExtension = lastparam.substring(lastparam.lastIndexOf('.') + 1);
+                const directory = path.basename(path.dirname(path.dirname(filePath)));
+                if(fileExtension === 'js' || fileExtension === 'css' ||  fileExtension === 'html') {
+                    // check for immediate directory
+                    if(directory === 'lwc' || directory === 'aura') {
+                        fileSupported = true;
+                    }
+                }
+                if(supportedFileTypes.indexOf(fileExtension) !== -1 ){
                     fileSupported = true;
                 }
-            }
-            if(supportedFileTypes.indexOf(fileExtension) !== -1 ){
-                fileSupported = true;
             }
         }
         return fileSupported;

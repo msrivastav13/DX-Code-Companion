@@ -1,9 +1,12 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.3.7
+1.Added support for saving static resource files to server via tooling api.
+
 ### 0.3.6
 1.To manage settings you dont need to edit the settings.json and instead has UI
-2.Security path via npm audit
+2.Security patches (discovered via npm audit)
 
 ### 0.3.3
 
