@@ -175,9 +175,9 @@ export class DeploySource {
     private static supportedFileForDeploy() : boolean {
         let fileSupported = false;
         if(vscode.window.activeTextEditor) {
-            const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
+            const filePath = vscodeCore_1.VSCodeCore.getFsPath();
             // Check if this is a static resource
-            if(filePath.indexOf('/staticresources/') !== -1 || filePath.indexOf('\\staticresources\\') !== -1) {
+            if(filePath.indexOf('/staticresources/') !== -1) {
                 fileSupported = true;
             } else {
                 //At this point only few file types are supported for auto save
