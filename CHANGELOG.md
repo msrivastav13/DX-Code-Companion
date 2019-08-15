@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.3.8
+1.Fix bug for the windows when static resource files are edited
+
 ### 0.3.7
 1.Added support for saving static resource files to server via tooling api.
 
