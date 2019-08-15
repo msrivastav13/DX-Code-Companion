@@ -2,7 +2,7 @@
     "name": "dx-code-companion",
     "displayName": "SalesforceDX Code Companion",
     "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "publisher": "MohithShrivastava",
     "engines": {
         "vscode": "^1.30.0"
