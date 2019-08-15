@@ -2,8 +2,6 @@
 
 import * as path from 'path';
 import { MetadataType } from '../typings/ccdxTypings';
-import { OSUtil } from './osUtils';
-
 export class Metadata {
 
     protected filepath: string; 
