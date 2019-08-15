@@ -34,7 +34,7 @@ export class VSCodeCore {
         let path = '';
         if(vscode.window.activeTextEditor) {
             path = vscode.window.activeTextEditor.document.uri.fsPath;
-            if(process.platform.includes('win')) {
+            if(OSUtil.isWindowsOs()) {
                 path = OSUtil.toUnixStyle(path); //change to unix style for windows
             }
         }

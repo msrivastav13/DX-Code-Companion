@@ -7,7 +7,8 @@ export class OSUtil {
     }
 
     public static isWindowsOs(): boolean {
-        if(process.platform.includes('win')) {
+        const operatingsystem : string = process.platform;
+        if(operatingsystem.includes('win')) {
             return true;
         } else {
             return false;

@@ -2,6 +2,7 @@
 
 import * as path from 'path';
 import { MetadataType } from '../typings/ccdxTypings';
+import { OSUtil } from './osUtils';
 
 export class Metadata {
 
@@ -12,7 +13,7 @@ export class Metadata {
     constructor(filepath: string) {
         this.filepath = filepath;
         this.directory = path.basename(path.dirname(path.dirname(this.filepath)));
-        this.isstaticresource = (filepath.indexOf('/staticresources/') === -1 || filepath.indexOf('\\staticresources\\') === -1 )? false : true;
+        this.isstaticresource = (filepath.indexOf('\\staticresources\\') === -1 && filepath.indexOf('/staticresources/') === -1)? false : true; 
     }
 
     public getMetadataType(): MetadataType {
