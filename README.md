@@ -111,6 +111,9 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.3.9
+1.There is a setting provided(dx-code-companion.staticresourcefolder.resourceBundleFoldername) to indicate the resource bundle folder name for single page app development. Default value is "staticresource" but if you prefer to use names like "resourcebundle" or "spa" use the settings to change it
+
 ### 0.3.7
 1.Now you can directly edit the static resource file and save to the server.Note that your folders or files should be within folder named "staticresources".If you are building a vf app using vue or React,you can keep your files in folder named staticresources and edit the app and save the file.
 

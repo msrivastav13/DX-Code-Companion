@@ -1,198 +1,212 @@
 {
-    "name": "dx-code-companion",
-    "displayName": "SalesforceDX Code Companion",
-    "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
-    "version": "0.3.10",
-    "publisher": "MohithShrivastava",
-    "engines": {
-        "vscode": "^1.30.0"
-    },
-    "icon": "images/logo.png",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/msrivastav13/DX-Code-Companion.git"
-    },
-    "categories": [
-        "Other"
+  "name": "dx-code-companion",
+  "displayName": "SalesforceDX Code Companion",
+  "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
+  "version": "0.3.10",
+  "publisher": "MohithShrivastava",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "icon": "images/logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msrivastav13/DX-Code-Companion.git"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:sfdx-project.json"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "retrieve.dxSource",
+        "title": "CCDX: Retrieve DX Source From Package"
+      },
+      {
+        "command": "refresh.source",
+        "title": "CCDX: Refresh From Server"
+      },
+      {
+        "command": "retrieve.pkgSource",
+        "title": "CCDX: Retrieve Source From Package"
+      },
+      {
+        "command": "deploy.source",
+        "title": "CCDX: Save To Salesforce"
+      },
+      {
+        "command": "compare.source",
+        "title": "CCDX: Compare With Server"
+      },
+      {
+        "command": "open.lightningPage",
+        "title": "CCDX: Open Lightning Builder page"
+      },
+      {
+        "command": "open.metadataCoverageReport",
+        "title": "CCDX: Open MetadataCoverage Report"
+      },
+      {
+        "command": "open.componentLibrary",
+        "title": "CCDX: Open Component Library"
+      },
+      {
+        "command": "open.vf",
+        "title": "CCDX: Open Visualforce Page"
+      },
+      {
+        "command": "open.slds",
+        "title": "CCDX: Open SLDS Website"
+      },
+      {
+        "command": "switch.org",
+        "title": "CCDX: Switch Org"
+      },
+      {
+        "command": "open.org",
+        "title": "CCDX: Open Default Org"
+      },
+      {
+        "command": "deploy.src",
+        "title": "CCDX: Deploy Source To Salesforce"
+      },
+      {
+        "command": "changeset.retrieve",
+        "title": "CCDX: Retrieve Source From Changeset"
+      },
+      {
+        "command": "changeset.addorgs",
+        "title": "CCDX: Add Orgs For Changeset Deployment"
+      },
+      {
+        "command": "deploy.staticresource",
+        "title": "CCDX: Deploy Static Resource"
+      }
     ],
-    "activationEvents": [
-        "workspaceContains:sfdx-project.json"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "retrieve.dxSource",
-                "title": "CCDX: Retrieve DX Source From Package"
-            },
-            {
-                "command": "refresh.source",
-                "title": "CCDX: Refresh From Server"
-            },
-            {
-                "command": "retrieve.pkgSource",
-                "title": "CCDX: Retrieve Source From Package"
-            },
-            {
-                "command": "deploy.source",
-                "title": "CCDX: Save To Salesforce"
-            },
-            {
-                "command": "compare.source",
-                "title": "CCDX: Compare With Server"
-            },
-            {
-                "command": "open.lightningPage",
-                "title": "CCDX: Open Lightning Builder page"
-            },
-            {
-                "command": "open.metadataCoverageReport",
-                "title": "CCDX: Open MetadataCoverage Report"
-            },
-            {
-                "command": "open.componentLibrary",
-                "title": "CCDX: Open Component Library"
-            },
-            {
-                "command": "open.vf",
-                "title": "CCDX: Open Visualforce Page"
-            },
-            {
-                "command": "open.slds",
-                "title": "CCDX: Open SLDS Website"
-            },
-            {
-                "command": "switch.org",
-                "title": "CCDX: Switch Org"
-            },
-            {
-                "command": "open.org",
-                "title": "CCDX: Open Default Org"
-            },
-            {
-                "command": "deploy.src",
-                "title": "CCDX: Deploy Source To Salesforce"
-            },
-            {
-                "command": "changeset.retrieve",
-                "title": "CCDX: Retrieve Source From Changeset"
-            },
-            {
-                "command": "changeset.addorgs",
-                "title": "CCDX: Add Orgs For Changeset Deployment"
-            }
-        ],
-        "menus": {
-            "editor/context": [
-                {
-                    "command": "deploy.source",
-                    "group": "DXCompanion",
-                    "when": "CCDXActive"
-                },
-                {
-                    "command": "refresh.source",
-                    "group": "DXCompanion",
-                    "when": "CCDXActive"
-                },
-                {
-                    "command": "compare.source",
-                    "group": "DXCompanion",
-                    "when": "CCDXActive"
-                }
-            ],
-            "editor/title": [
-                {
-                    "command": "open.componentLibrary",
-                    "group": "OpenCmd",
-                    "when": "CCDXActive"
-                },
-                {
-                    "command": "open.metadataCoverageReport",
-                    "group": "OpenCmd",
-                    "when": "CCDXActive"
-                },
-                {
-                    "command": "open.slds",
-                    "group": "OpenCmd",
-                    "when": "CCDXActive"
-                },
-                {
-                    "command": "open.lightningPage",
-                    "group": "OpenCmd",
-                    "when": "resourceExtname =~ /(.flexipage|.xml)/"
-                },
-                {
-                    "command": "open.vf",
-                    "group": "OpenCmd",
-                    "when": "resourceExtname == .page"
-                },
-                {
-                    "command": "open.org",
-                    "group": "OpenCmd",
-                    "when": "CCDXActive"
-                }
-            ],
-            "explorer/context": [
-                {
-                    "command": "deploy.src",
-                    "group": "DXCompanion",
-                    "when": "explorerResourceIsFolder && resourceFilename == src"
-                },
-                {
-                    "command": "changeset.retrieve",
-                    "title": "CCDX: Retrieve Source From Changeset",
-                    "group": "DXCompanion",
-                    "when": "explorerResourceIsFolder && resourceFilename == changesets"
-                },
-                {
-                    "command": "changeset.addorgs",
-                    "title": "CCDX: Add Orgs For Changeset Deployment",
-                    "group": "DXCompanion",
-                    "when": "resourceFilename == orgs.json"
-                }
-            ]
+    "menus": {
+      "editor/context": [
+        {
+          "command": "deploy.source",
+          "group": "DXCompanion",
+          "when": "CCDXActive"
         },
-        "keybindings": [
-            {
-                "command": "deploy.source",
-                "key": "cmd+shift+c",
-                "win": "ctrl+shift+c",
-                "linux": "ctrl+shift+c",
-                "when": "editorFocus"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "SalesforceDX Companion Features",
-            "properties": {
-                "dx-code-companion.autosave.enabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Saves to salesforce automatically"
-                },
-                "dx-code-companion.manageconflict.enabled": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Compare code in local file with file in salesforce"
-                }
-            }
+        {
+          "command": "refresh.source",
+          "group": "DXCompanion",
+          "when": "CCDXActive"
+        },
+        {
+          "command": "compare.source",
+          "group": "DXCompanion",
+          "when": "CCDXActive"
         }
+      ],
+      "editor/title": [
+        {
+          "command": "open.componentLibrary",
+          "group": "OpenCmd",
+          "when": "CCDXActive"
+        },
+        {
+          "command": "open.metadataCoverageReport",
+          "group": "OpenCmd",
+          "when": "CCDXActive"
+        },
+        {
+          "command": "open.slds",
+          "group": "OpenCmd",
+          "when": "CCDXActive"
+        },
+        {
+          "command": "open.lightningPage",
+          "group": "OpenCmd",
+          "when": "CCDXActive && resourceExtname =~ /(.flexipage|.xml)/"
+        },
+        {
+          "command": "open.vf",
+          "group": "OpenCmd",
+          "when": "CCDXActive && resourceExtname == .page"
+        },
+        {
+          "command": "open.org",
+          "group": "OpenCmd",
+          "when": "CCDXActive"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "deploy.staticresource",
+          "group": "DXCompanion",
+          "when": "explorerResourceIsFolder && CCDXActive"
+        },
+        {
+          "command": "deploy.src",
+          "group": "DXCompanion",
+          "when": "explorerResourceIsFolder && resourceFilename == src && CCDXActive"
+        },
+        {
+          "command": "changeset.retrieve",
+          "title": "CCDX: Retrieve Source From Changeset",
+          "group": "DXCompanion",
+          "when": "explorerResourceIsFolder && resourceFilename == changesets && CCDXActive"
+        },
+        {
+          "command": "changeset.addorgs",
+          "title": "CCDX: Add Orgs For Changeset Deployment",
+          "group": "DXCompanion",
+          "when": "resourceFilename == orgs.json && CCDXActive"
+        }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "@types/mocha": "^2.2.42",
-        "@types/node": "^8.10.48",
-        "tslint": "^5.16.0",
-        "typescript": "^3.3.0",
-        "vscode": "^1.1.34"
-    },
-    "dependencies": {
-        "@salesforce/core": "^2.1.1"
+    "keybindings": [
+      {
+        "command": "deploy.source",
+        "key": "cmd+shift+c",
+        "win": "ctrl+shift+c",
+        "linux": "ctrl+shift+c",
+        "when": "editorFocus"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "SalesforceDX Companion Features",
+      "properties": {
+        "dx-code-companion.autosave.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Saves to salesforce automatically"
+        },
+        "dx-code-companion.manageconflict.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Compare code in local file with file in salesforce"
+        },
+        "dx-code-companion.staticresourcefolder.resourceBundleFoldername": {
+          "type": "string",
+          "default": "staticresources",
+          "description": "Folder name where you have your Single page application"
+        }
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^8.10.48",
+    "tslint": "^5.16.0",
+    "typescript": "^3.3.0",
+    "vscode": "^1.1.34"
+  },
+  "dependencies": {
+    "@salesforce/core": "^2.1.1"
+  }
 }

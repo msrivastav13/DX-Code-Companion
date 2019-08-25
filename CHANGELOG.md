@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.3.9
+1.There is a setting provided(dx-code-companion.staticresourcefolder.resourceBundleFoldername) to indicate the resource bundle folder name for single page app development. Default value is "staticresource" but if you prefer to use names like "resourcebundle" or "spa" use the settings to change it
+
 ### 0.3.8
 1.Fix bug for the windows when static resource files are edited
 

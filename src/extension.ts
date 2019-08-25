@@ -7,6 +7,7 @@ import CodeCompanionContentProvider from './providers/ccprovider' ;
 import {Changeset} from './services/changeset';
 import {DeploySource} from './services/deploy';
 import {NavigationService} from './services/navigation';
+import {OSUtil} from './services/osUtils';
 import {RetrieveSource} from './services/retrieve';
 import {switchOrg} from './services/switchOrg';
 import {VSCodeCore} from './services/vscodeCore';
@@ -83,6 +84,17 @@ export function activate(context: vscode.ExtensionContext) {
         await switchOrg();
     });
 
+    const deployStaticResource = vscode.commands.registerCommand('deploy.staticresource', (uri:vscode.Uri) => {
+        const staticresourcefolder = vscode.workspace.getConfiguration("dx-code-companion").staticresourcefolder.resourceBundleFoldername;
+        let activeTerminal = VSCodeCore.setupTerminal();
+        if(activeTerminal){
+            if(uri.fsPath.indexOf(staticresourcefolder) !== -1) {
+                let openCmd = 'sfdx deploy:staticresource -p ' + '"' + OSUtil.toUnixStyle(uri.fsPath) + '"' + ' -r ' + staticresourcefolder;
+                activeTerminal.sendText(openCmd);
+            }
+        }
+    });
+
     const deploySource = vscode.commands.registerCommand('deploy.source', () => {
         if(vscode.window.activeTextEditor){
             DeploySource.deployToSFDC(vscode.window.activeTextEditor.document);
@@ -123,6 +135,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(openSalesforceOrg);
     context.subscriptions.push(deploysrc);
     context.subscriptions.push(changesetOrgAdd);
+    context.subscriptions.push(deployStaticResource);
 }
 // this method is called when your extension is deactivated
 export function deactivate() {
