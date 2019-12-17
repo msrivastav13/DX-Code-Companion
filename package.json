@@ -207,6 +207,6 @@
     "vscode": "^1.1.34"
   },
   "dependencies": {
-    "@salesforce/core": "^2.1.1"
+    "@salesforce/core": "^2.1.5"
   }
 }
