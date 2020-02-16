@@ -111,6 +111,15 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.4.0
+1.Fix issues listed [here](https://github.com/msrivastav13/DX-Code-Companion/labels/fixed%20in%200.4.0)
+
+2.Install mo-dx-plugin now from the extension context menu directly if you do not have mo-dx-plugin.
+
+![Install mo-dx-plugin for extension](./images/install_plugins.png)
+
+3.Security patch
+
 ### 0.3.9
 1.There is a setting provided(dx-code-companion.staticresourcefolder.resourceBundleFoldername) to indicate the resource bundle folder name for single page app development. Default value is "staticresource" but if you prefer to use names like "resourcebundle" or "spa" use the settings to change it
 2.A static resource folder has a explorer menu to deploy the folder as static resource bundle

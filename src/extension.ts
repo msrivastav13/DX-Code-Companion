@@ -64,6 +64,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    const installPlugin = vscode.commands.registerCommand('extension.installplugin', () => {
+        let activeTerminal = VSCodeCore.setupTerminal();
+        if(activeTerminal){
+            let openCmd = 'sfdx plugins:install mo-dx-plugin';
+            activeTerminal.sendText(openCmd);
+        }
+    });
+
     const openVFPage = vscode.commands.registerCommand('open.vf', () => {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
@@ -117,7 +125,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider('codecompanion', CodeCompanionContentProvider.getInstance()));
     // Trigger Deploy on Save
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
-        DeploySource.deploy(textDocument);
+        if(vscode.window.activeTextEditor) {
+            // Execute save only for the opened Editor file save event
+            if(vscode.window.activeTextEditor.document.uri.fsPath === textDocument.uri.fsPath) {
+                DeploySource.deploy(textDocument);
+            }
+        }
     }));
     
     context.subscriptions.push(deploySource);
@@ -136,6 +149,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(deploysrc);
     context.subscriptions.push(changesetOrgAdd);
     context.subscriptions.push(deployStaticResource);
+    context.subscriptions.push(installPlugin);
 }
 // this method is called when your extension is deactivated
 export function deactivate() {

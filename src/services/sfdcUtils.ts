@@ -119,6 +119,8 @@ export class SalesforceUtil {
              // Add Namespace Prefix
             if(namespacePrefix !== null) {
                 query.queryString += ` and NamespacePrefix=${namespacePrefix}`;
+            } else {
+                query.queryString += ` and NamespacePrefix=null`;
             }
         }
         query.bodyfield = bodyfield;
