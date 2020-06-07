@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+
+### 0.4.1
+1.Update npm libraries to latest. Fixes Security Vulnerabilities
+
 ### 0.4.0
 1.Fix issues listed [here](https://github.com/msrivastav13/DX-Code-Companion/labels/fixed%20in%200.4.0)
 
