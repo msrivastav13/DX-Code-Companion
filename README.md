@@ -111,6 +111,9 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.4.6
+1.Update npm libraries to latest. Fixes Security Vulnerabilities
+
 ### 0.4.1
 
 1.Update npm libraries to latest. Fixes Security Vulnerabilities
