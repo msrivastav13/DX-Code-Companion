@@ -36,7 +36,7 @@ export class DeploySource {
             // Set content provider content
             CodeCompanionContentProvider.serverContent = serverResponse.Body;
             var sfuri: vscode.Uri = vscode.Uri.parse(
-              `codecompanion://salesforce.com/${metadataType}/${filename}?${Date.now()}`
+              `codecompanion://salesforce.com/${metadataType}/${filename}.${fileextension}?${Date.now()}`
             );
             vscode.commands.executeCommand(
               "vscode.diff",
