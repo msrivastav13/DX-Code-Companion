@@ -4,6 +4,7 @@ All notable changes to the "dx-code-companion" extension will be documented in t
 ### 0.4.7
 
 1. Update npm libraries to latest.
+2. Diff view now respects current UI theme set by user
 
 ### 0.4.6
 
