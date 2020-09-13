@@ -20,7 +20,7 @@ This vscode extension works only once you have installed Salesforce CLI and a mo
 
 1. Install SalesforceDX CLI from https://developer.salesforce.com/tools/sfdxcli based on your operating system.
 2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx plugins:update`
-3. VScode version 1.29 and beyond
+3. VScode version 1.36 and beyond
 4. Salesforce official plugin provides great syntax and language support.Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
 5. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
 6. Extension activation is shown in footer with a rocket symbol. Once extension is active authorize the project if you havent and enjoy faster deploys
@@ -110,6 +110,10 @@ To open command pallete and look for all CCDX Commands use below .
 "linux": "ctrl+shift+p",
 
 # Release Notes
+
+### 0.4.7
+1.Update npm libraries to latest. Fixes Security Vulnerabilities
+2.Update mo-dx-plugins using sfdx plugins:update to get latest CLI plugin extension that powers this extension
 
 ### 0.4.6
 1.Update npm libraries to latest. Fixes Security Vulnerabilities
