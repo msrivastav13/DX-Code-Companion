@@ -109,7 +109,7 @@ export class DeploySource {
         title: "Comparing with server copy"
       },
       () => {
-        var p = new Promise(async resolve => {
+        var p = new Promise<void>(async resolve => {
           const serverResponse = await this.getServerCopy(
             metadataType,
             filename,
@@ -176,7 +176,7 @@ export class DeploySource {
               title: "Refreshing.."
             },
             () => {
-              var p = new Promise(async resolve => {
+              var p = new Promise<void>(async resolve => {
                 const serverResponse = await this.getServerCopy(
                   metadataType,
                   filename,
