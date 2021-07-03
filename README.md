@@ -111,6 +111,9 @@ To open command pallete and look for all CCDX Commands use below .
 
 # Release Notes
 
+### 0.4.8
+1.Update npm libraries to latest. Fixes Security Vulnerabilities 
+
 ### 0.4.7
 1.Update npm libraries to latest. Fixes Security Vulnerabilities
 2.Update mo-dx-plugins using sfdx plugins:update to get latest CLI plugin extension that powers this extension

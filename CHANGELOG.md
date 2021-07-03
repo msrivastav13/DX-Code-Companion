@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.4.8
+
+1. Update npm libraries to latest
+
 ### 0.4.7
 
 1. Update npm libraries to latest.
