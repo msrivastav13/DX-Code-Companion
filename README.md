@@ -1,8 +1,5 @@
 # SalesforceDX Code Companion
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/MohithShrivastava.dx-code-companion)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/MohithShrivastava.dx-code-companion)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
-
 VS Code extension for deploying Apex, Visualforce, Aura, and LWC files to Salesforce orgs without source tracking. Also retrieves metadata from packages and changesets. Not an official Salesforce product.
 
 Depends on [Salesforce CLI (`sf`)](https://developer.salesforce.com/tools/salesforcecli) and [mo-dx-plugin](https://github.com/msrivastav13/mo-dx-plugin) (auto-installed on activation).
