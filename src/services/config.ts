@@ -2,29 +2,22 @@
 
 import * as sfcore from '@salesforce/core';
 import * as vscode from 'vscode';
-import * as path from 'path';
 
 export class Config {
 
     public static async getAllOrgs(): Promise<string[]> {
-        const authFiles = await sfcore.AuthInfo.listAllAuthFiles();
-        const orgs = authFiles.map(authfile => authfile.replace('.json', ''));
-        return orgs;
-    }
-
-    private static async getAllAliases(): Promise<sfcore.Aliases> {
-        const aliases = await sfcore.Aliases.create(sfcore.Aliases.getDefaultOptions());
-        return aliases;
+        const authorizations = await sfcore.AuthInfo.listAllAuthorizations();
+        return authorizations.map(a => a.username);
     }
 
     public static async getAllOrgAliases(): Promise<string[]> {
-        const orgAlias = [];
+        const orgAlias: string[] = [];
         const orgs = await this.getAllOrgs();
-        const aliases = await this.getAllAliases();
-        // Map the aliases onto the orgs
+        const stateAgg = await sfcore.StateAggregator.getInstance();
         for (const org of orgs) {
-            if(aliases.getKeysByValue(org)) {
-                orgAlias.push( aliases.getKeysByValue(org) + ':' + org );
+            const alias = stateAgg.aliases.get(org);
+            if (alias) {
+                orgAlias.push(alias + ':' + org);
             }
         }
         return orgAlias;
@@ -33,22 +26,18 @@ export class Config {
     public static async getConnection(): Promise<any> {
         let defaultusername = await Config.getDefaultUsername();
         const connection = await sfcore.Connection.create({
-            authInfo: await sfcore.AuthInfo.create({ username:  defaultusername})
+            authInfo: await sfcore.AuthInfo.create({ username: defaultusername })
         });
-        return connection;  
+        return connection;
     }
 
     public static async getDefaultUsername() {
-        if(vscode.workspace && vscode.workspace.workspaceFolders) {
-            const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-            const myLocalConfig = await sfcore.ConfigFile.create({
-                isGlobal: false,
-                rootFolder: path.join(rootPath, '.sfdx'),
-                filename: 'sfdx-config.json'
-            });
-            const localValue = myLocalConfig.get('defaultusername');
-            let defaultusername = await sfcore.Aliases.fetch(JSON.stringify(localValue).replace(/\"/g, ''));
-            return defaultusername;
+        if (vscode.workspace && vscode.workspace.workspaceFolders) {
+            const aggregator = await sfcore.ConfigAggregator.create();
+            const value = aggregator.getPropertyValue(sfcore.OrgConfigProperties.TARGET_ORG);
+            if (!value) { return undefined; }
+            const stateAgg = await sfcore.StateAggregator.getInstance();
+            return stateAgg.aliases.resolveUsername(String(value));
         }
     }
 }

@@ -1,6 +1,17 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.5.0
+
+1. Migrate all CLI commands from deprecated `sfdx` to `sf`
+2. Auto-install `mo-dx-plugin@latest` on extension activation
+3. Upgrade `@salesforce/core` from v2 to v8 (uses new `StateAggregator`, `ConfigAggregator`, and `AuthInfo.listAllAuthorizations()` APIs)
+4. Replace deprecated `vscode` dev dependency with `@types/vscode` and `@vscode/test-electron`
+5. Upgrade TypeScript to v5 and `@types/node` to v18
+6. Fix all 29 npm security vulnerabilities (critical: form-data, json-schema, minimist, prototype pollution in lodash/qs; high: jsonwebtoken, jsen, jws, minimatch)
+7. Use `sf config set target-org` instead of `sfdx force:config:set defaultusername` for org switching
+8. Use `sf project deploy start` instead of `sfdx force:mdapi:deploy` for metadata deployment
+
 ### 0.4.8
 
 1. Update npm libraries to latest

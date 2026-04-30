@@ -7,7 +7,7 @@ import { VSCodeUI } from './vscodeUI';
 export async function switchOrg(): Promise<void> {
     const orgs = await Config.getAllOrgAliases();
     const result = await VSCodeUI.showQuickPick(orgs);
-    let cmd = 'sfdx force:config:set defaultusername=';
+    let cmd = 'sf config set target-org=';
     if(result){
         cmd = cmd + result.split(':')[0];
         let activeTerminal = VSCodeCore.setupTerminal();

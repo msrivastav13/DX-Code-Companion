@@ -18,16 +18,22 @@ export function activate(context: vscode.ExtensionContext) {
     // show activation message
     VSCodeCore.showActivationMessage();
 
+    // Auto-install mo-dx-plugin on activation
+    const activeTerminal = VSCodeCore.setupTerminal();
+    if (activeTerminal) {
+        activeTerminal.sendText('sf plugins install mo-dx-plugin@latest');
+    }
+
     const retrieveSource = vscode.commands.registerCommand('retrieve.dxSource', async () => {
         const connection = await Config.getConnection();
         const retrievesrc = new RetrieveSource(connection);
-        retrievesrc.retrieve('sfdx retrieve:dxsource -n ');
+        retrievesrc.retrieve('sf retrieve dxsource -n ');
     });
 
     const retrievepkgSource = vscode.commands.registerCommand('retrieve.pkgSource', async () => {
         const connection = await Config.getConnection();
         const retrievesrc = new RetrieveSource(connection);
-        retrievesrc.retrieve('sfdx retrieve:pkgsource -n ');
+        retrievesrc.retrieve('sf retrieve pkgsource -n ');
     });
 
     const deploysrc = vscode.commands.registerCommand('deploy.src', async (fileUri: { path: string; }) => {
@@ -59,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
     const openSalesforceOrg = vscode.commands.registerCommand('open.org', () => {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
-            let openCmd = 'sfdx force:org:open';
+            let openCmd = 'sf org open';
             activeTerminal.sendText(openCmd);
         }
     });
@@ -67,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
     const installPlugin = vscode.commands.registerCommand('extension.installplugin', () => {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
-            let openCmd = 'sfdx plugins:install mo-dx-plugin';
+            let openCmd = 'sf plugins install mo-dx-plugin@latest';
             activeTerminal.sendText(openCmd);
         }
     });
@@ -75,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
     const openVFPage = vscode.commands.registerCommand('open.vf', () => {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
-            let openCmd = 'sfdx force:org:open -p /apex/' + NavigationService.openVFPage(VSCodeCore.getFsPath());
+            let openCmd = 'sf org open -p /apex/' + NavigationService.openVFPage(VSCodeCore.getFsPath());
             activeTerminal.sendText(openCmd);
         }
     });
@@ -83,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
     const openLightningAppPage = vscode.commands.registerCommand('open.lightningPage', () => {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
-            let openCmd = 'sfdx force:source:open -f ' + '"' + VSCodeCore.getFsPath() + '"';
+            let openCmd = 'sf org open -f ' + '"' + VSCodeCore.getFsPath() + '"';
             activeTerminal.sendText(openCmd);
         }
     });
@@ -97,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
         let activeTerminal = VSCodeCore.setupTerminal();
         if(activeTerminal){
             if(uri.fsPath.indexOf(staticresourcefolder) !== -1) {
-                let openCmd = 'sfdx deploy:staticresource -p ' + '"' + OSUtil.toUnixStyle(uri.fsPath) + '"' + ' -r ' + staticresourcefolder;
+                let openCmd = 'sf deploy staticresource -p ' + '"' + OSUtil.toUnixStyle(uri.fsPath) + '"' + ' -r ' + staticresourcefolder;
                 activeTerminal.sendText(openCmd);
             }
         }

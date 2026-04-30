@@ -1,22 +1,25 @@
-//
-// PLEASE DO NOT MODIFY / DELETE UNLESS YOU KNOW WHAT YOU ARE DOING
-//
-// This file is providing the test runner to use when running extension tests.
-// By default the test runner in use is Mocha based.
-//
-// You can provide your own test runner if you want to override it by exporting
-// a function run(testRoot: string, clb: (error:Error) => void) that the extension
-// host can call to run the tests. The test runner is expected to use console.log
-// to report the results back to the caller. When the tests are finished, return
-// a possible error to the callback or null if none.
+import * as path from 'path';
+import * as fs from 'fs';
+import Mocha from 'mocha';
 
-import * as testRunner from 'vscode/lib/testrunner';
+export async function run(): Promise<void> {
+    const mocha = new Mocha({
+        ui: 'tdd',
+        color: true
+    });
 
-// You can directly control Mocha options by uncommenting the following lines
-// See https://github.com/mochajs/mocha/wiki/Using-mocha-programmatically#set-options for more info
-testRunner.configure({
-    ui: 'tdd', 		// the TDD UI is being used in extension.test.ts (suite, test, etc.)
-    useColors: true // colored output from test results
-});
+    const testsRoot = path.resolve(__dirname, '.');
+    const files = fs.readdirSync(testsRoot).filter(f => f.endsWith('.test.js'));
 
-module.exports = testRunner;
+    files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
+
+    return new Promise<void>((resolve, reject) => {
+        mocha.run((failures: number) => {
+            if (failures > 0) {
+                reject(new Error(`${failures} tests failed.`));
+            } else {
+                resolve();
+            }
+        });
+    });
+}

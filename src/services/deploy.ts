@@ -17,7 +17,7 @@ export class DeploySource {
 
   public static async compareWithServer(textDocument: vscode.TextDocument) {
     if (this.supportedFileForDeploy()) {
-      // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
+      // The authorization creates sfdx-project.json files and this extension supports only auth done using sf cli
       if (this.isProjectAuthroizedToSFDC()) {
         if (vscode.window.activeTextEditor) {
           const {
@@ -53,7 +53,7 @@ export class DeploySource {
 
   public static deployToSFDC(textDocument: vscode.TextDocument) {
     if (this.supportedFileForDeploy()) {
-      // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
+      // The authorization creates sfdx-project.json files and this extension supports only auth done using sf cli
       if (this.isProjectAuthroizedToSFDC()) {
         if (vscode.window.activeTextEditor) {
           const {
@@ -160,7 +160,7 @@ export class DeploySource {
 
   public static async refreshFromServer(textDocument: vscode.TextDocument) {
     if (this.supportedFileForDeploy()) {
-      // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
+      // The authorization creates sfdx-project.json files and this extension supports only auth done using sf cli
       if (this.isProjectAuthroizedToSFDC()) {
         if (vscode.window.activeTextEditor) {
           const {
@@ -242,7 +242,7 @@ export class DeploySource {
   private static isProjectAuthroizedToSFDC(): boolean {
     let isProjectAuthorized: boolean = false;
     if (vscode.workspace.workspaceFolders) {
-      // The authorization creates sfdx-project.json files and this extension supports only auth done using sfdx cli
+      // The authorization creates sfdx-project.json files and this extension supports only auth done using sf cli
       if (
         fs.existsSync(
           vscode.workspace.workspaceFolders[0].uri.fsPath + "/sfdx-project.json"
@@ -311,7 +311,7 @@ export class DeploySource {
     if (vscode.workspace.workspaceFolders) {
       let activeTerminal = VSCodeCore.setupTerminal();
       let deployCommand =
-        "sfdx force:mdapi:deploy -d " + OSUtil.toUnixStyle(uripath) + " -w -1";
+        "sf project deploy start -d " + OSUtil.toUnixStyle(uripath) + " --metadata-dir -w -1";
       let runCommand = true;
       if (uripath.indexOf("changesets") > -1) {
         //changesets folder so ask for relevant org

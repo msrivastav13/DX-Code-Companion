@@ -16,7 +16,7 @@ export class CommandService {
   }
 
   public generateCommand() {
-    let command = "sfdx deploy:";
+    let command = "sf deploy ";
     const metadata = this.metadataDef;
     // const auraFiles = ['.cmp','.app','.evt','.css','.js','design','svg','tokens','intf','auradoc'];
     command = command + metadata.getMetadataType().CommandName + " ";

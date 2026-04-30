@@ -21,7 +21,7 @@ export class Changeset {
                 fs.mkdirSync(changesetDir);
                 const defaultorg = await Config.getDefaultUsername();
                 const orgArray: Array<string | undefined> = [defaultorg];
-                await fs.writeFile(orgsJson,JSON.stringify(orgArray), 'UTF-8', (err) => {
+                await fs.writeFile(orgsJson,JSON.stringify(orgArray), 'utf-8', (err) => {
                     if (err) {
                         throw err;
                     }
@@ -32,8 +32,7 @@ export class Changeset {
             }
             let activeTerminal = VSCodeCore.setupTerminal();
             if(activeTerminal){
-                //let retrievecommand = 'sfdx force:mdapi:retrieve -s -p ' + '"' + name + '"' + ' -r ' + subDirectory + ' -w 30 --json';
-                let retrievecommand = 'sfdx retrieve:pkgsource -n ' + '"' + name + '"' + ' -r ' + 'changesets/' + name.trim().toLowerCase().replace(/\s/g,'') + '/src';
+                let retrievecommand = 'sf retrieve pkgsource -n ' + '"' + name + '"' + ' -r ' + 'changesets/' + name.trim().toLowerCase().replace(/\s/g,'') + '/src';
                 activeTerminal.sendText(retrievecommand);
             } 
         }
@@ -53,7 +52,7 @@ export class Changeset {
                     const selectedOrgs = await VSCodeUI.showQuickPickMultiple(allOrgsListArray);
                     if(selectedOrgs) {
                         currentOrgsArray.push.apply(currentOrgsArray, selectedOrgs);
-                        await fs.writeFile(orgsJson,JSON.stringify(currentOrgsArray), 'UTF-8', (err) => {
+                        await fs.writeFile(orgsJson,JSON.stringify(currentOrgsArray), 'utf-8', (err) => {
                             if (err) {
                                 throw err;
                             }

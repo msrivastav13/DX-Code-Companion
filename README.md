@@ -1,283 +1,208 @@
-# SalesforceDX Code Companion 
+# SalesforceDX Code Companion
 
 [![Logo](./images/logo_revised.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 
-[![Version](https://vsmarketplacebadge.apphb.com/version/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
-[![Downloads](https://vsmarketplacebadge.apphb.com/downloads/MohithShrivastava.dx-code-companion.png)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/MohithShrivastava.dx-code-companion.png)](https://vsmarketplacebadge.apphb.com/rating/MohithShrivastava.dx-code-companion.svg)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/MohithShrivastava.dx-code-companion)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/MohithShrivastava.dx-code-companion)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/MohithShrivastava.dx-code-companion)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/MohithShrivastava.dx-code-companion)](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion)
 
 
-**Note that this is not official from Salesforce. I created this extension to help my own development workflow for building salesforce apps. This extension supplements Salesforce Official Extension Pack with features like faster save of apex,lwc and vf pages.You can use this to also retrieve package metadata from salesforce orgs in both traditional metadata and SalesforceDX formats. Also supports managing conflicts between salesforce files and salesforce org**
+**Note: This is not an official Salesforce product. I created this extension to help my own development workflow for building Salesforce apps. It supplements the Salesforce Official Extension Pack with features like faster save of Apex, LWC, and Visualforce pages. You can also retrieve package metadata from Salesforce orgs in both traditional metadata and SalesforceDX formats, and manage conflicts between local files and the Salesforce org.**
 
-Provides ability to save Apex Classes,Apex Triggers, Visualforce, AuraBundles, Lightning Web Component Bundles(under preview) and ApexComponents to Salesforce Org at blazing speed without source tracking. Also enables retrieving code from the salesforce unmanaged package/changesets in both DX and NonDX source formats .You can also switch between authenticated orgs easily with CCDX: Switch Command. This extension requires users to have SalesforceDX CLI and also mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin**) for SalesforceDX CLI.This Extension works with both scratch orgs and Non-scratch orgs.
+Provides the ability to save Apex Classes, Apex Triggers, Visualforce Pages, Aura Bundles, Lightning Web Component Bundles, and Apex Components to a Salesforce org without source tracking. Also enables retrieving code from unmanaged packages and changesets in both DX and non-DX source formats. You can switch between authenticated orgs with the `CCDX: Switch Org` command. This extension requires the [Salesforce CLI (`sf`)](https://developer.salesforce.com/tools/salesforcecli) and the [mo-dx-plugin](https://github.com/msrivastav13/mo-dx-plugin) (auto-installed on extension activation). Works with both scratch orgs and non-scratch orgs.
 
-It is highly recommended to use with Salesforce Extension Pack to get all the other good things salesforce official extension offers (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) .
+It is highly recommended to use alongside the [Salesforce Extension Pack](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) to get all the other features the official extensions offer.
 
 # Requirements
 
-This vscode extension works only once you have installed Salesforce CLI and a mo-dx-plugin(run **sfdx plugins:install mo-dx-plugin** on your terminal) that has api for all the commands this extension leverages .
-
-1. Install SalesforceDX CLI from https://developer.salesforce.com/tools/sfdxcli based on your operating system.
-2. Install mo-dx-plugin using the command `sfdx plugins:install mo-dx-plugin`.Note if you have already then make sure to update to latest always using `sfdx plugins:update`
-3. VScode version 1.30 and beyond
-4. Salesforce official plugin provides great syntax and language support.Highly recommend to install (https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode)
-5. You have project workspace set up and have sfdx-project.json file in the root folder and you have ran sfdx force:auth:web:login for project folder and authorized your org with Salesforce CLI. 
-6. Extension activation is shown in footer with a rocket symbol. Once extension is active authorize the project if you havent and enjoy faster deploys
+1. Install [Salesforce CLI (`sf`)](https://developer.salesforce.com/tools/salesforcecli) for your operating system.
+2. The `mo-dx-plugin` is automatically installed when the extension activates. To manually install or update it, run: `sf plugins install mo-dx-plugin`
+3. VS Code version 1.30 or later
+4. The [Salesforce Extension Pack](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode) is highly recommended for syntax and language support.
+5. Your project workspace must have an `sfdx-project.json` file in the root folder, and you must have authorized your org with Salesforce CLI (e.g., `sf org login web`).
+6. Extension activation is shown in the footer with a rocket symbol. Once the extension is active, authorize the project if you haven't already and enjoy faster deploys.
 
 # Features
 
-1. **Retrieve Source in DX Source format from Managed/Unmamaged package/ChangeSets**
+1. **Retrieve Source in DX Source Format from Managed/Unmanaged Packages and Changesets**
 
-    From the command palette menu select "Retrieve DX Source From Package" . Provide the name of the managed/unmanaged package in input box and press enter .This is the recommended source format.
+    From the command palette, select `CCDX: Retrieve DX Source From Package`. Provide the name of the managed/unmanaged package in the input box and press enter. This is the recommended source format.
 
-    The source is in the format specified here (https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_source_file_format.htm)
+    The source is in the [DX source format](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_source_file_format.htm).
 
-    You will notice that package.xml is autogenerated in the manifest directory and source code of the package is retrieved in DX source format in force-app folder. 
+    You will notice that `package.xml` is auto-generated in the manifest directory and source code of the package is retrieved in DX source format in the `force-app` folder.
 
     ![Retrieve Source From Unmanaged/Managed Package In DX Format](./images/retrieve.png)
 
-2. **Retrieve Source from Managed/Unmamaged package/Changesets in traditional metadata format**
+2. **Retrieve Source from Managed/Unmanaged Packages and Changesets in Traditional Metadata Format**
 
-    From the command palette menu select "Retrieve Source From Package". Provide the name of the managed/unmanaged package and press enter .Projects still not moved to the DX format can benefit from this .
+    From the command palette, select `CCDX: Retrieve Source From Package`. Provide the name of the managed/unmanaged package and press enter. Projects not yet moved to the DX format can benefit from this.
 
-    You will notice that package.xml is autogenerated  and source code of the package is retrieved in src folder. Create a folder src if your project does not have one.
+    You will notice that `package.xml` is auto-generated and source code of the package is retrieved in the `src` folder. Create a `src` folder if your project does not have one.
 
-    ![Retrieve Source From Unmanaged/Managed Package In DX Format](./images/retrievePkg.png)
+    ![Retrieve Source From Unmanaged/Managed Package In Non-DX Format](./images/retrievePkg.png)
 
-3. **Save Apex Class,Apex Trigger,Visualforce Page and Visualforce Component To Salesforce Org**
+3. **Save Apex Classes, Apex Triggers, Visualforce Pages, and Visualforce Components to Salesforce**
 
     ![Save Apex](./images/apexsave.png)
 
-    By default autosave is enabled .Hence when you save file the extension will try to save the file to salesforce you have logged in by default.
+    By default, auto-save is enabled. When you save a file, the extension will deploy it to the Salesforce org you have set as your default.
 
-    If you disable auto save feature you can also Right click on the File and click "Save To Salesforce Menu"
+    If you disable auto-save, you can right-click on the file and select **"Save To Salesforce"**.
 
-4. **Save Lightning Components (Both aura and LWC) To Salesforce Org**
+4. **Save Lightning Components (Aura and LWC) to Salesforce**
 
-    If you disable auto save feature you can also Right click on the File and click **_"Save To Salesforce"_**
+    If you disable auto-save, you can right-click on the file and select **"Save To Salesforce"**.
 
     ![Save AuraBundle Files](./images/aurasave.png)
 
-    Save LWC (Available in Spring 19 pre-release orgs)
-
     ![Save LWC Bundle Files](./images/lwcsave.png)
 
-5. **Manage Conflicts with server**
+5. **Manage Conflicts with Server**
 
-    This feature is turned off by default .It compares server copy with the local copy before save and if a difference is found you will see a prompt in a diff editor with options to either overwrite or accept change from server. Also you can manually resolve the conflicts and push changes .
+    This feature is turned off by default. It compares the server copy with the local copy before save and, if a difference is found, you will see a prompt in a diff editor with options to either overwrite or accept the change from the server. You can also manually resolve conflicts and push changes.
 
     ![Manage conflict](./images/manageConflicts.png)
 
-    If you wish to turn this feature (If you have VCS for your project and do not develop in team) for faster save you can do so by disabling Manageconflict settings found in  settings for extension
+    If you wish to turn this off (e.g., you have VCS for your project and do not develop in a team) for faster save, you can disable the `Manage Conflict` setting in the extension settings.
 
     ![Manage conflict](./images/manageConflictSettings.png)
 
-
-6. **Smart Navigations to VF page preview ,Lighnting App Builder Page ,Salesforce Lightning Design System Website ,Salesforce MetadataCoverage Report and Component Library URL**
-
-    Screenshot shows how one can find these smart navigation
+6. **Smart Navigation to VF Page Preview, Lightning App Builder, SLDS Website, Metadata Coverage Report, and Component Library**
 
     ![Navigations](./images/navigation.png)
 
-    ## Display Status of Save and Success
+## Display Status of Save and Success
 
-    1. When Saving files to Salesforce Status of Success or Failure is always displayed on the Terminal .
-    2. Extension relies on Terminal API and hence to see any errors and progress keep the Terminal On.
+1. When saving files to Salesforce, the status of success or failure is always displayed in the Terminal.
+2. The extension relies on the Terminal API, so keep the Terminal open to see errors and progress.
 
-    Below screenshot shows how the errors are logged
+Below screenshot shows how errors are logged:
 
-    ![See Errors on Terminal](./images/error_log.png)
+![See Errors on Terminal](./images/error_log.png)
 
-# Video Recordings of all features 
+# Video Recordings
 
 https://www.youtube.com/playlist?list=PLDFd1LjbN883y5IlMuU8BCyGhRO-VMuw9
 
 # Issue Reporting
 
-You can join the slack channel for any assistance [here](https://join.slack.com/t/salesforcedxc-ej87847/shared_invite/enQtNTQ4MjM2MTEzNjg2LTg2NzA4YTQ5ZTRkYzZjYTI4MDFhODQ2MDQ1ZjNmNzVmMTg5M2E0NTI2NzE0YWVmZjRjMGIwNmQ5YjkyMWEzZWU). 
+If you find any issues, feel free to log them on the [GitHub Issues](https://github.com/msrivastav13/DX-Code-Companion/issues) page.
 
-If you find any issues feel free to log it on the github page for the project @ https://github.com/msrivastav13/DX-Code-Companion/issues
-
-You can also reach out to me via my twitter @msrivastav13 or via my MVP email handle mohith.shrivastava@salesforcemvps.com
+You can also reach out to me via Twitter [@msrivastav13](https://twitter.com/msrivastav13).
 
 ## Extension Shortcut Keys
 
-To open command pallete and look for all CCDX Commands use below .
+To open the command palette and look for all CCDX commands:
 
-"MACOSX": "cmd+shift+p",
-"win": "ctrl+shift+p",
-"linux": "ctrl+shift+p",
+| Platform | Shortcut |
+|----------|----------|
+| macOS | `Cmd+Shift+P` |
+| Windows | `Ctrl+Shift+P` |
+| Linux | `Ctrl+Shift+P` |
+
+To save the current file to Salesforce:
+
+| Platform | Shortcut |
+|----------|----------|
+| macOS | `Cmd+Shift+C` |
+| Windows | `Ctrl+Shift+C` |
+| Linux | `Ctrl+Shift+C` |
+
+# Extension Settings
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `dx-code-companion.autosave.enabled` | `true` | Auto-deploy on file save |
+| `dx-code-companion.manageconflict.enabled` | `false` | Compare local file with server before save |
+| `dx-code-companion.staticresourcefolder.resourceBundleFoldername` | `"staticresources"` | Folder name for static resource bundles |
 
 # Release Notes
 
+### 0.5.0
+1. Migrate all CLI commands from deprecated `sfdx` to `sf`
+2. Auto-install `mo-dx-plugin@latest` on extension activation
+3. Upgrade `@salesforce/core` from v2 to v8 (uses new `StateAggregator`, `ConfigAggregator`, and `AuthInfo.listAllAuthorizations()` APIs)
+4. Replace deprecated `vscode` dev dependency with `@types/vscode` and `@vscode/test-electron`
+5. Upgrade TypeScript to v5 and `@types/node` to v18
+6. Fix all 29 npm security vulnerabilities
+7. Use `sf config set target-org` instead of `sfdx force:config:set defaultusername` for org switching
+8. Use `sf project deploy start` instead of `sfdx force:mdapi:deploy` for metadata deployment
+
 ### 0.4.8
-1.Update npm libraries to latest. Fixes Security Vulnerabilities 
+1. Update npm libraries to latest. Fixes security vulnerabilities.
 
 ### 0.4.7
-1.Update npm libraries to latest. Fixes Security Vulnerabilities
-2.Update mo-dx-plugins using sfdx plugins:update to get latest CLI plugin extension that powers this extension
-3.Diff view now respects current UI theme set by user
+1. Update npm libraries to latest. Fixes security vulnerabilities.
+2. Update mo-dx-plugin using `sf plugins update` to get latest CLI plugin.
+3. Diff view now respects current UI theme set by user.
 
 ### 0.4.6
-1.Update npm libraries to latest. Fixes Security Vulnerabilities
+1. Update npm libraries to latest. Fixes security vulnerabilities.
 
 ### 0.4.1
-
-1.Update npm libraries to latest. Fixes Security Vulnerabilities
+1. Update npm libraries to latest. Fixes security vulnerabilities.
 
 ### 0.4.0
-1.Fix issues listed [here](https://github.com/msrivastav13/DX-Code-Companion/labels/fixed%20in%200.4.0)
+1. Fix issues listed [here](https://github.com/msrivastav13/DX-Code-Companion/labels/fixed%20in%200.4.0).
+2. Install mo-dx-plugin from the extension context menu directly.
 
-2.Install mo-dx-plugin now from the extension context menu directly if you do not have mo-dx-plugin.
+    ![Install mo-dx-plugin for extension](./images/install_plugins.png)
 
-![Install mo-dx-plugin for extension](./images/install_plugins.png)
-
-3.Security patch
+3. Security patch.
 
 ### 0.3.9
-1.There is a setting provided(dx-code-companion.staticresourcefolder.resourceBundleFoldername) to indicate the resource bundle folder name for single page app development. Default value is "staticresource" but if you prefer to use names like "resourcebundle" or "spa" use the settings to change it
-2.A static resource folder has a explorer menu to deploy the folder as static resource bundle
+1. Setting `dx-code-companion.staticresourcefolder.resourceBundleFoldername` to indicate the resource bundle folder name for single page app development. Default value is `"staticresources"`.
+2. A static resource folder has an explorer menu to deploy the folder as a static resource bundle.
 
 ### 0.3.7
-1.Now you can directly edit the static resource file and save to the server.Note that your folders or files should be within folder named "staticresources".If you are building a vf app using vue or React,you can keep your files in folder named staticresources and edit the app and save the file.
+1. Edit static resource files and save to the server. Folders or files should be within a folder named `staticresources`.
 
 ### 0.3.6
-1.To manage settings you dont need to edit the settings.json and instead has UI
-2.Security path via npm audit
+1. Extension settings now have a UI instead of requiring manual `settings.json` edits.
+2. Security patches via npm audit.
 
 ### 0.3.3
-
-1.Update the sfdx-core to use latest version.
-2.Save to salesforce would automatically kick off  when vscode opens a folder. Made sure it happens only when user manually tries to save the file
-3.Remove support for v1.29.0 vscode. Requires v1.30.0 and above
+1. Update `@salesforce/core` to latest version.
+2. Fixed auto-save triggering when VS Code opens a folder (now only triggers on manual file save).
+3. Removed support for VS Code v1.29.0. Requires v1.30.0 and above.
 
 ### 0.3.0
+Fully support changeset-driven development ([Trailhead module](https://trailhead.salesforce.com/en/content/learn/modules/declarative-change-set-development/develop-and-test-changes-locally)).
 
-Fully support changeset driven development (https://trailhead.salesforce.com/en/content/learn/modules/declarative-change-set-development/develop-and-test-changes-locally)
+With this release, you can retrieve source from changesets created in your sandbox, edit contents in VS Code, and deploy to target orgs — all without uploading changesets and waiting.
 
-This version requires you to upgrade mo-dx-plugin to 0.2.0 version.
+  1. Use the command palette and select `CCDX: Retrieve Source From Changeset`
 
-Run `sfdx plugins:update` to update mo-dx-plugin to latest
+      ![Retrieve source from changeset](./images/retrieve_changeset.png)
 
-With this release,you can use DX Code Companion extension to retrieve source from the changeset created in your sandbox (Assumes you have authorized CLI to sandbox using "SFDX:Authorize and org").Use vscode to edit contents if needed and then deploy to target orgs all from VScode without need to upload the changesets and wait.
+  2. Provide the changeset name in the text box
 
-  1) To retrieve source from the changeset use the command pallete and select "CCDX:Retrieve Source From Changeset"
+      ![changeset name](./images/changesetname.png)
 
-  ![Retrieve source from changeset](./images/retrieve_changeset.png)
+  3. Once retrieved, a subdirectory is created under `changesets/` with a `src` folder containing all the components
 
-  2) Provide the changeset name in the text box (Avoid creating changesets with same name in sandbox)
+      ![changeset dir structure](./images/changesetdir.png)
 
-  ![changeset name](./images/changesetname.png)
+  4. The changeset directory has `orgs.json` — add target orgs using `CCDX: Add Orgs For Changeset Deployment`
 
-  3) Once code components are retrieved , Under changeset directory a sub directory will be created with src folder having all the components .You can edit the source code and also save to the authenticated orgs.
+      ![Add orgs for deployments](./images/addChangesets.png)
+      ![Select the target org](./images/deployorgselector.png)
 
-  ![changeset dir structure](./images/changesetdir.png)
+  5. Click on the `src` folder for your changeset to deploy. The interface will ask you to pick an org from the list you added.
 
-  4) Note that the changeset directory has orgs.json to which you can add list of orgs you have authorized salesforce CLI by clicking on the file and using "CCDX:Add Orgs For Changeset Deployment"
-
-  ![Add orgs for depolyments](./images/addChangesets.png)
-
-  ![Select the target org](./images/deployorgselector.png)
-
-  5.Click on "src" folder for your changeset to deploy them . The interface will ask you to pick orgs from list of orgs you have added in previous step
-
-  ![Deploy changeset](./images/changesetDeploy.png)
+      ![Deploy changeset](./images/changesetDeploy.png)
 
 ### 0.2.8
+1. Fixes connection method to use Salesforce core library native methods.
+2. Adds ability to deploy the `src` folder for classic metadata directly from the explorer menu.
 
-1. Fixes connection method to use salesforce core library native methods
-2. Adds ability to deploy the src folder for classic metadata directly from explorer menu
+    ![Deploy source from src folder](./images/deploySrc.png)
 
-![Deploy source from src folder](./images/deploySrc.png)
+---
 
-### 0.2.7
-
-1. Fixes Manage Conflicts with server is not working for Apex Components and Apex Pages
-
-### 0.2.6
-
-1. Fix issue by changing the folder name of content provider to use Capital letter. Seems very weird that not doing this breaks the plugin for chrome-os. The issue is described here (https://github.com/msrivastav13/DX-Code-Companion/issues/6)
-
-### 0.2.5
-
-1. Adds a new Command Compare With Server to view diff between current local and server file.
-
-2. By default Manage Conflict is switched off .Turn it on via settings 
-
-![Manage conflict](./images/manageConflictSettings.png)
-
-3. Fixed few bugs related to refresh from server on aura components.
-
-### 0.2.4
-
-1. Fixes when .xml files would try to save to server .This is not supported at this point and use native salesforce extension to deploy meta.xml files for version changes .
-
-### 0.2.0
-
-1. Adds ability to manage conflicts with server copy
-
-2. Refresh From Server for LWC, Aura files , triggers , vf pages, vf components and classes
-
-3. Save now compares file with server copy .
-
-4. A new icon on the footer to indicate SalesforceDX Code Companion is active
-
-5. Footer now indicates a rocket symbol if extension is active and you can navigate to org clicking on this .
-
-### 0.1.10
-
-1. Auto populate package list for selection for Retrieve Options
-
-2. Retrieve DX Source and metadata options are only available from Command Palette (CMD+ SHIFT + P on MACOSX or CTRL + SHIFT + P on windows)
-
-3. Previously the Save To Server tried running command on Non Salesforce files .This update fixes this and only saves if the working directory root has sfdx-project.json file.
-
-### 0.1.8
-
-1.Switch between authenticated orgs using new Switch Org Command .This opens up to switch and deploy the code between orgs using SFDX:Deploy To Org Command
-
-![Navigations](./images/switchorg.png)
-
-2.Fix AutoSave to now not run terminal command if file type is not supported
-
-3.Better naming and Grouping .All Commands now CCDX as the prefix .
-
-4.LWC(Lighnting Web Components) support improved
-
-5.Introduces sfdx-core library in the build opening up lot more existing features to come in next release.
-
-### 0.1.4
-
-1.Auto Save enabled .You can disable using the autosave property
-
-![Auto Save Feature](./images/autosavefeature.png)
-
-Use the settings (Select Code > Preferences > Settings) from the gear icon and modify the usersettings to disable the autosave feature as shown below by setting dx-code-companion.autosave.enabled as false .
-
-![Auto Save Feature](./images/autosavedisable.png)
-
-2.Save LWC Components(Under preview).Upgrade the mo-dx-plugin using sfdx:plugins:update mo-dx-plugin
-
-### 0.1.3
-
-1.Add support to retrieve metadata using package name in regular metadata format
-
-2.Add some useful link in editor title for vf preview , app builder page ,metadata coverage report and component Library.
-
-### 0.0.5
-
-1. Fixes issues for keyboard shortcut
-
-### 0.0.2
-
-1. Provides quick save apex,vf,aura bundles to salesforce server
-2. Retrieve Source from Salesforce using DX Source format.
-3. 3X performant than salesforce deploy command for apex,aura and vf files.
-
------------------------------------------------------------------------------------------------------------
-
-### For more information and contribution to project visit the below repositories and use issues tab to log any feedback or issues .
+### For more information and contribution visit:
 
 * [Mo DX Plugin Repository](https://github.com/msrivastav13/mo-dx-plugin)
 * [DX Code Companion](https://github.com/msrivastav13/DX-Code-Companion)
