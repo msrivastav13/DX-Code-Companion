@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.5.1
+
+1. Fix: "Manage Conflict" mode silently skipping deploy for Apex classes (and all metadata types). Root cause was `@salesforce/core` v8's pino logger using dynamic `require()` that breaks when webpack-bundled.
+2. Fix: Externalize `@salesforce/core` and `@jsforce` from the webpack bundle so dynamic module resolution works at runtime.
+3. Fix: Replace async-in-Promise-constructor antipattern in the conflict-check flow — errors are now surfaced to the user instead of silently swallowed.
+4. Fix: SOQL namespace prefix not quoted in Tooling API queries (affected namespaced orgs).
+5. Fix: `showWarningMessage` in conflict flow is now properly awaited so the progress notification stays visible until the user responds.
+6. Fix: Resolve `fast-uri` path traversal vulnerability (high severity).
+7. Update `@salesforce/core` to 8.30.0.
+
 ### 0.5.0
 
 1. Migrate all CLI commands from deprecated `sfdx` to `sf`

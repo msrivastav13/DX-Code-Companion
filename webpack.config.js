@@ -13,9 +13,15 @@ const config = {
         filename: 'extension.js',
         libraryTarget: 'commonjs2'
     },
-    externals: {
-        vscode: 'commonjs vscode'
-    },
+    externals: [
+        { vscode: 'commonjs vscode' },
+        function({request}, callback) {
+            if (/^@salesforce\/|^@jsforce\//.test(request)) {
+                return callback(null, 'commonjs ' + request);
+            }
+            callback();
+        }
+    ],
     resolve: {
         extensions: ['.ts', '.js']
     },

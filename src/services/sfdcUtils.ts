@@ -117,8 +117,8 @@ export class SalesforceUtil {
         } else {
             query.queryString += ` where ${wherefield}='${filename}'`;
              // Add Namespace Prefix
-            if(namespacePrefix !== null) {
-                query.queryString += ` and NamespacePrefix=${namespacePrefix}`;
+            if(namespacePrefix) {
+                query.queryString += ` and NamespacePrefix='${namespacePrefix}'`;
             } else {
                 query.queryString += ` and NamespacePrefix=null`;
             }

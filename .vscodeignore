@@ -4,7 +4,7 @@
 .claude/**
 src/**
 out/**
-node_modules/**
+node_modules/.cache/**
 webpack.config.js
 tsconfig.json
 tslint.json

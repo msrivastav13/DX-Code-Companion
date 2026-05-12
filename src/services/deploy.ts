@@ -108,15 +108,14 @@ export class DeploySource {
         location: vscode.ProgressLocation.Notification,
         title: "Comparing with server copy"
       },
-      () => {
-        var p = new Promise<void>(async resolve => {
+      async () => {
+        try {
           const serverResponse = await this.getServerCopy(
             metadataType,
             filename,
             fileextension
           );
           if (serverResponse.exist) {
-            // Set content provider content
             CodeCompanionContentProvider.serverContent = serverResponse.Body;
             if (
               !this.compare(textDocument.getText(), serverResponse.Body) &&
@@ -132,28 +131,28 @@ export class DeploySource {
                 `${filename}.${fileextension}(SERVER) <~> ${filename}.${fileextension} (LOCAL)`,
                 { preview: true }
               );
-              vscode.window
-                .showWarningMessage(
-                  "File has been modified in salesforce",
-                  "Refresh From Server",
-                  "Overwrite Server Copy"
-                )
-                .then(s => {
-                  if (s === "Overwrite Server Copy") {
-                    this.run(commandToExecute, textDocument);
-                  } else if (s === "Refresh From Server") {
-                    this.refresh(serverResponse.Body);
-                  }
-                });
+              const selection = await vscode.window.showWarningMessage(
+                "File has been modified in salesforce",
+                "Refresh From Server",
+                "Overwrite Server Copy"
+              );
+              if (selection === "Overwrite Server Copy") {
+                this.run(commandToExecute, textDocument);
+              } else if (selection === "Refresh From Server") {
+                this.refresh(serverResponse.Body);
+              }
             } else {
               this.run(commandToExecute, textDocument);
             }
           } else {
             this.run(commandToExecute, textDocument);
           }
-          resolve();
-        });
-        return p;
+        } catch (error) {
+          vscode.window.showErrorMessage(
+            `Failed to compare with server: ${error instanceof Error ? error.message : error}`
+          );
+          this.run(commandToExecute, textDocument);
+        }
       }
     );
   }
