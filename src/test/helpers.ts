@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { readSfCalls, SfCall } from './environment';
+export { cliPath } from './environment';
 
 export const extensionId = 'MohithShrivastava.dx-code-companion';
 export const workspace = process.env.CCDX_WORKSPACE as string;

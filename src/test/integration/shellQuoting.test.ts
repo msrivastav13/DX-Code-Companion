@@ -3,12 +3,18 @@
 import * as assert from 'assert';
 import * as cp from 'child_process';
 import * as path from 'path';
+import { OSUtil } from '../../services/osUtils';
 import { VSCodeCore } from '../../services/vscodeCore';
 import { repoRoot } from '../environment';
 
 // Feeds VSCodeCore.quoteArg output to real shells and checks the program receives the value unchanged.
 
-const sfShim = path.join(repoRoot, 'test-fixtures', 'bin', 'sf');
+const isWindows = process.platform === 'win32';
+const shimDir = path.join(repoRoot, 'test-fixtures', 'bin');
+// Like the real CLI, the shim is a .cmd batch file on Windows; that is where cmd.exe parsing kicks in
+const sfCommand = isWindows
+    ? VSCodeCore.quoteArg(OSUtil.toUnixStyle(path.join(shimDir, 'sf.cmd')))
+    : VSCodeCore.quoteArg('node') + ' ' + VSCodeCore.quoteArg(path.join(shimDir, 'sf'));
 
 interface Shell {
     name: string;
@@ -25,7 +31,7 @@ const shells: Shell[] = ([
     { name: 'powershell', command: 'powershell.exe', args: ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command'], invoke: line => '& ' + line }
 ] as Shell[]).filter(shell => cp.spawnSync(shell.command, shell.args.concat(['exit 0'])).status === 0);
 
-const accepted = [
+const portable = [
     '/Users/dev/My Project/force-app/main/default/classes/Foo.cls',
     'semi;colon',
     'pipe | and && or ||',
@@ -37,6 +43,9 @@ const accepted = [
     'tab\there',
     'unicode café ✓'
 ];
+// cmd.exe operators and variable expansion, rejected on Windows only
+const batchOperators = /[&|<>^%]/;
+const accepted = portable.filter(value => !isWindows || !batchOperators.test(value));
 
 const rejected = [
     '$(id)',
@@ -48,7 +57,7 @@ const rejected = [
     'carriage\rreturn',
     'bang!',
     '“$(id)”'
-];
+].concat(isWindows ? portable.filter(value => batchOperators.test(value)) : []);
 
 suite('Shell quoting', () => {
     test('at least one shell is available', () => {
@@ -58,7 +67,7 @@ suite('Shell quoting', () => {
     for (const shell of shells) {
         test(`${shell.name} passes accepted values through unchanged`, () => {
             for (const value of accepted) {
-                const commandLine = shell.invoke(VSCodeCore.quoteArg('node') + ' ' + VSCodeCore.quoteArg(sfShim) + ' ' + VSCodeCore.quoteArg(value));
+                const commandLine = shell.invoke(sfCommand + ' ' + VSCodeCore.quoteArg(value));
                 const result = cp.spawnSync(shell.command, shell.args.concat([commandLine]), {
                     encoding: 'utf8',
                     env: Object.assign({}, process.env, { CCDX_SF_STDOUT: '1' })

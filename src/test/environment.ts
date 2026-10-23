@@ -20,6 +20,11 @@ export interface SfCall {
     terminal: string | null;
 }
 
+// A file path as the extension passes it to the CLI: forward slashes and VS Code's lower-case drive letter on Windows
+export function cliPath(file: string): string {
+    return process.platform === 'win32' ? (file.charAt(0).toLowerCase() + file.slice(1)).replace(/\\/g, '/') : file;
+}
+
 export function readSfCalls(sfLog: string): SfCall[] {
     return fs.readFileSync(sfLog, 'utf8')
         .split('\n')

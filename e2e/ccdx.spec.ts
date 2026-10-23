@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { cliPath } from '../src/test/environment';
 import { editAndSave, expect, openFile, runCommand, sfArgvs, test } from './fixtures';
 
 const statusBarItem = '.statusbar-item';
@@ -19,7 +20,7 @@ test.describe('trusted workspace', () => {
         await openFile(page, 'CcdxFoo.cls');
         await editAndSave(page);
         const file = path.join(sandbox.workspace, 'force-app/main/default/classes/CcdxFoo.cls');
-        await expect.poll(() => sfArgvs(sandbox)).toContainEqual(['deploy', 'apex', '-p', file]);
+        await expect.poll(() => sfArgvs(sandbox)).toContainEqual(['deploy', 'apex', '-p', cliPath(file)]);
     });
 
     test('a malicious file name shows an error and runs nothing', async ({ vscode: { page }, sandbox }) => {
