@@ -70,7 +70,8 @@ suite('Shell quoting', () => {
                 const commandLine = shell.invoke(sfCommand + ' ' + VSCodeCore.quoteArg(value));
                 const result = cp.spawnSync(shell.command, shell.args.concat([commandLine]), {
                     encoding: 'utf8',
-                    env: Object.assign({}, process.env, { CCDX_SF_STDOUT: '1' })
+                    // MSYS_NO_PATHCONV stops Git Bash on Windows rewriting /posix/paths, which is unrelated to quoting
+                    env: Object.assign({}, process.env, { CCDX_SF_STDOUT: '1', MSYS_NO_PATHCONV: '1' })
                 });
                 assert.strictEqual(result.status, 0, `${shell.name} failed for ${JSON.stringify(value)}: ${result.stderr}`);
                 assert.deepStrictEqual(JSON.parse(result.stdout), [value], `${shell.name} altered ${JSON.stringify(value)}`);
