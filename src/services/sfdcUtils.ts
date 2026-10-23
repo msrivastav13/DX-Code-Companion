@@ -8,6 +8,8 @@ import { Query, ServerResult } from '../typings/ccdxTypings';
 export class SalesforceUtil {
 
     private connection: Connection;
+    private static apiNamePattern: RegExp = /^[A-Za-z][A-Za-z0-9_]*$/;
+    private static fileExtensionPattern: RegExp = /^[A-Za-z0-9.-]+$/;
 
     constructor (conn: Connection) {
         this.connection = conn;
@@ -30,6 +32,10 @@ export class SalesforceUtil {
     }
 
     public async getFileContentFromServer(metadataType: string, filename: string,fileextension: string): Promise<ServerResult> {
+        // filename and fileextension come from the local file and are interpolated into SOQL literals below
+        if (!SalesforceUtil.apiNamePattern.test(filename) || !SalesforceUtil.fileExtensionPattern.test(fileextension)) {
+            throw new Error(`"${filename}.${fileextension}" is not a valid Salesforce metadata file name`);
+        }
         const namespacePrefix = await this.getNamespace();
         const connection = await this.connection;
         const query = await this.getToolingQuery(metadataType,filename,fileextension,namespacePrefix);

@@ -2,7 +2,7 @@
   "name": "dx-code-companion",
   "displayName": "SalesforceDX Code Companion",
   "description": "An extension that works alongside the Salesforce Extensions for Vscode with faster apex,vf and aura components save performance",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "publisher": "MohithShrivastava",
   "engines": {
     "vscode": "^1.30.0"
@@ -29,6 +29,12 @@
     "workspaceContains:sfdx-project.json"
   ],
   "main": "./dist/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "DX Code Companion runs Salesforce CLI commands built from workspace files and settings, so it is only enabled in trusted workspaces."
+    }
+  },
   "contributes": {
     "commands": [
       {

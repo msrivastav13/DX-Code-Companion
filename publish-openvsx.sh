@@ -1,6 +1,7 @@
 #!/bin/bash
 # Publish to Open VSX Registry
-# Usage: ./publish-openvsx.sh <OPENVSX_TOKEN>
+# Usage: OVSX_PAT=<token> ./publish-openvsx.sh
+# (passing the token as an argument still works but leaves it in shell history)
 
 set -e
 
@@ -10,7 +11,7 @@ TOKEN="${1:-$OVSX_PAT}"
 
 if [ -z "$TOKEN" ]; then
   echo "Error: Provide token as argument or set OVSX_PAT env variable"
-  echo "Usage: ./publish-openvsx.sh <token>"
+  echo "Usage: OVSX_PAT=<token> ./publish-openvsx.sh"
   exit 1
 fi
 
@@ -25,7 +26,8 @@ mv package.json.bak package.json
 
 VSIX_FILE=$(ls -t *.vsix | head -1)
 echo "Publishing $VSIX_FILE to Open VSX..."
-npx ovsx publish "$VSIX_FILE" -p "$TOKEN"
+# ovsx reads OVSX_PAT from the environment, keeping the token out of the process list
+OVSX_PAT="$TOKEN" npx ovsx publish "$VSIX_FILE"
 
 echo "Cleaning up..."
 rm -f "$VSIX_FILE"

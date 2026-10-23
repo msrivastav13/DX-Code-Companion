@@ -7,27 +7,42 @@ export class VSCodeCore {
 
     private static terminalName: string = 'DX Companion';
 
-    private static ensureTerminalExists(): boolean {
-        if ((<any>vscode.window).terminals.length === 0) {
-            return false;
+    // Characters a shell still interprets inside double quotes (bash/zsh: $ ` \ !;
+    // PowerShell: $ ` and smart quotes) or that terminate the command line.
+    private static unsafeShellChars: RegExp = /["`$\\!\r\n\u201C\u201D\u201E]/;
+    // On Windows sf is a .cmd batch file: PowerShell drops the quotes around an argument without spaces
+    // before handing it to cmd.exe, which then treats these as command operators or variable expansion.
+    private static unsafeBatchChars: RegExp = /[&|<>^%]/;
+
+    private static setupTerminal(): vscode.Terminal {
+        // Only reuse our own terminal so commands never land in an unrelated shell or REPL
+        let activeTerminal = vscode.window.terminals.find(terminal => terminal.name === this.terminalName);
+        if (!activeTerminal) {
+            activeTerminal = vscode.window.createTerminal(this.terminalName);
         }
-        return true;
+        activeTerminal.show(true);
+        return activeTerminal;
     }
 
-    public static setupTerminal(): vscode.Terminal {
-        let activeTerminal;
-        if(this.ensureTerminalExists()){
-            activeTerminal = vscode.window.terminals[0];
-            if(activeTerminal){
-                activeTerminal.show(true);
-            }
-        } else {
-            // Create Terminal via VScode API
-            const terminalName = this.terminalName;
-            activeTerminal = vscode.window.createTerminal(terminalName);
-            activeTerminal.show(true);
+    // Wraps a value in double quotes for use as a single terminal argument.
+    // Throws if the value could break out of the quotes or run a sub-command.
+    public static quoteArg(value: string): string {
+        if (this.unsafeShellChars.test(value) || (OSUtil.isWindowsOs() && this.unsafeBatchChars.test(value))) {
+            throw new Error(`Refusing to run command: ${JSON.stringify(value)} contains characters the terminal shell would interpret`);
         }
-        return activeTerminal;
+        return '"' + value + '"';
+    }
+
+    // Builds a command and sends it to the DX Companion terminal; a rejected argument is shown as an error instead.
+    public static runCommand(buildCommand: () => string): void {
+        let command: string;
+        try {
+            command = buildCommand();
+        } catch (error) {
+            vscode.window.showErrorMessage(error instanceof Error ? error.message : String(error));
+            return;
+        }
+        this.setupTerminal().sendText(command);
     }
 
     public static getFsPath(): string {

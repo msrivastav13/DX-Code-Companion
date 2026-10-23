@@ -232,10 +232,7 @@ export class DeploySource {
   }
 
   private static executeDeployCommand(cmd: CommandService): void {
-    let activeTerminal = VSCodeCore.setupTerminal();
-    if (activeTerminal) {
-      activeTerminal.sendText(cmd.generateCommand());
-    }
+    VSCodeCore.runCommand(() => cmd.generateCommand());
   }
 
   private static isProjectAuthroizedToSFDC(): boolean {
@@ -308,9 +305,8 @@ export class DeploySource {
 
   public static async deploySrc(uripath: string): Promise<void> {
     if (vscode.workspace.workspaceFolders) {
-      let activeTerminal = VSCodeCore.setupTerminal();
-      let deployCommand =
-        "sf project deploy start -d " + OSUtil.toUnixStyle(uripath) + " --metadata-dir -w -1";
+      const deployDir = OSUtil.toUnixStyle(uripath);
+      let username: string | undefined;
       let runCommand = true;
       if (uripath.indexOf("changesets") > -1) {
         //changesets folder so ask for relevant org
@@ -319,11 +315,10 @@ export class DeploySource {
             vscode.workspace.workspaceFolders[0].uri.fsPath +
               "/changesets/orgs.json"
           );
-          const username = await VSCodeUI.showQuickPick(
+          username = await VSCodeUI.showQuickPick(
             JSON.parse(orgs.toString()),
             "Select Org for deployment(To display more orgs add usernames in orgs.json)"
           );
-          deployCommand = deployCommand + " -u " + username;
           if (!username) {
             runCommand = false;
           }
@@ -331,8 +326,14 @@ export class DeploySource {
           throw error;
         }
       }
-      if (activeTerminal && runCommand) {
-        activeTerminal.sendText(deployCommand);
+      if (runCommand) {
+        VSCodeCore.runCommand(
+          () =>
+            "sf project deploy start -d " +
+            VSCodeCore.quoteArg(deployDir) +
+            " --metadata-dir -w -1" +
+            (username ? " -u " + VSCodeCore.quoteArg(username) : "")
+        );
       }
     }
   }
