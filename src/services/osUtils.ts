@@ -7,11 +7,7 @@ export class OSUtil {
     }
 
     public static isWindowsOs(): boolean {
-        const operatingsystem : string = process.platform;
-        if(operatingsystem.includes('win')) {
-            return true;
-        } else {
-            return false;
-        }
+        // process.platform is 'win32' on all Windows versions ('darwin' also contains 'win')
+        return process.platform === 'win32';
     }
 }
