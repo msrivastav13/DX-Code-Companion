@@ -3,7 +3,7 @@ All notable changes to the "dx-code-companion" extension will be documented in t
 
 ### 0.5.2
 
-1. Security: Prevent shell command injection. File paths, org usernames (including `changesets/orgs.json`), package and changeset names, and the `resourceBundleFoldername` setting are now always quoted, and values containing characters the shell would interpret (`$`, backtick, `"`, `\`, `!`, newlines) are rejected with an error instead of being sent to the terminal.
+1. Security: Prevent shell command injection. File paths, org usernames (including `changesets/orgs.json`), package and changeset names, and the `resourceBundleFoldername` setting are now always quoted, and values containing characters the shell would interpret (`$`, backtick, `"`, `\`, `!`, newlines) are rejected with an error instead of being sent to the terminal. On Windows, `&`, `|`, `<`, `>`, `^` and `%` are rejected too, because `sf` is a `.cmd` batch file and cmd.exe interprets them even in arguments PowerShell passed quoted.
 2. Security: Commands are sent only to the "DX Companion" terminal, never to whichever terminal happens to be first (e.g. an SSH session or REPL).
 3. Security: Validate file names before they are used in Tooling API SOQL queries.
 4. Security: The extension is disabled in untrusted workspaces (VS Code Workspace Trust).
