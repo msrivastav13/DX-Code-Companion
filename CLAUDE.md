@@ -14,8 +14,25 @@ The extension depends on `mo-dx-plugin` (a Salesforce CLI plugin) — most comma
 npm install                  # install dependencies (runs postinstall to set up vscode typings)
 npm run compile              # compile TypeScript to out/
 npm run watch                # compile in watch mode (used during development)
-npm test                     # compile then run tests
+npm test                     # compile, then run the extension-host suites in real VS Code (bash + zsh terminals)
+npm run test:ui              # Playwright UI smoke tests against the packaged VSIX (incl. Workspace Trust)
+CCDX_TEST_ORG=<alias> npm run test:org   # opt-in: replay generated commands with the real CLI against a disposable org
 ```
+
+### Tests
+
+- `src/test/runTest.ts` downloads VS Code via `@vscode/test-electron` and runs `src/test/integration/*.test.ts` (or `src/test/org/`) inside its extension host, once per shell in `CCDX_TEST_SHELLS`.
+- `src/test/environment.ts` builds each sandbox: a temp copy of `test-fixtures/project` (path contains spaces, `&` and `'` on macOS/Linux), a private profile, and a terminal profile whose PATH puts `test-fixtures/bin/sf` first. That shim records the argv the real shell delivered, so tests assert on what a terminal actually parsed (`sfCalls()` in `src/test/helpers.ts`).
+- Injection payloads in tests write `ccdx-canary` into the workspace if they ever execute; helpers fail the test when it appears.
+- `e2e/` holds the Playwright suite (`_electron.launch` on the downloaded VS Code; installs the VSIX built by `vsce package`). Failure traces land in `test-results/`; open with `npx playwright show-trace`.
+
+### Releasing
+
+1. Bump `version` in `package.json` (and `package-lock.json`) and add a `### <version>` section at the top of `CHANGELOG.md`. That section becomes the GitHub release notes.
+2. Merge to `master`, then tag it with the bare version and push: `git tag -a 0.5.2 -m 0.5.2 && git push origin 0.5.2`.
+3. `.github/workflows/release.yml` runs the full test matrix, checks the tag matches `package.json`, runs `./publish.sh` with the `VSCE_PAT` and `OPEN_VSX_PAT` repository secrets, and creates the GitHub release with both VSIX files. The Marketplace publisher is `MohithShrivastava`; on Open VSX it is `msrivastav13` (the script swaps it while packaging).
+
+`./publish.sh --dry-run` builds both VSIX files locally without publishing.
 
 To debug the extension: press F5 in VS Code (uses the "Extension" launch config), which compiles via `npm: watch` and opens an Extension Development Host window.
 

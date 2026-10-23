@@ -3,3 +3,5 @@ node_modules
 .vscode-test/
 *.vsix
 C:Devnodejsnpm-cache
+playwright-report/
+test-results/

@@ -13,3 +13,8 @@ CLAUDE.md
 vsc-extension-quickstart.md
 **/*.map
 **/*.ts
+e2e/**
+test-fixtures/**
+playwright-report/**
+test-results/**
+publish.sh
