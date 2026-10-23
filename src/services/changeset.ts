@@ -30,11 +30,7 @@ export class Changeset {
             if(!fs.existsSync(subDirectory)) {
                 fs.mkdirSync(subDirectory);
             }
-            let activeTerminal = VSCodeCore.setupTerminal();
-            if(activeTerminal){
-                let retrievecommand = 'sf retrieve pkgsource -n ' + '"' + name + '"' + ' -r ' + 'changesets/' + name.trim().toLowerCase().replace(/\s/g,'') + '/src';
-                activeTerminal.sendText(retrievecommand);
-            } 
+            VSCodeCore.runCommand(() => 'sf retrieve pkgsource -n ' + VSCodeCore.quoteArg(name) + ' -r ' + VSCodeCore.quoteArg('changesets/' + name.trim().toLowerCase().replace(/\s/g,'') + '/src'));
         }
     }
 

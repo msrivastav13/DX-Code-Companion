@@ -20,11 +20,7 @@ export class RetrieveSource {
         const pkgs = packages.records.map( pkg => pkg.Name);
         const unmanagedpkg = await VSCodeUI.showQuickPick(pkgs);
         if(unmanagedpkg) {
-            let activeTerminal = VSCodeCore.setupTerminal();
-            if(activeTerminal){
-                let retrievecommand = cmd + '"' + unmanagedpkg + '"' ;
-                activeTerminal.sendText(retrievecommand);
-            }
+            VSCodeCore.runCommand(() => cmd + VSCodeCore.quoteArg(unmanagedpkg));
         }
     }
 }

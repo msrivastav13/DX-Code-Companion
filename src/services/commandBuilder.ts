@@ -2,6 +2,7 @@
 
 import * as path from "path";
 import { Metadata } from "../services/findMetadataType";
+import { VSCodeCore } from "../services/vscodeCore";
 import { workspace } from "vscode";
 
 export class CommandService {
@@ -20,13 +21,15 @@ export class CommandService {
     const metadata = this.metadataDef;
     // const auraFiles = ['.cmp','.app','.evt','.css','.js','design','svg','tokens','intf','auradoc'];
     command = command + metadata.getMetadataType().CommandName + " ";
-    command = command + "-p " + '"' + this.filepath + '"';
+    command = command + "-p " + VSCodeCore.quoteArg(this.filepath);
     if (this.metadataDef.getMetadataType().CommandName === "staticresource") {
       command =
         command +
         " -r " +
-        workspace.getConfiguration("dx-code-companion").staticresourcefolder
-          .resourceBundleFoldername;
+        VSCodeCore.quoteArg(
+          workspace.getConfiguration("dx-code-companion").staticresourcefolder
+            .resourceBundleFoldername
+        );
     }
     return command;
   }

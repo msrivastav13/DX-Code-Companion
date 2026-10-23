@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to the "dx-code-companion" extension will be documented in this file.
 
+### 0.5.2
+
+1. Security: Prevent shell command injection. File paths, org usernames (including `changesets/orgs.json`), package and changeset names, and the `resourceBundleFoldername` setting are now always quoted, and values containing characters the shell would interpret (`$`, backtick, `"`, `\`, `!`, newlines) are rejected with an error instead of being sent to the terminal.
+2. Security: Commands are sent only to the "DX Companion" terminal, never to whichever terminal happens to be first (e.g. an SSH session or REPL).
+3. Security: Validate file names before they are used in Tooling API SOQL queries.
+4. Security: The extension is disabled in untrusted workspaces (VS Code Workspace Trust).
+5. Fix all open npm security vulnerabilities (critical: websocket-driver; high: brace-expansion, browserslist, fast-uri, form-data, js-yaml; moderate: baseline-browser-mapping, csv-parse, fast-copy).
+
 ### 0.5.1
 
 1. Fix: "Manage Conflict" mode silently skipping deploy for Apex classes (and all metadata types). Root cause was `@salesforce/core` v8's pino logger using dynamic `require()` that breaks when webpack-bundled.

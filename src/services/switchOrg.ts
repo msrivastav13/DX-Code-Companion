@@ -7,12 +7,7 @@ import { VSCodeUI } from './vscodeUI';
 export async function switchOrg(): Promise<void> {
     const orgs = await Config.getAllOrgAliases();
     const result = await VSCodeUI.showQuickPick(orgs);
-    let cmd = 'sf config set target-org=';
     if(result){
-        cmd = cmd + result.split(':')[0];
-        let activeTerminal = VSCodeCore.setupTerminal();
-        if(activeTerminal){
-            activeTerminal.sendText(cmd);
-        }
+        VSCodeCore.runCommand(() => 'sf config set target-org=' + VSCodeCore.quoteArg(result.split(':')[0]));
     }
 }
