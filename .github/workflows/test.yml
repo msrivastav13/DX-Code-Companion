@@ -1,0 +1,79 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      org:
+        description: 'Also run the real-org suite (needs the SF_AUTH_URL secret)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    # Windows terminal/quoting paths have not been verified yet
+    continue-on-error: ${{ matrix.os == 'windows-latest' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install zsh
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y zsh
+      - name: Cache VS Code
+        uses: actions/cache@v4
+        with:
+          path: .vscode-test
+          key: vscode-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - run: npx tslint -p .
+      - run: npm audit --audit-level=moderate
+      - name: Extension-host tests
+        shell: bash
+        run: if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a npm test; else npm test; fi
+      - name: UI tests
+        shell: bash
+        run: if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a npm run test:ui; else npm run test:ui; fi
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-${{ matrix.os }}
+          path: |
+            playwright-report/
+            test-results/
+
+  org:
+    if: github.event_name == 'workflow_dispatch' && inputs.org
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Salesforce CLI and mo-dx-plugin
+        run: |
+          npm install --global @salesforce/cli
+          echo y | sf plugins install mo-dx-plugin
+      - name: Authorize test org
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
+        run: echo "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias ccdx-e2e
+      - name: Real-org tests
+        env:
+          CCDX_TEST_ORG: ccdx-e2e
+        run: xvfb-run -a npm run test:org
