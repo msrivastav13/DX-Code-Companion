@@ -17,4 +17,4 @@ e2e/**
 test-fixtures/**
 playwright-report/**
 test-results/**
-publish-openvsx.sh
+publish.sh

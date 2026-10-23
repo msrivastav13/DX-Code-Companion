@@ -26,6 +26,14 @@ CCDX_TEST_ORG=<alias> npm run test:org   # opt-in: replay generated commands wit
 - Injection payloads in tests write `ccdx-canary` into the workspace if they ever execute; helpers fail the test when it appears.
 - `e2e/` holds the Playwright suite (`_electron.launch` on the downloaded VS Code; installs the VSIX built by `vsce package`). Failure traces land in `test-results/`; open with `npx playwright show-trace`.
 
+### Releasing
+
+1. Bump `version` in `package.json` (and `package-lock.json`) and add a `### <version>` section at the top of `CHANGELOG.md`. That section becomes the GitHub release notes.
+2. Merge to `master`, then tag it with the bare version and push: `git tag -a 0.5.2 -m 0.5.2 && git push origin 0.5.2`.
+3. `.github/workflows/release.yml` runs the full test matrix, checks the tag matches `package.json`, runs `./publish.sh` with the `VSCE_PAT` and `OPEN_VSX_PAT` repository secrets, and creates the GitHub release with both VSIX files. The Marketplace publisher is `MohithShrivastava`; on Open VSX it is `msrivastav13` (the script swaps it while packaging).
+
+`./publish.sh --dry-run` builds both VSIX files locally without publishing.
+
 To debug the extension: press F5 in VS Code (uses the "Extension" launch config), which compiles via `npm: watch` and opens an Extension Development Host window.
 
 ## Architecture

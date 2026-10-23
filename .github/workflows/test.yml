@@ -4,6 +4,8 @@ on:
   push:
     branches: [master]
   pull_request:
+  # Lets the Release workflow gate publishing on this test matrix
+  workflow_call:
   workflow_dispatch:
     inputs:
       org:

@@ -1,0 +1,61 @@
+name: Release
+
+# Push a version tag that matches package.json (e.g. 0.5.2) to test, publish to the
+# VS Code Marketplace and Open VSX, and create the GitHub release with the VSIX files.
+# Re-running is safe: publishing skips versions that already exist.
+on:
+  push:
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
+
+concurrency: release
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+    permissions:
+      contents: read
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check the tag matches package.json
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $version"
+            exit 1
+          fi
+      - name: Publish to the VS Code Marketplace and Open VSX
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          OPEN_VSX_PAT: ${{ secrets.OPEN_VSX_PAT }}
+        run: ./publish.sh
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Release notes are this version's CHANGELOG section
+          awk -v heading="### $GITHUB_REF_NAME" '$0 == heading {found=1; next} found && /^### / {exit} found' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then
+            echo "::error::CHANGELOG.md has no '### $GITHUB_REF_NAME' section"
+            exit 1
+          fi
+          cat >> notes.md <<NOTES
+
+          ---
+          **Install:** [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=MohithShrivastava.dx-code-companion) · [Open VSX](https://open-vsx.org/extension/msrivastav13/dx-code-companion/$GITHUB_REF_NAME)
+          NOTES
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dx-code-companion-*.vsix --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dx-code-companion-*.vsix --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag
+          fi

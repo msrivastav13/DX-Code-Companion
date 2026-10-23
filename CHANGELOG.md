@@ -8,6 +8,11 @@ All notable changes to the "dx-code-companion" extension will be documented in t
 3. Security: Validate file names before they are used in Tooling API SOQL queries.
 4. Security: The extension is disabled in untrusted workspaces (VS Code Workspace Trust).
 5. Fix all open npm security vulnerabilities (critical: websocket-driver; high: brace-expansion, browserslist, fast-uri, form-data, js-yaml; moderate: baseline-browser-mapping, csv-parse, fast-copy).
+6. Fix: Windows detection matched macOS (`darwin` contains "win").
+7. Packaging: the publish script is no longer shipped inside the extension.
+8. Development: end-to-end tests run in a real VS Code on Windows, macOS and Linux (bash, zsh and PowerShell terminals), including Playwright UI tests of the packaged VSIX and Workspace Trust. CodeQL code scanning runs again, and releases are published from CI only after the tests pass.
+
+**Behaviour changes:** a deploy or command whose file path, org username, package or changeset name contains one of the rejected characters now shows a "Refusing to run command" error instead of running. Rename the file or value to continue. In Restricted Mode, choose "Trust" to enable the extension.
 
 ### 0.5.1
 
