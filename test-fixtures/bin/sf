@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+// Stand-in for the Salesforce CLI used by the tests. It records the argv the shell actually
+// delivered, so tests can assert on what a real terminal parsed out of the extension's command.
+const fs = require('fs');
+
+const argv = process.argv.slice(2);
+if (process.env.CCDX_SF_STDOUT) {
+    process.stdout.write(JSON.stringify(argv));
+} else if (process.env.CCDX_SF_LOG) {
+    const call = { argv: argv, cwd: process.cwd(), terminal: process.env.CCDX_TERMINAL_TAG || null };
+    fs.appendFileSync(process.env.CCDX_SF_LOG, JSON.stringify(call) + '\n');
+}
